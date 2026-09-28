@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RESPONSE · Officer Patrol</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#0a0a0b; --panel:#141416; --panel2:#1c1c1f; --line:#2a2a2e;
+    --silver:#c9ccd1; --silver-dim:#8b8f96; --white:#f4f5f6;
+    --red:#e1251b; --red-dim:#3a1210; --green:#2fbf71; --amber:#f0a92b;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#050505;font-family:Inter,system-ui,sans-serif;color:var(--white);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:32px 16px}
+  .phone{width:390px;max-width:100%;height:844px;background:var(--black);border-radius:44px;border:10px solid #1a1a1c;box-shadow:0 0 0 2px #333,0 30px 80px rgba(0,0,0,.7);overflow:hidden;display:flex;flex-direction:column;position:relative}
+  .status{display:flex;justify-content:space-between;padding:14px 26px 6px;font-size:13px;font-weight:600;color:var(--silver)}
+  header{padding:8px 20px 14px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line)}
+  .logo{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:22px;letter-spacing:3px}
+  .logo span{color:var(--red)}
+  .onshift{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--silver);background:var(--panel2);padding:6px 10px;border-radius:20px}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green)}
+  main{flex:1;overflow-y:auto;padding:16px 20px 20px}
+  .site{font-size:12px;color:var(--silver-dim);text-transform:uppercase;letter-spacing:1.5px}
+  .site-name{font-size:20px;font-weight:700;margin:2px 0 16px}
+  .progress{display:flex;gap:18px;align-items:center;background:linear-gradient(135deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:18px;padding:18px}
+  .ring{width:92px;height:92px;flex-shrink:0;position:relative}
+  .ring svg{transform:rotate(-90deg)}
+  .ring .num{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .ring b{font-family:"Barlow Condensed",sans-serif;font-size:30px;line-height:1}
+  .ring small{font-size:10px;color:var(--silver-dim)}
+  .ptext h3{font-size:15px;margin-bottom:4px}
+  .ptext p{font-size:12px;color:var(--silver-dim);line-height:1.5}
+  .next{margin-top:16px;border:1px solid var(--red);background:linear-gradient(180deg,var(--red-dim),var(--panel));border-radius:18px;padding:18px}
+  .next .lbl{font-size:11px;color:var(--red);font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+  .next h2{font-size:19px;margin:6px 0 2px}
+  .next .meta{font-size:12px;color:var(--silver);display:flex;gap:14px;margin-bottom:16px}
+  .scan{width:100%;border:none;background:var(--red);color:#fff;font:700 16px Inter,system-ui,sans-serif;padding:15px;border-radius:12px;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer}
+  .welfare{margin-top:14px;display:flex;justify-content:space-between;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+  .welfare .t{font-size:12px;color:var(--silver-dim)}
+  .welfare .v{font-size:15px;font-weight:600;margin-top:2px}
+  .ok{background:var(--panel2);color:var(--white);border:1px solid var(--silver-dim);font:600 13px Inter,system-ui,sans-serif;padding:9px 16px;border-radius:10px}
+  h4{font-size:12px;color:var(--silver-dim);text-transform:uppercase;letter-spacing:1.5px;margin:22px 0 10px}
+  .cp{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+  .ic{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
+  .done .ic{background:rgba(47,191,113,.15);color:var(--green)}
+  .miss .ic{background:var(--red-dim);color:var(--red)}
+  .todo .ic{background:var(--panel2);color:var(--silver-dim);border:1px solid var(--line)}
+  .cp .n{flex:1;font-size:14px}
+  .cp .tm{font-size:12px;color:var(--silver-dim)}
+  .miss .tm{color:var(--red)}
+  .sos{position:absolute;right:18px;bottom:92px;width:62px;height:62px;border-radius:50%;background:var(--red);color:#fff;border:3px solid #ff6a60;font:800 14px Inter,system-ui,sans-serif;box-shadow:0 0 0 6px rgba(225,37,27,.2),0 8px 24px rgba(225,37,27,.5)}
+  nav{display:flex;justify-content:space-around;border-top:1px solid var(--line);padding:10px 0 22px;background:var(--panel)}
+  nav a{color:var(--silver-dim);font-size:11px;text-decoration:none;display:flex;flex-direction:column;align-items:center;gap:4px}
+  nav a.on{color:var(--white)}
+  nav svg{width:22px;height:22px}
+  nav a.on svg{stroke:var(--red)}
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="status"><span>02:14</span><span>5G ▮▮▮ 78%</span></div>
+  <header>
+    <div class="logo">RESP<span>O</span>NSE</div>
+    <div class="onshift"><span class="dot"></span>On shift · 4h 14m</div>
+  </header>
+  <main>
+    <div class="site">Current site</div>
+    <div class="site-name">Fengate Distribution Centre</div>
+
+    <div class="progress">
+      <div class="ring">
+        <svg width="92" height="92"><circle cx="46" cy="46" r="40" fill="none" stroke="#2a2a2e" stroke-width="8"/><circle cx="46" cy="46" r="40" fill="none" stroke="#e1251b" stroke-width="8" stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="94"/></svg>
+        <div class="num"><b>5/8</b><small>checkpoints</small></div>
+      </div>
+      <div class="ptext">
+        <h3>Patrol 3 of 6 · External</h3>
+        <p>Started 01:52 · due to finish by 02:40<br>1 checkpoint missed</p>
+      </div>
+    </div>
+
+    <div class="next">
+      <div class="lbl">Next checkpoint</div>
+      <h2>Loading Bay 4 – Roller Door</h2>
+      <div class="meta"><span>◉ 85 m away</span><span>⏱ Due 02:20</span><span>NFC</span></div>
+      <button class="scan">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3"/><path d="M8 12h8"/></svg>
+        Tap to scan checkpoint
+      </button>
+    </div>
+
+    <div class="welfare">
+      <div><div class="t">Next welfare check</div><div class="v">in 11 min · 02:25</div></div>
+      <button class="ok">I'm OK</button>
+    </div>
+
+    <h4>This patrol</h4>
+    <div class="cp done"><div class="ic">✓</div><div class="n">Main Gate – Gatehouse</div><div class="tm">01:53</div></div>
+    <div class="cp done"><div class="ic">✓</div><div class="n">Car Park A – North Fence</div><div class="tm">01:58</div></div>
+    <div class="cp miss"><div class="ic">!</div><div class="n">Fuel Store Compound</div><div class="tm">Missed</div></div>
+    <div class="cp done"><div class="ic">✓</div><div class="n">Loading Bay 1</div><div class="tm">02:06</div></div>
+    <div class="cp done"><div class="ic">✓</div><div class="n">Loading Bay 2–3</div><div class="tm">02:11</div></div>
+    <div class="cp todo"><div class="ic">6</div><div class="n">Loading Bay 4 – Roller Door</div><div class="tm">02:20</div></div>
+    <div class="cp todo"><div class="ic">7</div><div class="n">Waste Compactor</div><div class="tm">02:28</div></div>
+    <div class="cp todo"><div class="ic">8</div><div class="n">Rear Fire Exit – East</div><div class="tm">02:35</div></div>
+  </main>
+  <button class="sos">SOS</button>
+  <nav>
+    <a class="on" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/></svg>Patrol</a>
+    <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>Incident</a>
+    <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 11h8M8 15h5"/></svg>Site info</a>
+    <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>Me</a>
+  </nav>
+</div>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RESPONSE · Control Room</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#0a0a0b; --panel:#131315; --panel2:#1b1b1e; --line:#27272b;
+    --silver:#c9ccd1; --silver-dim:#83878e; --white:#f4f5f6;
+    --red:#e1251b; --red-dim:#3a1210; --green:#2fbf71; --amber:#f0a92b;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--black);font-family:Inter,system-ui,sans-serif;color:var(--white);display:flex;min-height:100vh;font-size:14px}
+  aside{width:220px;background:var(--panel);border-right:1px solid var(--line);padding:22px 14px;display:flex;flex-direction:column;flex-shrink:0}
+  .logo{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:26px;letter-spacing:4px;padding:0 10px 26px}
+  .logo span{color:var(--red)}
+  aside a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:var(--silver-dim);text-decoration:none;margin-bottom:2px}
+  aside a.on{background:var(--panel2);color:var(--white);box-shadow:inset 3px 0 0 var(--red)}
+  aside a .b{margin-left:auto;background:var(--red);color:#fff;font-size:11px;font-weight:700;padding:1px 7px;border-radius:10px}
+  aside .foot{margin-top:auto;font-size:12px;color:var(--silver-dim);padding:10px}
+  .wrap{flex:1;display:flex;flex-direction:column;min-width:0}
+  .top{display:flex;justify-content:space-between;align-items:center;padding:18px 26px;border-bottom:1px solid var(--line)}
+  .top h1{font-size:20px;font-weight:700}
+  .top .sub{font-size:12px;color:var(--silver-dim);margin-top:2px}
+  .live{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--silver);background:var(--panel2);border:1px solid var(--line);padding:7px 12px;border-radius:20px}
+  .pulse{width:8px;height:8px;border-radius:50%;background:var(--red);animation:p 1.4s infinite}
+  @keyframes p{50%{opacity:.3}}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding:20px 26px 0}
+  .kpi{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+  .kpi .l{font-size:11px;color:var(--silver-dim);text-transform:uppercase;letter-spacing:1.3px}
+  .kpi .v{font-family:"Barlow Condensed",sans-serif;font-size:36px;font-weight:700;margin-top:4px;line-height:1.1}
+  .kpi .d{font-size:12px;color:var(--silver-dim)}
+  .kpi.alert{border-color:var(--red);background:linear-gradient(180deg,var(--red-dim),var(--panel))}
+  .kpi.alert .v{color:var(--red)}
+  .grid{display:grid;grid-template-columns:1.6fr 1fr;gap:14px;padding:14px 26px 26px;flex:1}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;display:flex;flex-direction:column;overflow:hidden}
+  .card h3{font-size:13px;padding:14px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+  .card h3 small{color:var(--silver-dim);font-weight:500}
+  .map{flex:1;min-height:360px;position:relative;background:#0e0f11}
+  .map svg{position:absolute;inset:0;width:100%;height:100%}
+  .legend{position:absolute;left:14px;bottom:14px;display:flex;gap:14px;background:rgba(10,10,11,.85);padding:8px 12px;border-radius:8px;font-size:11px;color:var(--silver)}
+  .legend i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}
+  .feed{overflow-y:auto}
+  .al{display:flex;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line)}
+  .al .sev{width:4px;border-radius:2px;flex-shrink:0}
+  .al .t{font-weight:600;font-size:13px}
+  .al .m{font-size:12px;color:var(--silver-dim);margin-top:3px}
+  .al .acts{display:flex;gap:8px;margin-top:9px}
+  .btn{font:600 12px Inter,system-ui,sans-serif;padding:6px 11px;border-radius:7px;border:1px solid var(--line);background:var(--panel2);color:var(--white)}
+  .btn.r{background:var(--red);border-color:var(--red)}
+  .tm{margin-left:auto;font-size:11px;color:var(--silver-dim);white-space:nowrap}
+  table{width:100%;border-collapse:collapse}
+  th{text-align:left;font-size:11px;color:var(--silver-dim);text-transform:uppercase;letter-spacing:1px;font-weight:600;padding:10px 18px;border-bottom:1px solid var(--line)}
+  td{padding:11px 18px;border-bottom:1px solid var(--line);font-size:13px}
+  .st{font-size:11px;font-weight:700;padding:3px 9px;border-radius:10px}
+  .st.g{background:rgba(47,191,113,.14);color:var(--green)}
+  .st.a{background:rgba(240,169,43,.14);color:var(--amber)}
+  .st.r{background:var(--red-dim);color:var(--red)}
+  .bar{height:6px;background:var(--panel2);border-radius:3px;width:90px;overflow:hidden;display:inline-block;vertical-align:middle;margin-right:8px}
+  .bar i{display:block;height:100%;background:var(--silver)}
+  .full{grid-column:1/-1}
+  @media(max-width:1000px){aside{display:none}.kpis{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<aside>
+  <div class="logo">RESP<span>O</span>NSE</div>
+  <a class="on" href="#">◉ Live overview</a>
+  <a href="#">⚠ Alerts <span class="b">3</span></a>
+  <a href="#">▤ Incidents</a>
+  <a href="#">⌂ Sites &amp; routes</a>
+  <a href="#">☰ Officers</a>
+  <a href="#">▦ Rota</a>
+  <a href="#">⎙ Reports</a>
+  <a href="#">⚙ Settings</a>
+  <div class="foot">Night control · J. Patel<br>Mon 28 Sep 2026</div>
+</aside>
+
+<div class="wrap">
+  <div class="top">
+    <div><h1>Live overview</h1><div class="sub">All sites · 02:14 BST</div></div>
+    <div class="live"><span class="pulse"></span>Live · updated 3s ago</div>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="l">Officers on shift</div><div class="v">24</div><div class="d">of 26 rostered · 2 late</div></div>
+    <div class="kpi"><div class="l">Sites covered</div><div class="v">17/18</div><div class="d">Hampton Retail uncovered</div></div>
+    <div class="kpi"><div class="l">Patrol completion</div><div class="v">94%</div><div class="d">tonight so far</div></div>
+    <div class="kpi alert"><div class="l">Open alerts</div><div class="v">3</div><div class="d">1 critical · 2 warnings</div></div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Officer map <small>Peterborough &amp; surrounding</small></h3>
+      <div class="map">
+        <svg viewBox="0 0 800 420" preserveAspectRatio="xMidYMid slice">
+          <defs><pattern id="g" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#18191c"/></pattern></defs>
+          <rect width="800" height="420" fill="url(#g)"/>
+          <path d="M0 250 C150 230 250 280 400 240 S650 180 800 210" stroke="#1d3a4a" stroke-width="14" fill="none" opacity=".7"/>
+          <path d="M120 0 L260 420 M0 120 L800 150 M520 0 L600 420 M0 360 L800 320" stroke="#26272b" stroke-width="5"/>
+          <path d="M320 0 L380 420 M0 60 L800 90" stroke="#202124" stroke-width="3"/>
+          <g font-family="Inter, system-ui, sans-serif" font-size="11" fill="#c9ccd1">
+            <circle cx="210" cy="140" r="8" fill="#2fbf71"/><text x="224" y="144">D. Okafor · Fengate DC</text>
+            <circle cx="470" cy="110" r="8" fill="#2fbf71"/><text x="484" y="114">S. Mills · Queensgate</text>
+            <circle cx="610" cy="260" r="8" fill="#f0a92b"/><text x="624" y="264">L. Novak · Welfare due</text>
+            <circle cx="330" cy="300" r="8" fill="#2fbf71"/><text x="344" y="304">A. Reid · Hampton Park</text>
+            <circle cx="95" cy="330" r="8" fill="#2fbf71"/><text x="109" y="334">K. Shah · Orton Ind. Est.</text>
+            <circle cx="690" cy="80" r="8" fill="#2fbf71"/><text x="600" y="60">T. Evans · Werrington</text>
+          </g>
+          <circle cx="400" cy="190" r="22" fill="#e1251b" opacity=".2"><animate attributeName="r" values="12;30;12" dur="1.6s" repeatCount="indefinite"/></circle>
+          <circle cx="400" cy="190" r="9" fill="#e1251b" stroke="#fff" stroke-width="2"/>
+          <g font-family="Inter, system-ui, sans-serif"><rect x="414" y="170" width="170" height="40" rx="6" fill="#1b0b0a" stroke="#e1251b"/><text x="424" y="187" font-size="11" font-weight="700" fill="#e1251b">SOS · M. Grant</text><text x="424" y="202" font-size="11" fill="#c9ccd1">Serpentine Green · 00:41</text></g>
+        </svg>
+        <div class="legend"><span><i style="background:#2fbf71"></i>On patrol</span><span><i style="background:#f0a92b"></i>Check due</span><span><i style="background:#e1251b"></i>Alert</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Alert feed <small>3 open</small></h3>
+      <div class="feed">
+        <div class="al"><div class="sev" style="background:var(--red)"></div><div style="flex:1">
+          <div class="t">SOS pressed — M. Grant</div>
+          <div class="m">Serpentine Green · live location sharing · call in progress</div>
+          <div class="acts"><button class="btn r">Call officer</button><button class="btn">Dispatch</button><button class="btn">Acknowledge</button></div>
+        </div><div class="tm">41s ago</div></div>
+        <div class="al"><div class="sev" style="background:var(--amber)"></div><div style="flex:1">
+          <div class="t">Missed checkpoint — Fuel Store Compound</div>
+          <div class="m">Fengate DC · D. Okafor · patrol 3</div>
+          <div class="acts"><button class="btn">Message officer</button><button class="btn">Acknowledge</button></div>
+        </div><div class="tm">14 min</div></div>
+        <div class="al"><div class="sev" style="background:var(--amber)"></div><div style="flex:1">
+          <div class="t">Late book-on — R. Adeyemi</div>
+          <div class="m">Hampton Retail · shift started 02:00 · site uncovered</div>
+          <div class="acts"><button class="btn">Call officer</button><button class="btn">Find cover</button></div>
+        </div><div class="tm">14 min</div></div>
+        <div class="al" style="opacity:.55"><div class="sev" style="background:var(--silver-dim)"></div><div style="flex:1">
+          <div class="t">Incident report filed — attempted entry</div>
+          <div class="m">Queensgate · S. Mills · 3 photos · resolved by J. Patel</div>
+        </div><div class="tm">01:37</div></div>
+      </div>
+    </div>
+
+    <div class="card full">
+      <h3>Officers on shift <small>24 active</small></h3>
+      <table>
+        <tr><th>Officer</th><th>Site</th><th>Status</th><th>Patrol progress</th><th>Last check-in</th><th>Next welfare check</th></tr>
+        <tr><td>M. Grant</td><td>Serpentine Green</td><td><span class="st r">SOS</span></td><td><span class="bar"><i style="width:60%"></i></span>3/5</td><td>00:41 ago</td><td>—</td></tr>
+        <tr><td>L. Novak</td><td>Boongate Works</td><td><span class="st a">Check due</span></td><td><span class="bar"><i style="width:100%"></i></span>6/6</td><td>28 min ago</td><td>Due now</td></tr>
+        <tr><td>D. Okafor</td><td>Fengate Distribution Centre</td><td><span class="st g">On patrol</span></td><td><span class="bar"><i style="width:62%"></i></span>5/8</td><td>3 min ago</td><td>02:25</td></tr>
+        <tr><td>S. Mills</td><td>Queensgate Centre</td><td><span class="st g">On patrol</span></td><td><span class="bar"><i style="width:40%"></i></span>4/10</td><td>1 min ago</td><td>02:30</td></tr>
+        <tr><td>A. Reid</td><td>Hampton Park</td><td><span class="st g">Static</span></td><td><span class="bar"><i style="width:100%"></i></span>4/4</td><td>6 min ago</td><td>02:40</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+</body>
+</html>
