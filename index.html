@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RESPONSE · Guarding Software</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--black:#0a0a0b;--panel:#131315;--panel2:#1b1b1e;--line:#27272b;--silver:#c9ccd1;--silver-dim:#83878e;--white:#f4f5f6;--red:#e1251b}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--black);color:var(--white);font-family:Inter,system-ui,sans-serif;min-height:100vh;display:flex;flex-direction:column}
+  .wrap{max-width:980px;margin:0 auto;padding:64px 20px 40px;width:100%;flex:1}
+  .logo{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:56px;letter-spacing:8px;line-height:1}
+  .logo span{color:var(--red)}
+  .tag{color:var(--silver);font-size:17px;margin:14px 0 6px}
+  .status{display:inline-block;margin-top:14px;font-size:12px;letter-spacing:1.4px;text-transform:uppercase;color:var(--red);border:1px solid var(--red);padding:5px 12px;border-radius:20px}
+  h2{font-size:13px;color:var(--silver-dim);text-transform:uppercase;letter-spacing:1.6px;margin:48px 0 14px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+  a.card{display:block;text-decoration:none;color:inherit;background:linear-gradient(135deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:16px;padding:22px;transition:border-color .15s,transform .15s}
+  a.card:hover{border-color:var(--red);transform:translateY(-2px)}
+  .k{font-size:11px;color:var(--red);font-weight:700;letter-spacing:1.4px;text-transform:uppercase}
+  .card h3{font-size:19px;margin:8px 0 6px}
+  .card p{font-size:14px;color:var(--silver-dim);line-height:1.55}
+  .go{margin-top:14px;font-size:13px;font-weight:600;color:var(--silver)}
+  footer{border-top:1px solid var(--line);padding:18px 20px;text-align:center;font-size:12px;color:var(--silver-dim)}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="logo">RESP<span>O</span>NSE</div>
+    <p class="tag">Guarding and patrol management for security companies.</p>
+    <span class="status">Concept · static mock-ups</span>
+
+    <h2>Screens</h2>
+    <div class="grid">
+      <a class="card" href="/mockups/mobile/patrol.html">
+        <div class="k">Officer app</div>
+        <h3>Patrol screen</h3>
+        <p>Checkpoint progress, next scan, welfare check timer and SOS, on the officer's phone.</p>
+        <div class="go">Open mock-up →</div>
+      </a>
+      <a class="card" href="/mockups/web/control-room.html">
+        <div class="k">Control room</div>
+        <h3>Live overview</h3>
+        <p>Officer map, live alert feed, site coverage and patrol completion across all sites.</p>
+        <div class="go">Open mock-up →</div>
+      </a>
+    </div>
+
+    <h2>Planning</h2>
+    <div class="grid">
+      <a class="card" href="https://github.com/RBSTALLION/RESPONSE/blob/main/docs/FEATURES.md">
+        <div class="k">Docs</div>
+        <h3>Feature list</h3>
+        <p>What RESPONSE does across the officer app, control room and client portal, and how it beats SmartTask.</p>
+        <div class="go">Read on GitHub →</div>
+      </a>
+    </div>
+  </div>
+  <footer>RESPONSE · concept preview</footer>
+</body>
+</html>
