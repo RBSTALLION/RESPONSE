@@ -91,7 +91,7 @@ if (sitesOnly) document.querySelector('.legend').innerHTML = '<span style="color
 try {
   const st = await import('./store.js');
   const apply = s => { const el = siteMarkers.riverside.getElement()?.firstChild; if (!el) return; el.classList.toggle('live', !!s.bookedOn && !s.sos); el.classList.toggle('sos', !!s.sos);
-    siteMarkers.riverside.setTooltipContent(s.sos ? 'Riverside DC · SOS · D. Owusu' : s.bookedOn ? `Riverside DC · D. Owusu · ${s.scanned}/12 scans` : 'Riverside DC · awaiting book on'); };
+    siteMarkers.riverside.setTooltipContent(s.sos ? 'Riverside DC · SOS · D. Owusu' : s.bookedOn ? `Riverside DC · D. Owusu · ${s.tagless ? s.tagless.idx : 3}/${s.tagless ? s.tagless.points.length : 12} checkpoints` : 'Riverside DC · awaiting book on'); };
   apply(st.load()); st.subscribe(apply);
 } catch (e) { console.warn('store unavailable', e); }
 </script>

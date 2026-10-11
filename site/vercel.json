@@ -1,19 +1,6 @@
 {
   "cleanUrls": true,
-  "rewrites": [
-    {
-      "source": "/app",
-      "destination": "/app/index.html"
-    },
-    {
-      "source": "/portal",
-      "destination": "/portal/index.html"
-    },
-    {
-      "source": "/",
-      "destination": "/Frames.dc.html"
-    }
-  ],
+  "trailingSlash": false,
   "headers": [
     {
       "source": "/app/sw.js",
@@ -36,16 +23,6 @@
           "value": "application/manifest+json"
         }
       ]
-    },
-    {
-      "source": "/(.*)\\.dc\\.html",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "text/html; charset=utf-8"
-        }
-      ]
     }
-  ],
-  "trailingSlash": false
+  ]
 }

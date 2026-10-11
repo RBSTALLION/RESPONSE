@@ -23,12 +23,14 @@
   <div style="display:flex;gap:40px;align-items:flex-start;flex-wrap:wrap">
     <div style="display:flex;flex-direction:column;gap:10px">
       <div style="font-size:12px;color:#6b6c72;font-weight:600;letter-spacing:.1em;text-transform:uppercase">Officer app · iPhone · /app</div>
+      <div style="max-width:402px"><div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center"><span style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#6b6c72;margin-right:4px">Jump to</span><sc-for list="{{ phoneJumps }}" as="j" hint-placeholder-count="8"><button onClick="{{ j.go }}" style="background:#fff;border:1px solid #d6d6da;border-radius:14px;padding:5px 11px;font-size:12px;font-weight:600;color:#111214;cursor:pointer" style-hover="border-color:#e10600;color:#e10600" style-active="background:#fde8e7">{{ j.label }}</button></sc-for></div></div>
       <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" dark="{{ true }}" hint-size="402px,874px">
-        <iframe src="App.dc.html?inset=54" title="RESPONSE Officer app" style="border:0;width:100%;height:100%;display:block;background:#0b0b0c"></iframe>
+        <iframe src="App.dc.html?inset=54" title="RESPONSE Officer app" allow="camera;microphone;geolocation" style="border:0;width:100%;height:100%;display:block;background:#0b0b0c"></iframe>
       </x-import>
     </div>
     <div style="display:flex;flex-direction:column;gap:10px">
       <div style="font-size:12px;color:#6b6c72;font-weight:600;letter-spacing:.1em;text-transform:uppercase">Control room · laptop · /portal</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center"><span style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#6b6c72;margin-right:4px">Jump to</span><sc-for list="{{ portalJumps }}" as="j" hint-placeholder-count="8"><button onClick="{{ j.go }}" style="background:#fff;border:1px solid #d6d6da;border-radius:14px;padding:5px 11px;font-size:12px;font-weight:600;color:#111214;cursor:pointer" style-hover="border-color:#e10600;color:#e10600" style-active="background:#fde8e7">{{ j.label }}</button></sc-for></div>
       <x-import component-from-global-scope="ChromeWindow" from="./browser-window.jsx" width="{{ 1360 }}" height="{{ 860 }}" url="app.response.security/control" tabs="{{ tabs }}" hint-size="1360px,860px">
         <iframe src="Portal.dc.html" title="RESPONSE Control room" style="border:0;width:100%;height:100%;display:block;background:#f4f4f5"></iframe>
       </x-import>
@@ -39,7 +41,12 @@
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
   renderVals(){
-    return { tabs: [{ title: 'RESPONSE · Control room' }], resetDemo: async () => { const st = await import('./store.js'); st.reset(); sessionStorage.removeItem('response.control'); sessionStorage.removeItem('response.controlUser'); localStorage.removeItem('response.officer'); document.querySelectorAll('iframe').forEach(f => { f.src = f.src; }); } };
+    const post = (title, msg) => { const fr = document.querySelector(`iframe[title="${title}"]`); if (fr && fr.contentWindow) fr.contentWindow.postMessage(msg, location.origin); };
+    const phone = [['Sign in','signin'],['Shift brief','brief'],['Home','home'],['Patrol home','patrolHome'],['Patrol guide','tgMap'],['Verify checkpoint','tgMatch'],['Choose site','cfgSite'],['Add site','cfgAddSite'],['Name patrol','cfgPatrol'],['Begin design','cfgBegin'],['Route setup','rsWalk'],['Capture checkpoint','rsCapture'],['Route built','rsBuilt'],['Incident','incident'],['Check call','checkcall'],['SOS','sos'],['Profile','profile']];
+    const portal = [['Sign in','login'],['Control room','control'],['Alarm job','job'],['Rota','rota'],['Officers','officers'],['Sites','sites'],['Incidents','incidents']];
+    return { phoneJumps: phone.map(([label, screen]) => ({ label, go: () => post('RESPONSE Officer app', { type:'response:go', screen }) })),
+      portalJumps: portal.map(([label, page]) => ({ label, go: () => post('RESPONSE Control room', { type:'response:portal', page }) })),
+      tabs: [{ title: 'RESPONSE · Control room' }], resetDemo: async () => { const st = await import('./store.js'); st.reset(); sessionStorage.removeItem('response.control'); sessionStorage.removeItem('response.controlUser'); localStorage.removeItem('response.officer'); document.querySelectorAll('iframe').forEach(f => { f.src = f.src; }); } };
   }
 }
 </script>

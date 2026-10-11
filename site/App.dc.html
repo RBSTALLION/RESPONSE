@@ -71,15 +71,15 @@ input::placeholder,textarea::placeholder{color:#5b5c63}
   <div style="display:flex;align-items:center;gap:8px;margin-top:6px;color:#c9cacd;font-size:14px"><span style="width:8px;height:8px;border-radius:50%;background:#2ecc71"></span>On shift · {{ shiftLeft }} left · {{ clockHMS }}</div>
   <div style="margin-top:22px;background:#15161a;border:1px solid #26272c;border-radius:8px;padding:16px">
     <div style="font-size:11px;letter-spacing:.2em;color:#8a8b91;text-transform:uppercase">Next checkpoint</div>
-    <div style="font-family:'Barlow Condensed';font-weight:700;font-size:28px;margin-top:4px">{{ nextCp }}</div>
-    <div style="font-size:13px;color:#8a8b91">Route B · {{ nextDue }}</div>
-    <button onClick="{{ goScan }}" style="margin-top:14px;width:100%;background:#e6e6e8;color:#0b0b0c;border:0;border-radius:6px;padding:14px;font-family:'Barlow Condensed';font-weight:700;font-size:18px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer" style-hover="background:#fff">Scan checkpoint</button>
+    <div style="font-family:'Barlow Condensed';font-weight:700;font-size:28px;margin-top:4px">{{ hNext }}</div>
+    <div style="font-size:13px;color:#8a8b91">{{ hNextSub }}</div>
+    <button onClick="{{ goTaglessH }}" style="margin-top:14px;width:100%;background:#e6e6e8;color:#0b0b0c;border:0;border-radius:6px;padding:14px;font-family:'Barlow Condensed';font-weight:700;font-size:18px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer" style-hover="background:#fff">Start patrol</button>
   </div>
   <div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
     <button onClick="{{ openCheckCall }}" style="background:#15161a;border:1px solid #26272c;border-radius:8px;padding:16px 14px;color:#e6e6e8;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:8px" style-hover="border-color:#8a8b91"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8.1 9.7a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.8.3 1.7.5 2.6.7a2 2 0 0 1 1.7 2z"/></svg><span style="font-weight:600">Check call</span></button>
     <button onClick="{{ goIncident }}" style="background:#15161a;border:1px solid #26272c;border-radius:8px;padding:16px 14px;color:#e6e6e8;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:8px" style-hover="border-color:#8a8b91"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M12 18v-6M9 15h6"/></svg><span style="font-weight:600">Report</span></button>
     <button onClick="{{ goBriefDocs }}" style="background:#15161a;border:1px solid #26272c;border-radius:8px;padding:16px 14px;color:#e6e6e8;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:8px" style-hover="border-color:#8a8b91"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5z"/></svg><span style="font-weight:600">Site docs</span></button>
-    <button style="background:#15161a;border:1px solid #26272c;border-radius:8px;padding:16px 14px;color:#e6e6e8;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:8px" style-hover="border-color:#8a8b91"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span style="font-weight:600;display:flex;gap:6px;align-items:center">Messages<span style="width:6px;height:6px;border-radius:50%;background:#e10600"></span></span></button>
+    <button onClick="{{ goMessages }}" style="background:#15161a;border:1px solid #26272c;border-radius:8px;padding:16px 14px;color:#e6e6e8;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:8px" style-hover="border-color:#8a8b91"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span style="font-weight:600;display:flex;gap:6px;align-items:center">Messages<sc-if value="{{ msgUnread }}" hint-placeholder-val="{{ true }}"><span style="width:6px;height:6px;border-radius:50%;background:#e10600"></span></sc-if></span></button>
   </div>
   <div style="flex:1;min-height:16px"></div>
   <button onPointerDown="{{ sosDown }}" onPointerUp="{{ sosUp }}" onPointerLeave="{{ sosUp }}" onPointerCancel="{{ sosUp }}" onContextMenu="{{ noop }}" style="width:100%;background:{{ sosBg }};color:#fff;border:0;border-radius:8px;padding:18px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;user-select:none;-webkit-user-select:none;touch-action:none;position:relative;overflow:hidden">
@@ -89,55 +89,75 @@ input::placeholder,textarea::placeholder{color:#5b5c63}
 </div>
 </sc-if>
 
-<sc-if value="{{ isPatrol }}" hint-placeholder-val="{{ false }}">
-<div data-screen-label="Patrol route" style="flex:1;display:flex;flex-direction:column;padding:20px 20px 0;overflow:auto">
-  <div style="display:flex;justify-content:space-between;align-items:center"><button onClick="{{ goHome }}" style="background:none;border:0;color:#c9cacd;font-size:15px;cursor:pointer;padding:0">‹ Shift</button><span style="font-size:13px;color:#8a8b91">Night patrol</span></div>
-  <div style="margin-top:22px;display:flex;justify-content:space-between;align-items:flex-end"><div><div style="font-family:'Barlow Condensed';font-weight:700;font-size:34px;line-height:1">ROUTE B</div><div style="color:#8a8b91;font-size:14px;margin-top:4px">{{ scanned }} of 12 checkpoints</div></div><span style="font-family:'Barlow Condensed';font-weight:700;font-size:13px;letter-spacing:.1em;color:#2ecc71;border:1px solid rgba(46,204,113,.4);padding:4px 8px;border-radius:4px">ON TIME</span></div>
-  <div style="margin-top:8px;height:3px;background:#26272c;border-radius:2px"><div style="height:100%;width:{{ routePct }}%;background:#e10600;border-radius:2px"></div></div>
-  <div style="margin-top:18px;display:flex;flex-direction:column">
-    <sc-for list="{{ cps }}" as="c" hint-placeholder-count="8">
-      <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #1c1d21;color:{{ c.color }}">
-        <span style="display:flex;gap:12px;align-items:center"><span style="width:18px;text-align:center;font-family:'Barlow Condensed';font-weight:700">{{ c.mark }}</span><span style="font-weight:{{ c.weight }}">{{ c.name }}</span></span><span style="font-size:13px;font-variant-numeric:tabular-nums">{{ c.time }}</span>
+<sc-if value="{{ isPatrolHome }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Patrol home" style="flex:1;display:flex;flex-direction:column;padding:20px 20px 0;overflow:auto">
+  <div style="display:flex;justify-content:space-between;align-items:center"><img src="assets/logo-wordmark.png" alt="RESPONSE" style="height:22px;width:auto;display:block"><span style="font-size:14px;color:#c9cacd;font-variant-numeric:tabular-nums">{{ clockHM }}</span></div>
+  <div style="margin-top:22px;font-size:11px;letter-spacing:.2em;color:#8a8b91;text-transform:uppercase">Patrol</div>
+  <div style="font-family:'Barlow Condensed';font-weight:700;font-size:34px;line-height:1.05;letter-spacing:.02em">RIVERSIDE DC</div>
+  <div style="margin-top:22px;background:#15161a;border:1px solid #26272c;border-radius:8px;padding:16px">
+    <div style="font-size:11px;letter-spacing:.2em;color:#8a8b91;text-transform:uppercase">Assigned route</div>
+    <div style="font-family:'Barlow Condensed';font-weight:700;font-size:28px;margin-top:4px;line-height:1.1">{{ tgCardTitle }}</div>
+    <div style="font-size:13px;color:#8a8b91;margin-top:2px">{{ tgCardSub }}</div>
+    <button onClick="{{ goTaglessH }}" style="margin-top:14px;width:100%;background:#e6e6e8;color:#0b0b0c;border:0;border-radius:6px;padding:16px;font-family:'Barlow Condensed';font-weight:700;font-size:20px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer" style-hover="background:#fff" style-active="background:#c9cacd">Start patrol</button>
+  </div>
+  <button onClick="{{ openConfigure }}" style="margin-top:12px;background:#15161a;border:1px solid #26272c;border-radius:8px;padding:16px;color:#e6e6e8;text-align:left;cursor:pointer;display:flex;align-items:center;gap:14px;min-height:72px" style-hover="border-color:#8a8b91">
+    <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px">
+      <span style="font-family:'Barlow Condensed';font-weight:700;font-size:22px;letter-spacing:.04em;text-transform:uppercase;color:{{ cfgColor }}">Configure patrol</span>
+      <span style="font-size:13px;color:#8a8b91;display:flex;align-items:center;gap:6px"><sc-if value="{{ cfgAuthed }}" hint-placeholder-val="{{ false }}"><span style="width:7px;height:7px;border-radius:50%;background:#2ecc71;flex:none"></span></sc-if>{{ cfgSub }}</span>
+    </span>
+    <sc-if value="{{ cfgLocked }}" hint-placeholder-val="{{ true }}"><span style="width:40px;height:40px;flex:none;border-radius:50%;border:1px solid #3a3b42;display:grid;place-items:center;color:#8a8b91"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span></sc-if>
+    <sc-if value="{{ cfgAuthed }}" hint-placeholder-val="{{ false }}"><span style="flex:none;color:#8a8b91;font-size:22px">›</span></sc-if>
+  </button>
+  <div style="flex:1;min-height:16px"></div>
+  <button onPointerDown="{{ sosDown }}" onPointerUp="{{ sosUp }}" onPointerLeave="{{ sosUp }}" onPointerCancel="{{ sosUp }}" onContextMenu="{{ noop }}" style="width:100%;background:{{ sosBg }};color:#fff;border:0;border-radius:8px;padding:18px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;user-select:none;-webkit-user-select:none;touch-action:none;position:relative;overflow:hidden">
+    <span style="position:absolute;left:0;top:0;bottom:0;width:{{ sosPct }}%;background:rgba(255,255,255,.22);transition:width .1s linear"></span>
+    <span style="font-family:'Barlow Condensed';font-weight:800;font-size:28px;letter-spacing:.12em;position:relative">SOS</span><span style="font-size:13px;opacity:.85;position:relative">{{ sosHint }}</span>
+  </button>
+</div>
+</sc-if>
+
+<sc-if value="{{ showAuth }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Supervisor authorisation" style="position:absolute;inset:0;z-index:5;background:rgba(11,11,12,.7);backdrop-filter:blur(6px);display:flex;align-items:flex-end;padding:14px">
+  <div style="width:100%;background:#15161a;border:1px solid #26272c;border-radius:14px;padding:22px 20px;display:flex;flex-direction:column;gap:14px">
+    <div style="display:flex;gap:12px;align-items:center"><span style="width:40px;height:40px;flex:none;border-radius:50%;background:#26272c;display:grid;place-items:center;color:#e6e6e8"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span><div><div style="font-size:11px;letter-spacing:.2em;color:#8a8b91;text-transform:uppercase">Configure patrol</div><div style="font-family:'Barlow Condensed';font-weight:700;font-size:24px;line-height:1.1">Supervisor authorisation</div></div></div>
+    <div style="font-size:14px;color:#c9cacd;line-height:1.4;text-wrap:pretty">Changing a route changes what every officer walks on this site. A supervisor must approve it.</div>
+    <sc-if value="{{ supIdle }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <label style="font-size:12px;color:#8a8b91;letter-spacing:.08em;text-transform:uppercase">Supervisor PIN</label>
+        <div style="display:flex;gap:10px">
+          <input value="{{ supPin }}" onChange="{{ setSupPin }}" inputMode="numeric" type="password" maxLength="4" placeholder="••••" style="flex:1;min-width:0;background:#0b0b0c;border:1px solid #3a3b42;border-radius:6px;padding:14px;color:#e6e6e8;font-size:20px;letter-spacing:.4em;text-align:center;outline:none" style-focus="border-color:#e6e6e8">
+          <button onClick="{{ authPin }}" style="flex:none;background:#e6e6e8;color:#0b0b0c;border:0;border-radius:6px;padding:0 18px;font-family:'Barlow Condensed';font-weight:700;font-size:17px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer" style-hover="background:#fff">Authorise</button>
+        </div>
+        <sc-if value="{{ supErr }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;color:#ff5c52">{{ supErr }}</div></sc-if>
+        <div style="font-size:12px;color:#6b6c72">Demo PIN 2580</div>
+        <div style="display:flex;align-items:center;gap:10px;color:#6b6c72;font-size:12px"><span style="flex:1;height:1px;background:#26272c"></span>or<span style="flex:1;height:1px;background:#26272c"></span></div>
+        <button onClick="{{ authRequest }}" style="background:none;border:1px solid #3a3b42;border-radius:6px;padding:14px;color:#e6e6e8;font-size:15px;font-weight:600;cursor:pointer" style-hover="border-color:#8a8b91">Request from control room</button>
+      </div>
+    </sc-if>
+    <sc-if value="{{ supPending }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;align-items:center;gap:12px;padding:14px;border:1px solid #26272c;border-radius:6px"><span style="width:10px;height:10px;border-radius:50%;background:#f0a500;flex:none"></span><div><div style="font-weight:600">Waiting for control room…</div><div style="font-size:13px;color:#8a8b91">Request sent to the duty supervisor</div></div></div>
+    </sc-if>
+    <button onClick="{{ authClose }}" style="background:none;border:0;color:#8a8b91;font-size:15px;cursor:pointer;padding:6px">Cancel</button>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isMessages }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Messages" style="flex:1;display:flex;flex-direction:column;padding:20px 20px 12px;overflow:hidden;min-height:0">
+  <div style="display:flex;justify-content:space-between;align-items:center"><button onClick="{{ goHome }}" style="background:none;border:0;color:#c9cacd;font-size:15px;cursor:pointer;padding:0">‹ Home</button><span style="font-size:11px;letter-spacing:.2em;color:#8a8b91;text-transform:uppercase">Control room</span></div>
+  <div style="margin-top:18px;font-family:'Barlow Condensed';font-weight:700;font-size:34px;line-height:1">MESSAGES</div>
+  <div style="flex:1;min-height:0;overflow:auto;margin-top:14px;display:flex;flex-direction:column-reverse;gap:12px">
+    <sc-for list="{{ msgList }}" as="m" hint-placeholder-count="2">
+      <div style="align-self:{{ m.align }};max-width:84%;display:flex;flex-direction:column;gap:4px;align-items:{{ m.align }}">
+        <div style="background:{{ m.bg }};color:{{ m.color }};border:1px solid {{ m.border }};border-radius:10px;padding:10px 12px;font-size:15px;line-height:1.4;text-wrap:pretty">{{ m.text }}</div>
+        <span style="font-size:11px;color:#6b6c72">{{ m.meta }}</span>
       </div>
     </sc-for>
   </div>
-  <div style="position:sticky;bottom:0;padding:16px 0 16px;background:linear-gradient(transparent,#0b0b0c 30%)">
-    <button onClick="{{ goScan }}" style="width:100%;background:#e10600;color:#fff;border:0;border-radius:6px;padding:16px;font-family:'Barlow Condensed';font-weight:700;font-size:20px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer" style-hover="background:#ff1a10">Scan {{ nextCp }}</button>
+  <div style="margin-top:10px;display:flex;gap:8px">
+    <input value="{{ msgDraft }}" onChange="{{ setMsgDraft }}" onKeyDown="{{ msgKey }}" placeholder="Message control room" style="flex:1;min-width:0;background:#15161a;border:1px solid #26272c;border-radius:6px;padding:13px 14px;color:#e6e6e8;font-size:16px;outline:none" style-focus="border-color:#e6e6e8">
+    <button onClick="{{ sendMsg }}" style="flex:none;background:#e10600;color:#fff;border:0;border-radius:6px;padding:0 16px;font-family:'Barlow Condensed';font-weight:700;font-size:17px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer" style-hover="background:#ff1a10">Send</button>
   </div>
-</div>
-</sc-if>
-
-<sc-if value="{{ isScan }}" hint-placeholder-val="{{ false }}">
-<div data-screen-label="NFC scan" style="flex:1;display:flex;flex-direction:column;padding:20px 24px 28px;align-items:center;text-align:center">
-  <div style="width:100%;display:flex;justify-content:space-between"><button onClick="{{ goPatrol }}" style="background:none;border:0;color:#c9cacd;font-size:15px;cursor:pointer;padding:0">‹ Route</button><span style="font-size:13px;color:#8a8b91">{{ clockHMS }}</span></div>
-  <div style="flex:1"></div>
-  <div style="font-size:11px;letter-spacing:.22em;color:#8a8b91;text-transform:uppercase">Ready to scan</div>
-  <button onClick="{{ doScan }}" style="margin-top:28px;width:180px;height:180px;border-radius:50%;background:#15161a;border:1px solid #26272c;color:#e6e6e8;cursor:pointer;position:relative;display:grid;place-items:center" style-hover="border-color:#e10600">
-    {{ pulse }}
-    <span style="font-family:'Barlow Condensed';font-weight:800;font-size:44px;letter-spacing:.1em;position:relative">NFC</span>
-  </button>
-  <div style="margin-top:28px;font-family:'Barlow Condensed';font-weight:600;font-size:24px;line-height:1.15">Hold the top of your phone<br>to the tag</div>
-  <div style="margin-top:8px;color:#8a8b91;font-size:14px">{{ nextCp }} · Tag {{ tagId }}</div>
-  <div style="color:#5b5c63;font-size:12px;margin-top:6px">Tap the ring to simulate a tag read</div>
-  <div style="flex:1"></div>
-  <button onClick="{{ doScan }}" style="width:100%;background:transparent;color:#c9cacd;border:1px solid #26272c;border-radius:6px;padding:14px;font-size:15px;cursor:pointer" style-hover="border-color:#8a8b91">Scan QR code instead</button>
-  <button style="margin-top:12px;background:none;border:0;color:#8a8b91;font-size:14px;cursor:pointer">Tag damaged? Report it</button>
-</div>
-</sc-if>
-
-<sc-if value="{{ isLogged }}" hint-placeholder-val="{{ false }}">
-<div data-screen-label="Checkpoint logged" style="flex:1;display:flex;flex-direction:column;padding:28px 20px 24px;overflow:auto">
-  <div style="display:flex;gap:14px;align-items:center"><span style="width:44px;height:44px;border-radius:50%;background:#2ecc71;display:grid;place-items:center;color:#0b0b0c;font-weight:800;font-size:22px">✓</span><div><div style="font-family:'Barlow Condensed';font-weight:700;font-size:26px;line-height:1">CHECKPOINT LOGGED</div><div style="color:#8a8b91;font-size:13px;margin-top:4px">{{ loggedAt }} · GPS ±4 m · {{ loggedName }}</div></div></div>
-  <div style="margin-top:28px;font-size:11px;letter-spacing:.2em;color:#8a8b91;text-transform:uppercase">{{ loggedName }} · Tasks</div>
-  <div style="margin-top:10px;display:flex;flex-direction:column;gap:8px">
-    <sc-for list="{{ tasks }}" as="t" hint-placeholder-count="3">
-      <button onClick="{{ t.toggle }}" style="display:flex;justify-content:space-between;align-items:center;text-align:left;background:#15161a;border:1px solid #26272c;border-radius:6px;padding:14px 16px;color:#e6e6e8;cursor:pointer;font-size:15px" style-hover="border-color:#8a8b91"><span>{{ t.name }}</span><span style="font-family:'Barlow Condensed';font-weight:700;color:{{ t.color }}">{{ t.mark }}</span></button>
-    </sc-for>
-  </div>
-  <div style="margin-top:24px;font-size:11px;letter-spacing:.2em;color:#8a8b91;text-transform:uppercase">Add photo or note (optional)</div>
-  <div style="margin-top:10px;display:flex;gap:10px"><button style="width:64px;height:64px;border:1px dashed #3a3b42;border-radius:6px;background:none;color:#8a8b91;font-size:26px;cursor:pointer" style-hover="border-color:#8a8b91">+</button><textarea placeholder="Note…" style="flex:1;background:#15161a;border:1px solid #26272c;border-radius:6px;color:#e6e6e8;padding:10px 12px;font-size:14px;resize:none;outline:none" style-focus="border-color:#e10600"></textarea></div>
-  <div style="flex:1;min-height:20px"></div>
-  <button onClick="{{ nextCheckpoint }}" style="width:100%;background:#e6e6e8;color:#0b0b0c;border:0;border-radius:6px;padding:16px;font-family:'Barlow Condensed';font-weight:700;font-size:20px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer" style-hover="background:#fff">Next: {{ nextCp }} ›</button>
 </div>
 </sc-if>
 
@@ -181,9 +201,322 @@ input::placeholder,textarea::placeholder{color:#5b5c63}
     <div style="display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid #1c1d21"><span>Training and certificates</span><span style="color:#8a8b91">3 ›</span></div>
     <div style="display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid #1c1d21"><span>Request holiday</span><span style="color:#8a8b91">›</span></div>
     <div style="display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid #1c1d21"><span>Payslips</span><span style="color:#8a8b91">›</span></div>
+    <button onClick="{{ openConfigure }}" style="display:flex;justify-content:space-between;padding:14px 0;background:none;border:0;border-bottom:1px solid #1c1d21;color:#e6e6e8;font-size:16px;cursor:pointer;text-align:left"><span>Set up a tagless route</span><span style="color:#8a8b91">›</span></button>
     <button onClick="{{ signOut }}" style="display:flex;justify-content:space-between;padding:14px 0;background:none;border:0;color:#ff5c52;font-size:16px;cursor:pointer;text-align:left">Sign out</button>
   </div>
   <div style="height:16px"></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isCfgSite }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Configure · choose site" style="flex:1;display:flex;flex-direction:column;padding:20px;overflow:auto">
+  <div style="display:flex;justify-content:space-between;align-items:center"><button onClick="{{ goPatrolHome }}" style="background:none;border:0;color:#c9cacd;font-size:15px;cursor:pointer;padding:0">‹ Patrol</button><span style="font-size:11px;letter-spacing:.2em;color:#8a8b91;text-transform:uppercase">Step 1 of 3</span></div>
+  <div style="margin-top:20px;font-family:'Barlow Condensed';font-weight:700;font-size:34px;line-height:1">CHOOSE SITE</div>
+  <div style="color:#8a8b91;font-size:14px;margin-top:4px">Which site is this patrol for?</div>
+  <sc-if value="{{ cfgHasSites }}" hint-placeholder-val="{{ true }}">
+    <div style="margin-top:18px;display:flex;flex-direction:column;gap:8px">
+      <sc-for list="{{ cfgSites }}" as="si" hint-placeholder-count="4">
+        <button onClick="{{ si.pick }}" style="background:#15161a;border:1px solid #26272c;border-radius:8px;padding:14px 16px;color:#e6e6e8;text-align:left;cursor:pointer;display:flex;align-items:center;gap:12px;min-height:64px" style-hover="border-color:#8a8b91">
+          <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px"><span style="font-size:16px;font-weight:600">{{ si.name }}</span><span style="font-size:13px;color:#8a8b91">{{ si.addr }}</span></span>
+          <span style="flex:none;font-size:12px;color:#8a8b91">{{ si.count }}</span><span style="flex:none;color:#8a8b91;font-size:20px">›</span>
+        </button>
+      </sc-for>
+    </div>
+    <div style="flex:1;min-height:16px"></div>
+    <button onClick="{{ goAddSite }}" style="width:100%;background:transparent;color:#e6e6e8;border:1px solid #3a3b42;border-radius:6px;padding:14px;font-family:'Barlow Condensed';font-weight:700;font-size:18px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer" style-hover="border-color:#8a8b91">+ Add site</button>
+  </sc-if>
+  <sc-if value="{{ cfgNoSites }}" hint-placeholder-val="{{ false }}">
+    <div style="margin-top:18px;border:1px dashed #3a3b42;border-radius:8px;padding:22px 18px;display:flex;flex-direction:column;gap:6px"><div style="font-family:'Barlow Condensed';font-weight:700;font-size:22px">No sites yet</div><div style="font-size:14px;color:#8a8b91;line-height:1.4">Add the site you're standing at, then build its first patrol.</div></div>
+    <div style="flex:1;min-height:16px"></div>
+    <button onClick="{{ goAddSite }}" style="width:100%;background:#e10600;color:#fff;border:0;border-radius:6px;padding:16px;font-family:'Barlow Condensed';font-weight:700;font-size:20px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer" style-hover="background:#ff1a10">Add site</button>
+  </sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ isCfgAddSite }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Configure · add site" style="flex:1;display:flex;flex-direction:column;padding:20px;overflow:auto">
+  <div style="display:flex;justify-content:space-between;align-items:center"><button onClick="{{ goSites }}" style="background:none;border:0;color:#c9cacd;font-size:15px;cursor:pointer;padding:0">‹ Sites</button><span style="font-size:11px;letter-spacing:.2em;color:#8a8b91;text-transform:uppercase">Step 1 of 3</span></div>
+  <div style="margin-top:20px;font-family:'Barlow Condensed';font-weight:700;font-size:34px;line-height:1">ADD SITE</div>
+  <div style="color:#8a8b91;font-size:14px;margin-top:4px">Add it once. Every patrol for the site lives under it.</div>
+  <div style="margin-top:20px;display:flex;flex-direction:column;gap:16px">
+    <label style="display:flex;flex-direction:column;gap:8px"><span style="font-size:11px;letter-spacing:.2em;color:#8a8b91;text-transform:uppercase">Site name</span><input value="{{ cfgAddName }}" onChange="{{ setAddName }}" placeholder="As the client knows it" style="width:100%;background:#15161a;border:1px solid #26272c;border-radius:6px;padding:14px;color:#e6e6e8;font-size:16px;outline:none" style-focus="border-color:#e6e6e8"></label>
+    <label style="display:flex;flex-direction:column;gap:8px"><span style="font-size:11px;letter-spacing:.2em;color:#8a8b91;text-transform:uppercase">Address or postcode</span><input value="{{ cfgAddAddr }}" onChange="{{ setAddAddr }}" placeholder="Street, town, postcode" style="width:100%;background:#15161a;border:1px solid #26272c;border-radius:6px;padding:14px;color:#e6e6e8;font-size:16px;outline:none" style-focus="border-color:#e6e6e8"></label>
+    <div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:11px;letter-spacing:.2em;color:#8a8b91;text-transform:uppercase">Location</span><div style="display:flex;align-items:center;gap:12px;background:#15161a;border:1px solid #26272c;border-radius:6px;padding:12px 14px"><span style="width:8px;height:8px;border-radius:50%;background:{{ cfgLocColor }};flex:none"></span><span style="flex:1;min-width:0;font-size:14px;color:#c9cacd">{{ cfgLocLabel }}</span><button onClick="{{ useLoc }}" style="flex:none;background:none;border:1px solid #3a3b42;border-radius:4px;color:#e6e6e8;font-size:13px;font-weight:600;padding:8px 10px;cursor:pointer" style-hover="border-color:#8a8b91">{{ cfgLocBtn }}</button></div></div>
+  </div>
+  <div style="flex:1;min-height:16px"></div>
+  <button onClick="{{ saveSite }}" style="width:100%;background:#e10600;color:#fff;border:0;border-radius:6px;padding:16px;font-family:'Barlow Condensed';font-weight:700;font-size:20px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;opacity:{{ cfgAddOpacity }}" style-hover="background:#ff1a10">Add site</button>
+</div>
+</sc-if>
+
+<sc-if value="{{ isCfgPatrol }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Configure · name patrol" style="flex:1;display:flex;flex-direction:column;padding:20px;overflow:auto">
+  <div style="display:flex;justify-content:space-between;align-items:center"><button onClick="{{ goSites }}" style="background:none;border:0;color:#c9cacd;font-size:15px;cursor:pointer;padding:0">‹ Sites</button><span style="font-size:11px;letter-spacing:.2em;color:#8a8b91;text-transform:uppercase">Step 2 of 3</span></div>
+  <div style="margin-top:20px;font-family:'Barlow Condensed';font-weight:700;font-size:34px;line-height:1">NAME THE PATROL</div>
+  <div style="color:#8a8b91;font-size:14px;margin-top:4px">{{ cfgBeginSite }}</div>
+  <sc-if value="{{ cfgHasPatrols }}" hint-placeholder-val="{{ false }}">
+    <div style="margin-top:20px;font-size:11px;letter-spacing:.2em;color:#8a8b91;text-transform:uppercase">On this site</div>
+    <div style="margin-top:8px;display:flex;flex-direction:column;gap:8px">
+      <sc-for list="{{ cfgPatrols }}" as="pt" hint-placeholder-count="1">
+        <button onClick="{{ pt.pick }}" style="background:#15161a;border:1px solid #26272c;border-radius:8px;padding:14px 16px;color:#e6e6e8;text-align:left;cursor:pointer;display:flex;align-items:center;gap:12px;min-height:64px" style-hover="border-color:#8a8b91"><span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px"><span style="font-size:16px;font-weight:600">{{ pt.name }}</span><span style="font-size:13px;color:#8a8b91">{{ pt.meta }}</span></span><span style="flex:none;font-size:13px;font-weight:600;color:#c9cacd">Re-record ›</span></button>
+      </sc-for>
+    </div>
+  </sc-if>
+  <div style="margin-top:22px;font-size:11px;letter-spacing:.2em;color:#8a8b91;text-transform:uppercase">New patrol</div>
+  <input value="{{ cfgNewName }}" onChange="{{ setNewName }}" placeholder="Name this patrol" style="margin-top:8px;width:100%;background:#15161a;border:1px solid #26272c;border-radius:6px;padding:14px;color:#e6e6e8;font-size:16px;outline:none" style-focus="border-color:#e6e6e8">
+  <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
+    <sc-for list="{{ cfgChips }}" as="ch" hint-placeholder-count="5"><button onClick="{{ ch.pick }}" style="border:1px solid #3a3b42;background:#15161a;color:#c9cacd;border-radius:20px;padding:8px 14px;font-size:14px;cursor:pointer" style-hover="border-color:#8a8b91">{{ ch.label }}</button></sc-for>
+  </div>
+  <sc-if value="{{ cfgNameErr }}" hint-placeholder-val="{{ false }}"><div style="margin-top:10px;font-size:13px;color:#ff5c52">{{ cfgNameErr }}</div></sc-if>
+  <div style="flex:1;min-height:16px"></div>
+  <button onClick="{{ cfgContinue }}" style="width:100%;background:#e10600;color:#fff;border:0;border-radius:6px;padding:16px;font-family:'Barlow Condensed';font-weight:700;font-size:20px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;opacity:{{ cfgNameOpacity }}" style-hover="background:#ff1a10">Continue</button>
+</div>
+</sc-if>
+
+<sc-if value="{{ isCfgBegin }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Configure · begin route design" style="flex:1;display:flex;flex-direction:column;padding:20px;overflow:auto">
+  <div style="display:flex;justify-content:space-between;align-items:center"><button onClick="{{ goCfgPatrol }}" style="background:none;border:0;color:#c9cacd;font-size:15px;cursor:pointer;padding:0">‹ Patrol name</button><span style="font-size:11px;letter-spacing:.2em;color:#8a8b91;text-transform:uppercase">Step 3 of 3</span></div>
+  <div style="margin-top:20px;font-family:'Barlow Condensed';font-weight:700;font-size:34px;line-height:1">{{ cfgBeginTitle }}</div>
+  <div style="color:#8a8b91;font-size:14px;margin-top:4px">{{ cfgBeginSite }}</div>
+  <sc-if value="{{ cfgRe }}" hint-placeholder-val="{{ false }}"><div style="margin-top:12px;font-size:13px;color:#e6a100;line-height:1.4">Re-recording. The live route keeps running until you publish the new one.</div></sc-if>
+  <div style="margin-top:22px;font-size:11px;letter-spacing:.2em;color:#8a8b91;text-transform:uppercase">Starting floor</div>
+  <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:8px">
+    <sc-for list="{{ cfgFloors }}" as="fl" hint-placeholder-count="3"><button onClick="{{ fl.pick }}" style="border:1px solid {{ fl.border }};background:{{ fl.bg }};color:{{ fl.color }};border-radius:6px;padding:10px 14px;font-size:15px;font-weight:600;cursor:pointer;min-height:44px">{{ fl.label }}</button></sc-for>
+  </div>
+  <div style="margin-top:8px;font-size:13px;color:#8a8b91;line-height:1.4;text-wrap:pretty">The barometer zeroes here. After that the floor changes on its own when you climb, or when you say "first floor".</div>
+  <div style="margin-top:20px;background:#15161a;border:1px solid #26272c;border-radius:8px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e6e6e8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:1px"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"></path><circle cx="12" cy="10" r="3"></circle></svg><div><div style="font-weight:600">Stand at the start point</div><div style="font-size:13px;color:#8a8b91;margin-top:3px;line-height:1.4">Usually the gatehouse or main entrance. The route is tracked from the phone's movement from here.</div></div></div>
+  <div style="margin-top:20px;font-size:11px;letter-spacing:.2em;color:#8a8b91;text-transform:uppercase">Sensors</div>
+  <div style="margin-top:4px;display:flex;flex-direction:column">
+    <sc-for list="{{ cfgSensors }}" as="sn" hint-placeholder-count="4"><div style="display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid #1c1d21"><span style="flex:1;min-width:0"><span style="display:block;font-size:15px">{{ sn.label }}</span><span style="display:block;font-size:12px;color:#8a8b91;margin-top:2px">{{ sn.sub }}</span></span><span style="flex:none;font-size:12px;font-weight:600;color:{{ sn.color }}">{{ sn.state }}</span></div></sc-for>
+  </div>
+  <div style="flex:1;min-height:16px"></div>
+  <button onClick="{{ beginDesign }}" style="width:100%;background:#e10600;color:#fff;border:0;border-radius:6px;padding:16px;font-family:'Barlow Condensed';font-weight:700;font-size:20px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer" style-hover="background:#ff1a10">Begin route design</button>
+</div>
+</sc-if>
+
+<sc-if value="{{ isRsWalk }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Route setup · walk" style="flex:1;display:flex;flex-direction:column;padding:20px;overflow:auto;position:relative">
+  <div style="display:flex;justify-content:space-between;align-items:center"><button onClick="{{ rsExit }}" style="background:none;border:0;color:#c9cacd;font-size:15px;cursor:pointer;padding:0">‹ Exit</button><span style="font-size:11px;letter-spacing:.2em;color:#8a8b91;text-transform:uppercase;display:flex;align-items:center;gap:6px"><span style="width:7px;height:7px;border-radius:50%;background:#e10600"></span>Recording route</span></div>
+  <div style="margin-top:14px;font-family:'Barlow Condensed';font-weight:700;font-size:28px;line-height:1">{{ rsTitle }}</div>
+  <div style="color:#8a8b91;font-size:14px;margin-top:4px;margin-top:2px">{{ rsSiteName }}</div>
+  <div style="margin-top:12px;position:relative;width:100%;aspect-ratio:4/3;border-radius:8px;overflow:hidden;background-color:#0f1013;border:1px solid #26272c;background-image:linear-gradient(#1a1b1f 1px,transparent 1px),linear-gradient(90deg,#1a1b1f 1px,transparent 1px);background-size:24px 24px">
+    <svg viewBox="0 0 100 75" style="position:absolute;inset:0;width:100%;height:100%"><polyline points="{{ rsOther }}" fill="none" stroke="#3a3b42" stroke-width="0.7" stroke-dasharray="1.4 1.4" stroke-linecap="round" stroke-linejoin="round"></polyline><polyline points="{{ rsPath }}" fill="none" stroke="#e10600" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"></polyline></svg>
+    <sc-if value="{{ rsShowStart }}" hint-placeholder-val="{{ true }}"><span style="position:absolute;left:{{ rsStartX }}%;top:{{ rsStartY }}%;transform:translate(-50%,-50%);width:20px;height:20px;border-radius:3px;background:#e6e6e8;color:#0b0b0c;font-size:11px;font-weight:700;display:grid;place-items:center">S</span></sc-if>
+    <sc-for list="{{ rsPins }}" as="pn" hint-placeholder-count="0"><span style="position:absolute;left:{{ pn.x }}%;top:{{ pn.y }}%;transform:translate(-50%,-50%);width:22px;height:22px;border-radius:50%;background:#0b0b0c;border:2px solid #e6e6e8;color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center">{{ pn.num }}</span></sc-for>
+    <span style="position:absolute;left:{{ rsYouX }}%;top:{{ rsYouY }}%;width:0;height:0"><span style="position:absolute;left:-5px;top:-21px;width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-bottom:9px solid #fff;transform-origin:5px 21px;transform:rotate({{ rsHeadDeg }}deg)"></span><span style="position:absolute;left:-8px;top:-8px;width:16px;height:16px;border-radius:50%;background:#e10600;border:2px solid #fff;box-shadow:0 0 0 6px rgba(225,6,0,.22)"></span></span>
+    <div style="position:absolute;left:8px;top:8px;display:flex;gap:6px"><span style="background:rgba(0,0,0,.6);color:#e6e6e8;font-size:12px;padding:4px 8px;border-radius:4px;font-variant-numeric:tabular-nums;display:flex;align-items:center;gap:6px">{{ rsElapsed }}</span><span style="background:rgba(0,0,0,.6);color:#e6e6e8;font-size:12px;padding:4px 8px;border-radius:4px;font-variant-numeric:tabular-nums;display:flex;align-items:center;gap:6px">{{ rsWalked }}</span></div>
+    <div style="position:absolute;left:8px;bottom:8px"><span style="background:rgba(0,0,0,.6);color:#e6e6e8;font-size:12px;padding:4px 8px;border-radius:4px;font-variant-numeric:tabular-nums;display:flex;align-items:center;gap:6px"><span style="width:7px;height:7px;border-radius:50%;background:{{ rsTrackDot }}"></span>{{ rsTrackLabel }}</span></div>
+    <span style="position:absolute;right:10px;bottom:8px;font-size:11px;font-weight:700;color:#8a8b91">N ↑</span>
+  </div>
+  <div style="margin-top:10px;background:#15161a;border:1px solid #26272c;border-radius:8px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;gap:12px">
+    <div style="min-width:0"><div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:'Barlow Condensed';font-weight:700;font-size:24px;line-height:1">{{ rsFloorLabel }}</span><span style="font-size:13px;color:#8a8b91">{{ rsAlt }} m</span></div><div style="font-size:12px;color:#8a8b91;margin-top:4px">{{ rsFloorSrc }}</div></div>
+    <button onClick="{{ toggleFloorFix }}" style="flex:none;background:none;border:1px solid #3a3b42;border-radius:4px;color:#c9cacd;font-size:12px;padding:8px 10px;cursor:pointer" style-hover="border-color:#8a8b91">Wrong floor?</button>
+  </div>
+  <sc-if value="{{ rsFloorFix }}" hint-placeholder-val="{{ false }}"><div style="margin-top:8px;display:flex;gap:6px;align-items:center"><span style="font-size:12px;color:#8a8b91;margin-right:4px">Set floor</span><sc-for list="{{ rsFloors }}" as="fl" hint-placeholder-count="3"><button onClick="{{ fl.pick }}" style="width:44px;height:44px;border-radius:6px;border:1px solid #3a3b42;background:{{ fl.bg }};color:{{ fl.color }};font-family:'Barlow Condensed';font-weight:700;font-size:18px;cursor:pointer">{{ fl.label }}</button></sc-for></div></sc-if>
+  <sc-if value="{{ rsToastOn }}" hint-placeholder-val="{{ false }}"><div style="margin-top:8px;border:1px solid #2ecc71;border-radius:6px;padding:10px 12px;font-size:13px;color:#e6e6e8;display:flex;gap:8px;align-items:center"><span style="width:7px;height:7px;border-radius:50%;background:#2ecc71;flex:none"></span>{{ rsToast }}</div></sc-if>
+  <button onClick="{{ toggleNarr }}" style="margin-top:10px;background:#15161a;border:1px solid #26272c;border-radius:8px;padding:12px 16px;color:#e6e6e8;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:6px" style-hover="border-color:#8a8b91">
+    <span style="display:flex;gap:8px;align-items:center;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:{{ rsNarrColor }}"><span style="width:8px;height:8px;border-radius:50%;background:{{ rsNarrDot }}"></span>{{ rsNarrLabel }}</span>
+    <span style="font-size:15px;line-height:1.4;color:#c9cacd;font-style:italic">{{ rsQuote }}</span>
+  </button>
+  <div style="flex:1;min-height:14px"></div>
+  <button onClick="{{ markCp }}" style="width:100%;background:#e10600;color:#fff;border:0;border-radius:6px;padding:16px;font-family:'Barlow Condensed';font-weight:700;font-size:20px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer" style-hover="background:#ff1a10">Mark checkpoint {{ rsNextN }}</button>
+  <div style="margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <button onClick="{{ openUndo }}" style="width:100%;background:transparent;color:#e6e6e8;border:1px solid #3a3b42;border-radius:6px;padding:14px;font-family:'Barlow Condensed';font-weight:700;font-size:18px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;font-size:16px;padding:13px 8px" style-hover="border-color:#8a8b91">↺ {{ rsUndoBtn }}</button>
+    <button onClick="{{ finishRoute }}" disabled="{{ finishDisabled }}" style="width:100%;background:transparent;color:#e6e6e8;border:1px solid #3a3b42;border-radius:6px;padding:14px;font-family:'Barlow Condensed';font-weight:700;font-size:18px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;font-size:16px;padding:13px 8px;opacity:{{ finishOpacity }}" style-hover="border-color:#8a8b91">Finish route</button>
+  </div>
+  <sc-if value="{{ rsUndoOpen }}" hint-placeholder-val="{{ false }}">
+  <div data-screen-label="Route setup · go back" style="position:absolute;inset:0;z-index:5;background:rgba(11,11,12,.7);backdrop-filter:blur(6px);display:flex;align-items:flex-end;padding:14px">
+    <div style="width:100%;background:#15161a;border:1px solid #26272c;border-radius:14px;padding:22px 20px;display:flex;flex-direction:column;gap:12px">
+      <div style="font-size:11px;letter-spacing:.2em;color:#8a8b91;text-transform:uppercase">Route setup</div>
+      <div style="font-family:'Barlow Condensed';font-weight:700;font-size:26px;line-height:1;margin-top:-6px">Go back</div>
+      <sc-for list="{{ rsUndoOpts }}" as="uo" hint-placeholder-count="2"><button onClick="{{ uo.act }}" style="background:#0b0b0c;border:1px solid #3a3b42;border-radius:8px;padding:14px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:4px" style-hover="border-color:#8a8b91"><span style="font-size:15px;font-weight:600;color:{{ uo.color }}">{{ uo.title }}</span><span style="font-size:13px;color:#8a8b91;line-height:1.4">{{ uo.sub }}</span></button></sc-for>
+      <button onClick="{{ closeUndo }}" style="background:none;border:0;color:#8a8b91;font-size:15px;cursor:pointer;padding:6px">Cancel</button>
+    </div>
+  </div>
+  </sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ isRsCapture }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Route setup · checkpoint" style="flex:1;display:flex;flex-direction:column;padding:20px 20px 20px;overflow:auto">
+  <div style="display:flex;justify-content:space-between;align-items:center"><button onClick="{{ capBack }}" style="background:none;border:0;color:#c9cacd;font-size:15px;cursor:pointer;padding:0">‹ Walk</button><span style="font-size:11px;letter-spacing:.2em;color:#8a8b91;text-transform:uppercase">Route setup</span></div>
+  <div style="margin-top:18px;font-family:'Barlow Condensed';font-weight:700;font-size:32px;line-height:1">CHECKPOINT {{ capN }}</div>
+  <div style="color:#8a8b91;font-size:13px;margin-top:4px">Captured {{ capTime }} · position, floor, photo and voice</div>
+  <div style="margin-top:16px;position:relative;width:100%;aspect-ratio:4/3;border-radius:8px;overflow:hidden;background:#15161a;border:1px solid #26272c">
+    <sc-if value="{{ capLive }}" hint-placeholder-val="{{ false }}"><video ref="{{ videoRef }}" autoPlay="{{ true }}" muted="{{ true }}" playsInline="{{ true }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></video></sc-if>
+    <sc-if value="{{ capHasPhoto }}" hint-placeholder-val="{{ false }}"><div role="img" aria-label="Reference photo" style="position:absolute;inset:0;background:center/cover no-repeat url({{ capPhoto }})"></div></sc-if>
+    <sc-if value="{{ capNoCam }}" hint-placeholder-val="{{ true }}"><div style="position:absolute;inset:0;background:#15161a center/cover no-repeat url({{ capSample }})"></div><span style="position:absolute;right:10px;top:10px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;background:rgba(0,0,0,.65);padding:2px 7px;border-radius:3px;color:#c9cacd">Sample photo</span></sc-if>
+    <span style="position:absolute;left:10px;top:10px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;background:rgba(0,0,0,.6);color:#e6e6e8;padding:3px 8px;border-radius:3px">Reference photo</span>
+    <button onClick="{{ capShutter }}" style="position:absolute;right:10px;bottom:10px;background:rgba(0,0,0,.65);color:#fff;border:1px solid rgba(255,255,255,.35);border-radius:20px;padding:6px 14px;font-size:13px;font-weight:600;cursor:pointer">{{ capShutterLabel }}</button>
+  </div>
+  <div style="margin-top:14px;display:flex;flex-direction:column">
+    <label style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #1c1d21"><span style="color:#8a8b91;font-size:14px">Name</span><input value="{{ capName }}" onChange="{{ setCapName }}" placeholder="Name this checkpoint" style="flex:1;text-align:right;background:none;border:0;color:#e6e6e8;font-size:15px;font-weight:600;outline:none;min-width:0"></label>
+    <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #1c1d21;font-size:14px"><span style="color:#8a8b91">Floor</span><span>{{ capFloor }} · auto from barometer</span></div>
+    <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #1c1d21;font-size:14px"><span style="color:#8a8b91">Position</span><span>{{ capPos }}</span></div>
+  </div>
+  <div style="margin-top:16px;font-size:11px;letter-spacing:.2em;color:#8a8b91;text-transform:uppercase">You said</div>
+  <textarea value="{{ capText }}" onChange="{{ setCapText }}" rows="3" style="margin-top:8px;width:100%;background:#15161a;border:1px solid #26272c;border-radius:6px;color:#e6e6e8;padding:12px 14px;font-size:15px;line-height:1.4;font-style:italic;resize:vertical;outline:none" style-focus="border-color:#e10600"></textarea>
+  <div style="margin-top:16px;display:flex;justify-content:space-between;align-items:center"><span style="font-size:11px;letter-spacing:.2em;color:#ff5c52;text-transform:uppercase">{{ capAiLabel }}</span>{{ capSpinner }}</div>
+  <div style="margin-top:8px;display:flex;flex-direction:column;gap:8px">
+    <sc-for list="{{ capTasks }}" as="t" hint-placeholder-count="2">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;background:#15161a;border:1px solid #26272c;border-radius:6px;padding:12px 14px"><span style="font-size:15px">{{ t.q }}</span><span style="display:flex;gap:10px;align-items:center;flex:none"><span style="font-family:'Barlow Condensed';font-weight:700;font-size:13px;letter-spacing:.06em;color:#8a8b91">{{ t.type }}</span><button onClick="{{ t.remove }}" aria-label="Remove task" style="background:none;border:0;color:#5b5c63;font-size:18px;cursor:pointer;padding:0 2px">×</button></span></div>
+    </sc-for>
+  </div>
+  <div style="flex:1;min-height:16px"></div>
+  <div style="display:grid;grid-template-columns:1fr 2fr;gap:8px">
+    <button onClick="{{ capRedo }}" style="background:transparent;color:#e6e6e8;border:1px solid #3a3b42;border-radius:6px;padding:14px;font-family:'Barlow Condensed';font-weight:700;font-size:18px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer" style-hover="border-color:#8a8b91">Redo</button>
+    <button onClick="{{ capSave }}" style="background:#e10600;color:#fff;border:0;border-radius:6px;padding:14px;font-family:'Barlow Condensed';font-weight:700;font-size:18px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer" style-hover="background:#ff1a10">Save and keep walking</button>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isRsBuilt }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Route setup · built" style="flex:1;display:flex;flex-direction:column;padding:20px 20px 20px;overflow:auto">
+  <div style="display:flex;justify-content:space-between;align-items:center"><button onClick="{{ keepWalking }}" style="background:none;border:0;color:#c9cacd;font-size:15px;cursor:pointer;padding:0">‹ Keep walking</button><span style="font-size:11px;letter-spacing:.2em;color:#8a8b91;text-transform:uppercase">Route setup</span></div>
+  <div style="margin-top:18px;font-family:'Barlow Condensed';font-weight:700;font-size:34px;line-height:1">ROUTE BUILT</div>
+  <div style="color:#8a8b91;font-size:14px;margin-top:4px">{{ bStats }}</div>
+  <div style="margin-top:16px;display:flex;gap:18px;border-bottom:1px solid #1c1d21">
+    <sc-for list="{{ bFloors }}" as="bf" hint-placeholder-count="3"><button onClick="{{ bf.pick }}" style="background:none;border:0;border-bottom:2px solid {{ bf.bar }};color:{{ bf.color }};padding:8px 0;font-family:'Barlow Condensed';font-weight:700;font-size:15px;letter-spacing:.08em;cursor:pointer;margin-bottom:-1px">{{ bf.label }}</button></sc-for>
+  </div>
+  <div style="margin-top:12px;position:relative;width:100%;aspect-ratio:10/7;background:#111215;border:1px solid #26272c;border-radius:8px;overflow:hidden">
+    <sc-for list="{{ bRooms }}" as="r" hint-placeholder-count="4"><div style="position:absolute;left:{{ r.x }}%;top:{{ r.y }}%;width:{{ r.w }}%;height:{{ r.h }}%;border:1px solid #3a3b42;background:#16171b center/cover no-repeat url({{ r.photo }});border-radius:3px;overflow:hidden"><div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,11,12,.25) 0%,rgba(11,11,12,.6) 100%)"></div><span style="position:relative;display:inline-block;margin:4px;padding:1px 5px;border-radius:2px;background:rgba(0,0,0,.7);font-size:10px;color:#e6e6e8">{{ r.n }}</span></div></sc-for>
+    <div style="position:absolute;left:2%;top:48%;width:96%;height:10%;background:#1d1e23;border-top:1px solid #2c2d33;border-bottom:1px solid #2c2d33;display:flex;align-items:center;padding-left:8px;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:#55565d">Corridor</div>
+    <svg viewBox="0 0 100 70" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%"><polyline points="{{ bRoute }}" fill="none" stroke="#e10600" stroke-width="2" stroke-dasharray="5 4" vector-effect="non-scaling-stroke"></polyline></svg>
+    <sc-for list="{{ bPts }}" as="p" hint-placeholder-count="3"><div style="position:absolute;left:{{ p.x }}%;top:{{ p.y }}%;transform:translate(-50%,-50%);width:24px;height:24px;border-radius:50%;background:{{ p.bg }};border:2px {{ p.bstyle }} {{ p.border }};color:{{ p.color }};display:grid;place-items:center;font-family:'Barlow Condensed';font-weight:700;font-size:12px">{{ p.num }}</div></sc-for>
+  </div>
+  <div style="margin-top:12px;display:flex;flex-direction:column">
+    <sc-for list="{{ bList }}" as="b" hint-placeholder-count="3"><div style="display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid #1c1d21;font-size:15px"><span style="display:flex;gap:12px"><span style="font-family:'Barlow Condensed';font-weight:700;color:#8a8b91;width:20px">{{ b.num }}</span>{{ b.name }}</span><span style="color:#8a8b91;font-size:13px">{{ b.tasks }}</span></div></sc-for>
+  </div>
+  <sc-if value="{{ bLow }}" hint-placeholder-val="{{ false }}">
+  <div style="margin-top:14px;background:rgba(230,161,0,.08);border:1px solid rgba(230,161,0,.4);border-radius:8px;padding:12px 14px"><div style="font-weight:600;color:#f0c14b">{{ bLowTitle }}</div><div style="font-size:13px;color:#c9cacd;margin-top:4px;line-height:1.4">{{ bLowText }}</div></div>
+  </sc-if>
+  <div style="flex:1;min-height:16px"></div>
+  <button onClick="{{ publish }}" style="width:100%;background:#e10600;color:#fff;border:0;border-radius:6px;padding:16px;font-family:'Barlow Condensed';font-weight:700;font-size:20px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer" style-hover="background:#ff1a10">Publish patrol</button>
+</div>
+</sc-if>
+
+<sc-if value="{{ isTgMap }}" hint-placeholder-val="{{ false }}">
+<sc-if value="{{ tgHasNext }}" hint-placeholder-val="{{ true }}">
+<div data-screen-label="Patrol guide" style="flex:1;position:relative;overflow:hidden;background-color:#0b0b0c;background-image:linear-gradient(#16171b 1px,transparent 1px),linear-gradient(90deg,#16171b 1px,transparent 1px);background-size:28px 28px">
+  <svg viewBox="{{ gView }}" preserveAspectRatio="xMidYMid meet" style="position:absolute;inset:0;width:100%;height:100%">
+    <sc-for list="{{ gRooms }}" as="rm" hint-placeholder-count="0"><g><rect x="{{ rm.x }}" y="{{ rm.y }}" width="{{ rm.w }}" height="{{ rm.h }}" fill="none" stroke="#26272c" stroke-width="{{ gSw }}"></rect><text x="{{ rm.lx }}" y="{{ rm.ly }}" fill="#55565d" font-size="{{ gFsS }}" font-family="Barlow, sans-serif">{{ rm.n }}</text></g></sc-for>
+    <polyline points="{{ gRoute }}" fill="none" stroke="#55565d" stroke-width="{{ gDot }}" stroke-dasharray="{{ gDash }}" stroke-linecap="round" stroke-linejoin="round"></polyline>
+    <polyline points="{{ gTrail }}" fill="none" stroke="#e10600" stroke-width="{{ gTrailW }}" stroke-linecap="round" stroke-linejoin="round" opacity=".5"></polyline>
+    <polyline points="{{ gAhead }}" fill="none" stroke="#e10600" stroke-width="{{ gDotB }}" stroke-dasharray="{{ gDashB }}" stroke-linecap="round" stroke-linejoin="round"></polyline>
+    <sc-for list="{{ gPins }}" as="pn" hint-placeholder-count="0"><g><circle cx="{{ pn.cx }}" cy="{{ pn.cy }}" r="{{ pn.r }}" fill="{{ pn.fill }}" stroke="{{ pn.stroke }}" stroke-width="{{ pn.sw }}"></circle><text x="{{ pn.cx }}" y="{{ pn.ty }}" text-anchor="middle" fill="{{ pn.tc }}" font-size="{{ pn.fs }}" font-weight="700" font-family="Barlow, sans-serif">{{ pn.num }}</text></g></sc-for>
+    <g transform="{{ gStairT }}"><rect x="{{ gStairX }}" y="{{ gStairY }}" width="{{ gStairW }}" height="{{ gStairH }}" rx="{{ gStairRx }}" fill="{{ gStairFill }}"></rect><text x="0" y="{{ gStairTy }}" text-anchor="middle" fill="{{ gStairTc }}" font-size="{{ gStairFs }}" font-weight="700" font-family="Barlow, sans-serif">{{ gStairLabel }}</text></g>
+    <g transform="{{ gYouT }}"><circle r="{{ gHalo }}" fill="rgba(225,6,0,.2)"></circle><path d="{{ gArrow }}" fill="#fff"></path><circle r="{{ gYouR }}" fill="#e10600" stroke="#fff" stroke-width="{{ gYouSw }}"></circle></g>
+  </svg>
+  <sc-if value="{{ gClimbing }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;inset:0;background:rgba(11,11,12,.6);display:flex;align-items:center;justify-content:center"><div style="width:220px;background:#15161a;border:1px solid #3a3b42;border-radius:12px;padding:18px;text-align:center"><div style="font-family:'Barlow Condensed';font-weight:700;font-size:40px;line-height:1">{{ gClimbBig }}</div><div style="margin-top:12px;height:6px;background:#26272c;border-radius:3px;overflow:hidden"><div style="height:100%;width:{{ gClimbPct }}%;background:#e10600"></div></div><div style="margin-top:8px;font-size:13px;color:#8a8b91;font-variant-numeric:tabular-nums">{{ gClimbSub }}</div></div></div></sc-if>
+  <div style="position:absolute;left:12px;right:12px;top:12px;display:flex;flex-direction:column;gap:8px">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+      <button onClick="{{ goPatrolHome }}" style="background:rgba(11,11,12,.85);border:1px solid #26272c;border-radius:6px;color:#e6e6e8;font-size:14px;padding:9px 12px;cursor:pointer" style-hover="border-color:#8a8b91">‹ Patrol</button>
+      <span style="background:rgba(11,11,12,.85);border:1px solid #26272c;border-radius:6px;padding:9px 10px;font-size:13px;color:#c9cacd;display:flex;gap:10px;align-items:center"><span style="font-family:'Barlow Condensed';font-weight:700;letter-spacing:.08em;color:#e6e6e8">{{ tgFloor }}</span><span>{{ tgDone }}</span><span style="display:flex;align-items:center;gap:5px;font-variant-numeric:tabular-nums"><span style="width:7px;height:7px;border-radius:50%;background:{{ gBaroTrendC }}"></span>{{ gAlt }} · {{ gBaroP }}</span></span>
+    </div>
+    <div style="background:#e6e6e8;color:#0b0b0c;border-radius:10px;padding:12px 14px;display:flex;gap:14px;align-items:center;box-shadow:0 8px 24px rgba(0,0,0,.5)">
+      <span style="width:52px;height:52px;flex:none;border-radius:8px;background:{{ gIconBg }};color:#fff;display:grid;place-items:center;font-size:30px;font-weight:700;line-height:1">{{ gIcon }}</span>
+      <span style="flex:1;min-width:0"><span style="display:block;font-family:'Barlow Condensed';font-weight:700;font-size:26px;line-height:1.05;text-wrap:balance">{{ gBig }}</span><span style="display:block;font-size:14px;color:#3a3b42;margin-top:3px">{{ gSub }}</span></span>
+    </div>
+    <div style="height:3px;background:rgba(255,255,255,.12);border-radius:2px"><div style="height:100%;width:{{ tgPct }}%;background:#e10600;border-radius:2px"></div></div>
+  </div>
+  <div style="position:absolute;left:0;right:0;bottom:0;padding:40px 14px 14px;background:linear-gradient(180deg,rgba(11,11,12,0) 0%,#0b0b0c 30%);display:flex;flex-direction:column;gap:10px">
+    <div style="background:#15161a;border:1px solid #26272c;border-radius:10px;padding:10px;display:flex;gap:12px;align-items:center">
+      <div role="img" aria-label="What the checkpoint looks like" style="width:56px;height:56px;flex:none;border-radius:6px;background:#0b0b0c center/cover no-repeat url({{ tgPhoto }})"></div>
+      <div style="flex:1;min-width:0"><div style="font-size:11px;letter-spacing:.16em;color:#8a8b91;text-transform:uppercase">Next · {{ gCpOf }}</div><div style="font-family:'Barlow Condensed';font-weight:700;font-size:22px;line-height:1.1">{{ tgNext }}</div></div>
+      <div style="font-family:'Barlow Condensed';font-weight:700;font-size:30px;color:#ff5c52;font-variant-numeric:tabular-nums;flex:none">{{ gRem }}</div>
+    </div>
+    <button onClick="{{ tgVerify }}" style="width:100%;background:#e10600;color:#fff;border:0;border-radius:6px;padding:16px;font-family:'Barlow Condensed';font-weight:700;font-size:20px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer" style-hover="background:#ff1a10">{{ gVerifyLabel }}</button>
+    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px">
+      <button onClick="{{ gToggleVoice }}" style="background:#15161a;border:1px solid {{ gVoiceBorder }};border-radius:8px;height:58px;color:{{ gVoiceColor }};display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:12px;font-weight:600;cursor:pointer"><sc-if value="{{ gUnmuted }}" hint-placeholder-val="{{ true }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg></sc-if><sc-if value="{{ gMuted }}" hint-placeholder-val="{{ false }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="m22 9-6 6M16 9l6 6"/></svg></sc-if>{{ gVoiceLabel }}</button>
+      <button onClick="{{ gLockOn }}" style="background:#15161a;border:1px solid #26272c;border-radius:8px;height:58px;color:#e6e6e8;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:12px;font-weight:600;cursor:pointer" style-hover="border-color:#8a8b91"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Lock</button>
+      
+      <button onPointerDown="{{ sosDown }}" onPointerUp="{{ sosUp }}" onPointerLeave="{{ sosUp }}" onPointerCancel="{{ sosUp }}" onContextMenu="{{ noop }}" style="background:{{ sosBg }};color:#fff;border:0;border-radius:8px;height:58px;font-family:'Barlow Condensed';font-weight:800;font-size:20px;letter-spacing:.12em;cursor:pointer;position:relative;overflow:hidden;user-select:none;-webkit-user-select:none;touch-action:none"><span style="position:absolute;left:0;top:0;bottom:0;width:{{ sosPct }}%;background:rgba(255,255,255,.22)"></span><span style="position:relative">SOS</span></button>
+    </div>
+  </div>
+  <sc-if value="{{ gLock }}" hint-placeholder-val="{{ false }}">
+  <div data-screen-label="Patrol guide · locked" style="position:absolute;inset:0;z-index:6;background:#000;display:flex;flex-direction:column;align-items:center;padding:56px 28px 32px;text-align:center">
+    <div style="display:flex;align-items:center;gap:8px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#6b6c72"><span style="width:7px;height:7px;border-radius:50%;background:#e10600"></span>Patrol running · {{ gVoiceLabel2 }}</div>
+    <div style="flex:1"></div>
+    <div style="font-family:'Barlow Condensed';font-weight:700;font-size:72px;line-height:1;color:#4a4b52;font-variant-numeric:tabular-nums">{{ gRem }}</div>
+    <div style="margin-top:6px;font-size:16px;color:#6b6c72">to {{ tgNext }}</div>
+    <div style="margin-top:22px;font-size:15px;color:#55565d;font-style:italic;max-width:300px;line-height:1.4">{{ gLastSaidQ }}</div>
+    <div style="flex:1"></div>
+    <button onPointerDown="{{ gUnDown }}" onPointerUp="{{ gUnUp }}" onPointerLeave="{{ gUnUp }}" onPointerCancel="{{ gUnUp }}" onContextMenu="{{ noop }}" style="position:relative;overflow:hidden;width:100%;max-width:320px;background:#0b0b0c;border:1px solid #26272c;border-radius:30px;padding:16px;color:#8a8b91;font-size:15px;cursor:pointer;user-select:none;-webkit-user-select:none;touch-action:none"><span style="position:absolute;left:0;top:0;bottom:0;width:{{ gUnPct }}%;background:#26272c"></span><span style="position:relative">Hold to unlock</span></button>
+    <div style="margin-top:12px;font-size:12px;color:#4a4b52;max-width:300px">In the native app the phone locks for real and voice prompts keep playing.</div>
+  </div>
+  </sc-if>
+</div>
+</sc-if>
+<sc-if value="{{ tgComplete }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Patrol complete" style="flex:1;display:flex;flex-direction:column;padding:20px;overflow:auto">
+  <div><button onClick="{{ goPatrolHome }}" style="background:none;border:0;color:#c9cacd;font-size:15px;cursor:pointer;padding:0">‹ Patrol</button></div>
+  <sc-if value="{{ tgComplete }}" hint-placeholder-val="{{ false }}">
+  <div style="margin-top:24px;background:#15161a;border:1px solid #26272c;border-radius:8px;padding:20px;text-align:center"><div style="width:48px;height:48px;border-radius:50%;background:#2ecc71;color:#0b0b0c;display:grid;place-items:center;font-weight:800;font-size:24px;margin:0 auto">✓</div><div style="font-family:'Barlow Condensed';font-weight:700;font-size:26px;margin-top:12px">PATROL COMPLETE</div><div style="color:#8a8b91;font-size:14px;margin-top:4px">All checkpoints verified and sent to control.</div><button onClick="{{ tgRestart }}" style="margin-top:16px;background:transparent;color:#e6e6e8;border:1px solid #3a3b42;border-radius:6px;padding:12px 18px;font-size:14px;cursor:pointer">Start again</button></div>
+  </sc-if>
+</div>
+</sc-if>
+</sc-if>
+
+<sc-if value="{{ isTgAR }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Tagless patrol · AR guide" style="flex:1;position:relative;display:flex;flex-direction:column;overflow:hidden;background:#000">
+  <sc-if value="{{ camOk }}" hint-placeholder-val="{{ false }}"><video ref="{{ videoRef }}" autoPlay="{{ true }}" muted="{{ true }}" playsInline="{{ true }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></video></sc-if>
+  <sc-if value="{{ camNo }}" hint-placeholder-val="{{ true }}"><div style="position:absolute;inset:0;background:#0e0f12 center/cover no-repeat url({{ arPhoto }})"></div></sc-if>
+  <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.65) 0%,rgba(0,0,0,0) 35%,rgba(0,0,0,0) 60%,rgba(0,0,0,.75) 100%)"></div>
+  <div style="position:relative;padding:20px 20px 0;display:flex;flex-direction:column;gap:6px">
+    <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:'Barlow Condensed';font-weight:700;font-size:13px;letter-spacing:.1em;background:rgba(0,0,0,.55);padding:3px 8px;border-radius:3px">{{ tgFloor }}</span><span style="font-size:14px;color:#e6e6e8;font-variant-numeric:tabular-nums">{{ clockHM }}</span></div>
+    <div style="margin-top:12px;font-size:11px;letter-spacing:.2em;color:#c9cacd;text-transform:uppercase">Heading to</div>
+    <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px"><span style="font-family:'Barlow Condensed';font-weight:700;font-size:30px;line-height:1.05">{{ tgNext }}</span><span style="font-family:'Barlow Condensed';font-weight:700;font-size:30px;color:#ff5c52;font-variant-numeric:tabular-nums;flex:none">{{ tgDist }}</span></div>
+  </div>
+  <div style="position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;perspective:700px;min-height:0">
+    <div style="transform:rotateX(58deg) rotateZ({{ arDeg }}deg);transition:transform .6s ease">
+      <svg width="170" height="220" viewBox="0 0 170 220" fill="none"><path d="M85 8 L160 110 L112 110 L112 212 L58 212 L58 110 L10 110 Z" fill="rgba(225,6,0,.85)" stroke="#fff" stroke-width="3" stroke-linejoin="round"></path></svg>
+    </div>
+    <div style="position:relative;z-index:1;display:flex;align-items:baseline;gap:6px;background:rgba(0,0,0,.72);border:2px solid #e10600;border-radius:8px;padding:6px 16px;font-family:'Barlow Condensed';font-weight:700;color:#fff;white-space:nowrap"><span style="font-size:44px;line-height:1">{{ arMeters }}</span><span style="font-size:16px;letter-spacing:.12em;text-transform:uppercase;color:#e6e6e8">straight</span></div>
+  </div>
+  <div style="position:relative;padding:0 20px 20px;display:flex;flex-direction:column;gap:8px">
+    <div style="background:rgba(0,0,0,.72);border-radius:8px;padding:16px 14px;display:flex;flex-direction:column;gap:6px">
+      <div style="font-family:'Barlow Condensed';font-weight:700;font-size:36px;line-height:1.05;text-align:center;text-wrap:balance">{{ arInstr }}</div>
+      <div style="font-size:16px;color:#e6e6e8;text-align:center">Lower the phone any time. It buzzes at the turn.</div>
+    </div>
+    <button onClick="{{ tgVerify }}" style="margin-top:8px;width:100%;background:#e10600;color:#fff;border:0;border-radius:6px;padding:14px;font-family:'Barlow Condensed';font-weight:700;font-size:18px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer" style-hover="background:#ff1a10">I'm at the checkpoint</button>
+    <button onClick="{{ showMap }}" style="width:100%;background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.35);border-radius:6px;padding:14px;font-family:'Barlow Condensed';font-weight:700;font-size:18px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;backdrop-filter:blur(6px)" style-hover="background:rgba(255,255,255,.22)">Back to map</button>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isTgMatch }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Tagless patrol · verify" style="flex:1;display:flex;flex-direction:column;padding:20px 20px 20px;overflow:auto">
+  <div style="display:flex;justify-content:space-between;align-items:center"><button onClick="{{ showMap }}" style="background:none;border:0;color:#c9cacd;font-size:15px;cursor:pointer;padding:0">‹ Map</button><span style="font-size:14px;color:#c9cacd;font-variant-numeric:tabular-nums">{{ clockHM }}</span></div>
+  <div style="margin-top:16px;font-family:'Barlow Condensed';font-weight:700;font-size:30px;line-height:1">{{ mName }}</div>
+  <div style="color:#8a8b91;font-size:13px;margin-top:4px">{{ mSub }}</div>
+  <div style="margin-top:14px;position:relative;width:100%;aspect-ratio:4/3;border-radius:8px;overflow:hidden;background:#15161a;border:2px solid {{ mFrame }}">
+    <sc-if value="{{ camOk }}" hint-placeholder-val="{{ false }}"><video ref="{{ videoRef }}" autoPlay="{{ true }}" muted="{{ true }}" playsInline="{{ true }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></video></sc-if>
+    <sc-if value="{{ camNo }}" hint-placeholder-val="{{ true }}"><div style="position:absolute;inset:0;background:#15161a center/cover no-repeat url({{ mSetupPhoto }});filter:brightness(.85)"></div><span style="position:absolute;right:10px;top:10px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;background:rgba(0,0,0,.65);padding:2px 7px;border-radius:3px;color:#c9cacd">Demo view</span></sc-if>
+    <div style="position:absolute;left:10px;top:10px;width:88px;border:1px solid rgba(255,255,255,.5);border-radius:4px;overflow:hidden;background:#0b0b0c">
+      <sc-if value="{{ mHasSetup }}" hint-placeholder-val="{{ false }}"><div role="img" aria-label="Setup photo" style="width:100%;aspect-ratio:4/3;background:center/cover no-repeat url({{ mSetupPhoto }})"></div></sc-if>
+      <sc-if value="{{ mNoSetup }}" hint-placeholder-val="{{ true }}"><div style="width:100%;aspect-ratio:4/3;background:#1c1d21"></div></sc-if>
+      <div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:2px 6px;color:#c9cacd">Setup</div>
+    </div>
+    <sc-if value="{{ mMatched }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;right:10px;bottom:10px;background:#2ecc71;color:#0b0b0c;font-family:'Barlow Condensed';font-weight:700;font-size:14px;letter-spacing:.08em;padding:4px 10px;border-radius:3px">VIEW MATCHED</span></sc-if>
+  </div>
+  <div style="margin-top:12px;display:flex;flex-direction:column">
+    <sc-for list="{{ mChecks }}" as="c" hint-placeholder-count="3"><div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid #1c1d21;font-size:14px;color:{{ c.color }}"><span>{{ c.label }}</span><span style="font-weight:700">{{ c.mark }}</span></div></sc-for>
+  </div>
+  <sc-if value="{{ mHasTask }}" hint-placeholder-val="{{ true }}">
+  <div style="margin-top:16px;font-size:11px;letter-spacing:.2em;color:#8a8b91;text-transform:uppercase">{{ mTaskLabel }}</div>
+  <div style="margin-top:6px;font-family:'Barlow Condensed';font-weight:700;font-size:26px;line-height:1.1">{{ mTaskQ }}</div>
+  <sc-if value="{{ mIsYesNo }}" hint-placeholder-val="{{ true }}">
+  <div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+    <button onClick="{{ mYes }}" style="background:#15161a;color:#2ecc71;border:1px solid rgba(46,204,113,.5);border-radius:6px;padding:14px;font-size:16px;font-weight:600;cursor:pointer" style-hover="background:rgba(46,204,113,.1)">{{ mYesLabel }}</button>
+    <button onClick="{{ mNo }}" style="background:#15161a;color:#ff5c52;border:1px solid rgba(225,6,0,.5);border-radius:6px;padding:14px;font-size:16px;font-weight:600;cursor:pointer" style-hover="background:rgba(225,6,0,.1)">No, report it</button>
+  </div>
+  </sc-if>
+  <sc-if value="{{ mIsPhoto }}" hint-placeholder-val="{{ false }}">
+  <button onClick="{{ mPhoto }}" style="margin-top:12px;width:100%;background:#15161a;color:#e6e6e8;border:1px solid #3a3b42;border-radius:6px;padding:14px;font-size:16px;font-weight:600;cursor:pointer" style-hover="border-color:#8a8b91">Take photo as evidence</button>
+  </sc-if>
+  </sc-if>
+  <sc-if value="{{ mTasksDone }}" hint-placeholder-val="{{ false }}"><div style="margin-top:16px;font-size:14px;color:#2ecc71">✓ {{ mDoneText }}</div></sc-if>
+  <div style="flex:1;min-height:16px"></div>
+  <button onClick="{{ mConfirm }}" style="width:100%;background:{{ mConfirmBg }};color:#fff;border:0;border-radius:6px;padding:16px;font-family:'Barlow Condensed';font-weight:700;font-size:20px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer">Confirm checkpoint</button>
 </div>
 </sc-if>
 
@@ -221,8 +554,10 @@ input::placeholder,textarea::placeholder{color:#5b5c63}
   </div>
   <div style="flex:1"></div>
   <button style="width:100%;background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.4);border-radius:6px;padding:14px;font-size:15px;cursor:pointer" style-hover="background:rgba(255,255,255,.25)">Silent mode</button>
-  <div style="margin-top:16px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;opacity:.85">Enter passcode to cancel</div>
+  <div style="margin-top:16px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;opacity:.85">Enter your 4-digit passcode to cancel</div>
   <div style="display:flex;gap:8px;margin-top:8px"><input value="{{ sosCode }}" onChange="{{ setSosCode }}" inputMode="numeric" type="password" placeholder="••••" style="flex:1;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.4);color:#fff;font-size:20px;letter-spacing:.3em;padding:12px 14px;border-radius:6px;outline:none"><button onClick="{{ sosCancel }}" style="background:#fff;color:#a30400;border:0;border-radius:6px;padding:12px 18px;font-family:'Barlow Condensed';font-weight:700;font-size:16px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer">Cancel SOS</button></div>
+  <sc-if value="{{ sosErr }}" hint-placeholder-val="{{ false }}"><div style="margin-top:8px;font-size:13px;font-weight:600">Wrong passcode. SOS is still active.</div></sc-if>
+  <div style="margin-top:8px;font-size:12px;opacity:.75">Demo passcode 1234</div>
 </div>
 </sc-if>
 
@@ -234,29 +569,462 @@ class Component extends DCLogic {
     cc:false, ccDeadline:null, logged:null, tasks:[true,true,null], notes:'side gate lock forced, checked perimeter no entry, chained gate, called police', type:'Damage', tidying:false, tidyErr:'' };
   async componentDidMount(){
     this.store = await import('./store.js');
+    window.addEventListener('message', this.onMsg);
     const s = this.store.load();
     this.unsub = this.store.subscribe(ns => this.setState({ s: ns }));
     let user = null; try { user = JSON.parse(localStorage.getItem('response.officer')); } catch (e) {}
     this.setState({ s, user, screen: user ? (s.bookedOn ? 'home' : 'brief') : 'signin' });
     this.timer = setInterval(() => {
       this.setState(st => ({ tick: st.tick + 1 }));
+      if (this.stepSim) this.stepSim();
       const st = this.state;
       if (st.cc && st.ccDeadline && Date.now() > st.ccDeadline) this.ccMiss();
       if (st.s && st.s.bookedOn && !st.cc && st.screen === 'home' && !st.s.sos && st.tick % 60 === 45) this.openCheckCall();
     }, 1000);
   }
-  componentWillUnmount(){ clearInterval(this.timer); if (this.unsub) this.unsub(); clearInterval(this.sosT); }
+  componentWillUnmount(){ this.stopMotion(); clearInterval(this.timer); if (this.unsub) this.unsub(); clearInterval(this.sosT); this.stopCam(); this.stopSR(); }
+  componentDidUpdate(){ this.syncMedia(); }
+  videoRef = el => { this.videoEl = el; if (el && this.stream && el.srcObject !== this.stream) { el.srcObject = this.stream; el.play().catch(() => {}); } };
+  syncMedia(){
+    const sc = this.state.screen;
+    const needCam = ['rsCapture','tgAR','tgMatch'].includes(sc);
+    if (needCam && !this.stream && !this.camReq && !this.state.camErr) this.startCam();
+    if (!needCam && this.stream) this.stopCam();
+    const needSR = sc === 'rsWalk' && this.state.rsNarr;
+    if (needSR && !this.sr) this.startSR();
+    if (!needSR && this.sr) this.stopSR();
+  }
+  async startCam(){
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) return this.setState({ camErr:true });
+    this.camReq = true;
+    try {
+      this.stream = await navigator.mediaDevices.getUserMedia({ video:{ facingMode:{ ideal:'environment' } }, audio:false });
+      if (this.videoEl) { this.videoEl.srcObject = this.stream; this.videoEl.play().catch(() => {}); }
+      this.setState({ camOk:true });
+    } catch (e) { this.setState({ camErr:true, camOk:false }); }
+    this.camReq = false;
+  }
+  stopCam(){ if (this.stream) { this.stream.getTracks().forEach(t => t.stop()); this.stream = null; if (this.state.camOk) this.setState({ camOk:false }); } }
+  startSR(){
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition; if (!SR || this.srFailed) return;
+    const r = new SR(); r.continuous = true; r.interimResults = true; r.lang = 'en-GB';
+    r.onresult = e => { let fin = '', int = ''; for (let i = e.resultIndex; i < e.results.length; i++) { const t = e.results[i][0].transcript; if (e.results[i].isFinal) fin += t; else int += t; } this.setState(x => ({ rsHeard: ((x.rsHeard||'') + ' ' + fin).trim(), rsInterim:int })); if (fin && this.state.screen === 'rsWalk') this.floorFromText(fin); };
+    r.onend = () => { if (this.sr === r) { try { r.start(); } catch (e) {} } };
+    r.onerror = ev => { if (ev.error === 'not-allowed' || ev.error === 'service-not-allowed') { this.srFailed = true; this.sr = null; this.setState({ srDenied:true }); } };
+    try { r.start(); this.sr = r; } catch (e) {}
+  }
+  stopSR(){ if (this.sr) { const r = this.sr; this.sr = null; try { r.stop(); } catch (e) {} } }
+  snap(w = 320){ const v = this.videoEl; if (!v || !v.videoWidth) return null; const c = document.createElement('canvas'); c.width = w; c.height = Math.round(w * v.videoHeight / v.videoWidth); c.getContext('2d').drawImage(v, 0, 0, c.width, c.height); return c.toDataURL('image/jpeg', .6); }
+
+  guideTick(){
+    const S = this.state, g = this._geo; if (S.screen !== 'tgMap' || !g) return;
+    if (this.isMuted()) { try { window.speechSynthesis.cancel(); } catch (e) {} }
+    const w0 = S.gWalk || 0; if (w0 >= g.total) return this.cues(g, w0);
+    const w = Math.min(g.total, w0 + 1.3); this.setState({ gWalk:w }); this.cues(g, w);
+  }
+  cues(g, w){
+    this.spoken = this.spoken || new Set();
+    const k = x => `${g.idx}:${x}`, once = (x, t) => { if (this.spoken.has(k(x))) return; this.spoken.add(k(x)); this.say(t); };
+    const buzz = x => { if (this.spoken.has(k(x))) return; this.spoken.add(k(x)); try { if (navigator.vibrate) navigator.vibrate([200, 100, 200]); } catch (e) {} };
+    once('start', `Next checkpoint, ${g.name}. ${g.walkM} metres.`);
+    if (g.climb) {
+      if (g.segA[0] >= 4 && w >= g.segA[0] - 5 && w < g.segA[0]) once('a1', `In ${Math.max(1, Math.round(g.segA[0] - w))} metres, turn ${g.aWest ? 'left' : 'right'}.`);
+      if (w >= g.A - 6 && w < g.A) once('a2', `Stairwell B ahead.`);
+      if (w >= g.A && w < g.A + g.C) once('c', `Take the stairs ${g.up ? 'up' : 'down'}.`);
+      if (w >= g.A + g.C) { once('fl', `Leave the stairwell into the corridor.`); buzz('flb'); }
+    }
+    const wl = w - g.A - g.C;
+    if (wl >= 0) {
+      if (g.s1 >= 4 && wl >= g.s1 - 5 && wl < g.s1) once('t1', `In ${Math.max(1, Math.round(g.s1 - wl))} metres, turn ${g.west ? 'left' : 'right'}.`);
+      if (wl >= g.s1 + g.s2 - 6 && wl < g.legM) once('t2', `${g.name} on your ${g.side} in ${Math.max(1, Math.round(g.legM - wl))} metres.`);
+      if (wl >= g.legM - 0.01) { once('arr', `You have arrived at ${g.name}. Verify the checkpoint.`); buzz('vib'); }
+    }
+  }
+
+  isMuted(){ if (this.muted == null) { try { this.muted = localStorage.getItem('response.mute') === '1'; } catch (e) { this.muted = false; } } return this.muted; }
+  say(t){ this.setState({ gLastSaid:t }); if (this.isMuted()) { try { window.speechSynthesis.cancel(); } catch (e) {} return; } try { const u = new SpeechSynthesisUtterance(t); u.lang = 'en-GB'; window.speechSynthesis.speak(u); } catch (e) {} }
+
+  stepSim(){
+    this.guideTick();
+    const S = this.state; if (S.screen !== 'rsWalk' || S.rsUndo) return;
+    if (this.lastRealStep && Date.now() - this.lastRealStep < 3000) return;
+    let h = S.rsHead || 0, seg = (S.rsSeg || 0) + 1.3, len = S.rsSegLen || 14;
+    if (seg > len) { h = (h + (Math.random() < .5 ? 90 : 270)) % 360; seg = 0; len = 8 + Math.random()*18; }
+    this.setState({ rsSeg:seg, rsSegLen:len });
+    this.addStep(1.3, h);
+    const F = this.store.floorsDef, rf = S.rsFloor || 0, n = (S.rsDraft || []).length;
+    if (F[rf+1] && n >= 2*(rf+1) && (S.rsWalked || 0) - (S.rsLastFloorW || 0) > 60) this.setFloor(rf+1, `Barometer · +${(F[rf+1].alt - F[rf].alt).toFixed(1)} m climb detected`);
+  }
+
+  addStep(d, h){ this.setState(x => { const tr = x.rsTrack && x.rsTrack.length ? x.rsTrack : [{ x:0, y:0, f:x.rsFloor || 0 }]; const l = tr[tr.length-1], rad = h * Math.PI / 180; return { rsTrack: tr.concat([{ x: +(l.x + Math.sin(rad)*d).toFixed(2), y: +(l.y - Math.cos(rad)*d).toFixed(2), f: x.rsFloor || 0 }]), rsWalked: (x.rsWalked || 0) + d, rsHead: h }; }); }
+  setFloor(to, src){ const F = this.store.floorsDef; if (!F[to]) return; this.setState(x => { const tr = x.rsTrack || [], l = tr[tr.length-1]; return { rsFloor:to, rsFloorSrc:src, rsLastFloorW: x.rsWalked || 0, rsFloorFix:false, rsToast:`Now on ${F[to].label}`, rsToastT: Date.now(), rsTrack: l ? tr.concat([{ ...l, f:to }]) : tr }; }); }
+  floorFromText(t){
+    const F = this.store.floorsDef, cur = this.state.rsFloor || 0; t = t.toLowerCase();
+    const W = { ground:0, first:1, second:2, third:3, fourth:4, one:1, two:2, three:3, four:4 };
+    const m = t.match(/\b(ground|first|second|third|fourth)\s+floor\b/) || t.match(/\b(?:floor|level)\s+(\d|one|two|three|four)\b/);
+    let to = null, said = '';
+    if (m) { to = W[m[1]] != null ? W[m[1]] : parseInt(m[1], 10); said = m[0]; }
+    else if (/\b(upstairs|going up|up the stairs|up a floor)\b/.test(t)) { to = cur + 1; said = 'upstairs'; }
+    else if (/\b(downstairs|going down|down the stairs|down a floor)\b/.test(t)) { to = cur - 1; said = 'downstairs'; }
+    if (to == null || to === cur || !F[to]) return;
+    this.setFloor(to, `Narration · "${said}"`);
+  }
+  startMotion(){
+    const go = () => { this.stopMotion(); window.addEventListener('devicemotion', this.onMotion); window.addEventListener('deviceorientation', this.onOrient, true); };
+    const DM = window.DeviceMotionEvent, DO = window.DeviceOrientationEvent;
+    if (DM && typeof DM.requestPermission === 'function') {
+      DM.requestPermission().then(res => { if (res === 'granted') { go(); if (DO && typeof DO.requestPermission === 'function') DO.requestPermission().catch(() => {}); } else this.setState({ motionDenied:true }); }).catch(() => this.setState({ motionDenied:true }));
+    } else if (DM) go();
+  }
+  stopMotion(){ window.removeEventListener('devicemotion', this.onMotion); window.removeEventListener('deviceorientation', this.onOrient, true); }
+  onMotion = e => {
+    const g = e.accelerationIncludingGravity; if (!g || g.x == null) return;
+    const m = Math.hypot(g.x, g.y, g.z), now = Date.now();
+    this.mAvg = this.mAvg ? this.mAvg * .92 + m * .08 : m;
+    const dv = m - this.mAvg;
+    if (dv > 1.4 && !this.mUp && now - (this.lastStepT || 0) > 300) { this.mUp = true; this.lastStepT = now; this.lastRealStep = now; if (this.state.screen === 'rsWalk' && !this.state.rsUndo) this.addStep(0.72, this.heading != null ? this.heading : (this.state.rsHead || 0)); }
+    else if (dv < 0.2) this.mUp = false;
+  };
+  onOrient = e => { const h = e.webkitCompassHeading != null ? e.webkitCompassHeading : (e.alpha != null ? 360 - e.alpha : null); if (h != null) this.heading = h; };
+
+  goTagless(){
+    const st = this.store, T = (this.state.s && this.state.s.tagless) || st.taglessDefault();
+    if (!(this.state.tgDist > 0) && T.idx < T.points.length) this.setState({ tgDist: T.dist || 38, tgTotal: T.dist || 38 });
+    this.go('tgMap');
+    if (this._geo) this.cues(this._geo, this.state.gWalk || 0);
+  }
+  onMsg = e => {
+    if (e.origin !== location.origin || !e.data || e.data.type !== 'response:go' || !this.store) return;
+    const sc = e.data.screen, v = this.taglessVals(), st = this.store;
+    if (!this.state.user && sc !== 'signin') this.setState({ user:{ name:'Admin', email:'admin@recreateteam.com' } });
+    if (sc === 'sos') { this.go('home'); this.startSos(); return; }
+    if (this.state.s && this.state.s.sos && sc !== 'sos') this.save(x => ({ ...x, sos:false, sosStart:null }));
+    if (sc === 'checkcall') { this.go('home'); this.openCheckCall(); return; }
+    this.setState({ cc:false });
+    if (sc === 'tgMap') return this.goTagless();
+    if (sc === 'tgAR') { this.goTagless(); return setTimeout(() => this.go('tgAR'), 0); }
+    if (sc === 'tgMatch') { this.goTagless(); return setTimeout(() => this.enterMatch(), 0); }
+    if (sc === 'rsWalk') return v.startSetup();
+    if (sc === 'rsCapture') { v.startSetup(); return setTimeout(() => this.taglessVals().markCp(), 0); }
+    if (sc === 'rsBuilt') { const d = st.taglessDefault().points.slice(0, 6); this.setState({ rsDraft:d, rsStart: Date.now() - 18*60e3, rsWalked:640, bFloor:0 }); return this.go('rsBuilt'); }
+    this.go(sc);
+  };
+  enterMatch(){ this.setState({ tgMatchT:Date.now(), tgTaskI:0 }); this.go('tgMatch'); }
+  heuristic(text){
+    const parts = text.split(/[.!]/).map(x => x.trim()).filter(Boolean);
+    const name = (parts[0]||'Checkpoint').split(',')[0].replace(/^\w/, c => c.toUpperCase());
+    const body = parts.slice(1).join('. ') || parts[0] || '';
+    const clauses = body.replace(/^(check|make sure|ensure)\s+(that\s+)?/i,'').split(/\s+and\s+(?:that\s+)?|,\s*/i).map(x => x.trim()).filter(x => x.length > 3);
+    const tasks = clauses.map(c => { const photo = /(panel|shows|display|meter|green|damage|photo)/i.test(c); let q = c.replace(/^the\s+/i,'').replace(/\b(is|are)\b\s*/i,'').replace(/\bshows\b\s*/i,'').replace(/[?.]*$/,''); return { q: q.charAt(0).toUpperCase() + q.slice(1) + '?', t: photo ? 'photo' : 'yesno' }; });
+    return { name, tasks: tasks.length ? tasks : [{ q:'All secure?', t:'yesno' }] };
+  }
+  async runAI(){
+    const text = (this.state.cap && this.state.cap.text) || '';
+    this.setState(x => ({ cap:{ ...x.cap, busy:true } }));
+    let out = null;
+    try {
+      if (window.claude && window.claude.complete) {
+        const r = await window.claude.complete({ messages:[{ role:'user', content:`A security officer narrated this while setting up a patrol checkpoint: "${text}". Return ONLY JSON: {"name": short checkpoint name, 2-4 words, sentence case, "tasks":[{"q": short yes/no question ending with ?, "t": "yesno" or "photo" (photo when the check needs visual evidence such as a panel, display, meter or damage)}]}. 1-3 tasks. No other text.` }] });
+        const m = String(r).match(/\{[\s\S]*\}/); if (m) out = JSON.parse(m[0]);
+      }
+    } catch (e) {}
+    if (!out || !Array.isArray(out.tasks) || !out.tasks.length) out = this.heuristic(text);
+    this.setState(x => ({ cap:{ ...x.cap, busy:false, name: x.cap.nameTouched ? x.cap.name : (out.name || x.cap.name), tasks: out.tasks.slice(0,3) } }));
+  }
+  taglessVals(){
+    const st = this.store, S = this.state, s = S.s;
+    if (!st || !st.floorsDef) return {};
+    const F = st.floorsDef, T = (s && s.tagless) || st.taglessDefault(), pts = T.points, idx = Math.min(T.idx, pts.length), next = pts[idx];
+    const mmss = n => `${String(Math.floor(n/60)).padStart(2,'0')}:${String(n%60).padStart(2,'0')}`;
+    const plan = (floor, list, cur) => {
+      const onF = list.map((p,i) => ({ ...p, i })).filter(p => p.floor === floor);
+      return { rooms: F[floor].rooms.map(rm => ({ ...rm, photo: st.photoFor(rm.n) })), route: onF.reduce((acc, p, i) => i === 0 ? [[p.x,p.y]] : acc.concat([[onF[i-1].x, st.corridorY],[p.x, st.corridorY],[p.x,p.y]]), []).map(q => `${q[0]},${(q[1]*.7).toFixed(1)}`).join(' '),
+        pts: onF.map(p => { const done = cur != null && p.i < cur, now = cur != null && p.i === cur; return { x:p.x, y:p.y, num:String(p.i+1), bg: done ? '#2a2b30' : now ? '#e10600' : '#0b0b0c', border: now ? '#ff8a84' : p.low ? '#e6a100' : done ? '#3a3b42' : '#c9cacd', bstyle: p.low && !now ? 'dashed' : 'solid', color: done ? '#6b6c72' : '#fff' }; }) };
+    };
+    const ring = React.createElement('span', { style:{ position:'absolute', inset:-2, borderRadius:'50%', border:'2px solid #e10600', animation:'rpulse 1.6s ease-out infinite' } });
+    const v = {};
+    // patrol card
+    v.hNext = next ? next.name : 'Patrol complete';
+    v.hNextSub = next ? `${T.name} · ${F[next.floor].label} · ${idx} of ${pts.length} done` : `${T.name} · all ${pts.length} verified`;
+    v.goTaglessH = () => this.goTagless();
+    const nowA = Date.now(), au = this.state.supUntil || 0, authed = au > nowA || this.state.role === 'supervisor';
+    const hm = t => new Date(t).toTimeString().slice(0,5);
+    v.cfgAuthed = authed; v.cfgLocked = !authed; v.cfgColor = authed ? '#e6e6e8' : '#8a8b91';
+    v.cfgSub = authed ? (this.state.role === 'supervisor' ? 'Walk and record a route' : `Authorised by ${this.state.supBy} · until ${hm(au)}`) : 'Supervisor authorisation required';
+    v.goPatrolHome = () => this.go('patrolHome');
+    v.openConfigure = () => { if (this.state.screen !== 'patrolHome') this.go('patrolHome'); if (authed) { this.setState({ cfgPatrol:null, cfgRe:false }); return this.go('cfgSite'); } this.setState({ authSheet:true, supPin:'', supErr:'', supPending:false }); };
+    const grant = (by, sub) => { this.setState({ supUntil: Date.now() + 30*60e3, supBy: by, authSheet:false, supPending:false, supPin:'' }); this.save(x => this.store.push(x, { title:'Configure patrol authorised · D. Owusu', sub, kind:'ok' })); };
+    v.showAuth = !!this.state.authSheet; v.supPending = !!this.state.supPending; v.supIdle = !this.state.supPending;
+    v.supPin = this.state.supPin || ''; v.supErr = this.state.supErr || '';
+    v.setSupPin = e => this.setState({ supPin: e.target.value.replace(/\D/g,'').slice(0,4), supErr:'' });
+    v.authPin = () => { if ((this.state.supPin||'') === '2580') grant('supervisor PIN', 'Riverside DC · supervisor PIN · 30 min'); else this.setState({ supErr:'PIN not recognised', supPin:'' }); };
+    v.authRequest = () => { this.setState({ supPending:true }); this.save(x => this.store.push(x, { title:'Configure patrol requested · D. Owusu', sub:'Riverside DC · awaiting supervisor', kind:'warn' })); clearTimeout(this.authT); this.authT = setTimeout(() => { if (this.state.supPending) grant('R. Mensah', 'Riverside DC · approved by R. Mensah · 30 min'); }, 3500); };
+    v.authClose = () => { clearTimeout(this.authT); this.setState({ authSheet:false, supPending:false }); };
+    v.tgCardTitle = T.name.toUpperCase();
+    v.tgCardSub = next ? `${idx} of ${pts.length} done · next: ${next.name}` : `Complete · ${pts.length} of ${pts.length}`;
+    v.startTagless = () => { const d = next ? (S.tgDist > 0 ? S.tgDist : T.dist || 38) : 0; this.setState({ tgDist:d, tgTotal: S.tgTotal || d || 38 }); this.go('tgMap'); };
+
+    const begin = motion => { const sf0 = S.cfgStartFloor || 0; if (motion) this.startMotion(); this.setState({ rsStart:Date.now(), rsWalked:0, rsFloor:sf0, rsStartFloor:sf0, rsFloorSrc:'Set at start · barometer zeroed', rsLastFloorW:0, rsTrack:[{ x:0, y:0, f:sf0 }], rsHead: this.heading || 0, rsSeg:0, rsSegLen:14, rsNarr:true, rsDraft:[], rsHeard:'', rsInterim:'', bFloor:null, rsUndo:false, rsFloorFix:false, rsToast:'', rsToastT:0 }); this.go('rsWalk'); };
+    v.startSetup = () => begin(false); v.beginDesign = () => begin(true);
+
+    // setup · walk
+    const draft = S.rsDraft || [], rf = S.rsFloor || 0, el = S.rsStart ? Math.floor((Date.now()-S.rsStart)/1000) : 0;
+    const srOk = !!(window.SpeechRecognition || window.webkitSpeechRecognition) && !S.srDenied;
+    Object.assign(v, {
+      isRsWalk: S.screen === 'rsWalk', rsRouteName: T.name, rsFloorLabel: F[rf].label.toUpperCase(), rsAlt: `+${F[rf].alt.toFixed(1)}`,
+      rsFloors: F.map(f => ({ label:f.short, pick: () => this.setState({ rsFloor:f.k }), bg: f.k === rf ? '#e6e6e8' : '#15161a', color: f.k === rf ? '#0b0b0c' : '#c9cacd' })),
+      rsElapsed: mmss(el), rsWalked: `${Math.round(S.rsWalked||0)} m`, rsCount: String(draft.length),
+      rsNarrLabel: S.rsNarr ? 'Narration on' : 'Narration off', rsNarrColor: S.rsNarr ? '#ff5c52' : '#8a8b91', rsNarrDot: S.rsNarr ? '#e10600' : '#3a3b42',
+      rsQuote: !S.rsNarr ? 'Tap to turn narration on' : S.rsInterim ? `"${S.rsInterim}…"` : S.rsHeard ? `"${S.rsHeard.slice(-90)}"` : srOk ? 'Say what to check as you walk…' : 'Voice not available here. You can type at each checkpoint.',
+      toggleNarr: () => this.setState(x => ({ rsNarr: !x.rsNarr })),
+      rsExit: () => { this.stopSR(); this.go('patrolHome'); },
+      markCp: () => { const n = draft.length + 1; const text = (S.rsHeard || '').trim() || st.narrationSamples[(n-1) % st.narrationSamples.length]; this.setState({ cap:{ n, time: st.hhmm(new Date()), floor: rf, text, name:'', tasks:[], busy:true, photo:null }, rsHeard:'', rsInterim:'' }); this.go('rsCapture'); setTimeout(() => this.runAI(), 0); },
+      finishRoute: () => { if (!draft.length) return; this.setState({ bFloor: draft[0].floor }); this.go('rsBuilt'); },
+      finishDisabled: !draft.length, finishOpacity: draft.length ? 1 : .4,
+    });
+
+    const defSites = () => st.sites.map((x,i) => ({ id:'s'+i, name:x.name, addr:`${x.client} · ${x.type}`, patrols: i === 0 ? [{ name:T.name, points:pts.length, floors:new Set(pts.map(p => p.floor)).size }] : [] }));
+    const sitesCfg = (s && s.sitesCfg) || defSites();
+    const siteSel = sitesCfg.find(x => x.id === S.cfgSiteId) || sitesCfg[0];
+    const siteName = siteSel ? siteSel.name : 'Riverside DC', pName = S.cfgPatrol || T.name;
+    const add = S.cfgAdd || {}, setAdd = o => this.setState(x => ({ cfgAdd:{ ...(x.cfgAdd || {}), ...o } }));
+    const nm = (S.cfgNewName || '').trim(), existing = siteSel ? siteSel.patrols.map(p => p.name.toLowerCase()) : [];
+    const uniq = b => { let n = b, i = 2; while (existing.includes(n.toLowerCase())) n = `${b} ${i++}`; return n; };
+    const motionAvail = typeof DeviceMotionEvent !== 'undefined' && ('ontouchstart' in window) && !S.motionDenied;
+    const sf = S.cfgStartFloor || 0;
+    Object.assign(v, {
+      isCfgSite: S.screen === 'cfgSite', isCfgAddSite: S.screen === 'cfgAddSite', isCfgPatrol: S.screen === 'cfgPatrol', isCfgBegin: S.screen === 'cfgBegin',
+      cfgHasSites: sitesCfg.length > 0, cfgNoSites: sitesCfg.length === 0,
+      cfgSites: sitesCfg.map(x => ({ name:x.name, addr:x.addr || 'No address', count: x.patrols.length ? `${x.patrols.length} patrol${x.patrols.length === 1 ? '' : 's'}` : 'No patrols', pick: () => { this.setState({ cfgSiteId:x.id, cfgNewName:'' }); this.go('cfgPatrol'); } })),
+      goAddSite: () => { this.setState({ cfgAdd:{} }); this.go('cfgAddSite'); }, goSites: () => this.go('cfgSite'), goCfgPatrol: () => this.go('cfgPatrol'),
+      cfgAddName: add.name || '', setAddName: e => setAdd({ name:e.target.value }), cfgAddAddr: add.addr || '', setAddAddr: e => setAdd({ addr:e.target.value }),
+      cfgLocLabel: add.loc ? `${add.loc.lat.toFixed(5)}, ${add.loc.lng.toFixed(5)} · ±${add.loc.acc} m` : add.locBusy ? 'Finding your position…' : add.locErr || 'Pin the site where you are standing',
+      cfgLocBtn: add.loc ? 'Update' : 'Use my location', cfgLocColor: add.loc ? '#2ecc71' : '#5b5c63',
+      useLoc: () => { if (!navigator.geolocation) return setAdd({ locErr:'Location not available on this device' }); setAdd({ locBusy:true, locErr:'' }); navigator.geolocation.getCurrentPosition(p => setAdd({ locBusy:false, loc:{ lat:p.coords.latitude, lng:p.coords.longitude, acc:Math.round(p.coords.accuracy) } }), () => setAdd({ locBusy:false, locErr:'Location blocked · add an address instead' }), { enableHighAccuracy:true, timeout:10000 }); },
+      cfgAddOpacity: (add.name || '').trim() ? 1 : .4,
+      saveSite: () => { const name = (add.name || '').trim(); if (!name) return; const id = 'n' + Date.now(); const site = { id, name, addr: (add.addr || '').trim() || (add.loc ? 'Pinned by GPS' : ''), loc: add.loc || null, patrols:[] }; this.save(x => st.push({ ...x, sitesCfg:[...(x.sitesCfg || defSites()), site] }, { title:`Site added · ${name}`, sub:'Added from the officer app · D. Owusu', kind:'info' })); this.setState({ cfgSiteId:id, cfgAdd:null, cfgNewName:'' }); this.go('cfgPatrol'); },
+      cfgHasPatrols: !!(siteSel && siteSel.patrols.length),
+      cfgPatrols: (siteSel ? siteSel.patrols : []).map(p => ({ name:p.name, meta:`${p.points} checkpoint${p.points === 1 ? '' : 's'} · ${p.floors} floor${p.floors === 1 ? '' : 's'}`, pick: () => { this.setState({ cfgPatrol:p.name, cfgRe:true }); this.go('cfgBegin'); } })),
+      cfgNewName: S.cfgNewName || '', setNewName: e => this.setState({ cfgNewName:e.target.value }),
+      cfgChips: ['Night patrol','Lock-up','Opening','Perimeter','Fire check'].map(c => ({ label:c, pick: () => this.setState({ cfgNewName: uniq(c) }) })),
+      cfgNameOpacity: nm && !existing.includes(nm.toLowerCase()) ? 1 : .4,
+      cfgNameErr: nm && existing.includes(nm.toLowerCase()) ? 'That patrol already exists. Re-record it above, or pick another name.' : '',
+      cfgContinue: () => { if (!nm || existing.includes(nm.toLowerCase())) return; this.setState({ cfgPatrol:nm, cfgRe:false }); this.go('cfgBegin'); },
+      cfgBeginTitle: pName.toUpperCase(), cfgBeginSite: siteName, cfgRe: !!S.cfgRe,
+      cfgFloors: F.map(f => ({ label:f.label, pick: () => this.setState({ cfgStartFloor:f.k }), bg: f.k === sf ? '#e6e6e8' : '#15161a', color: f.k === sf ? '#0b0b0c' : '#c9cacd', border: f.k === sf ? '#e6e6e8' : '#3a3b42' })),
+      cfgSensors: [
+        ['Motion & compass', motionAvail ? 'Tracks the route from your steps and heading' : S.motionDenied ? 'Blocked · the walk will be simulated' : 'No motion sensors here · the walk is simulated', motionAvail],
+        ['Barometer', 'Detects stairs and lifts · native app only, simulated here', false],
+        ['Narration', srOk ? 'Say floors and checks as you walk' : 'Not available · type at each checkpoint', srOk],
+        ['Camera', 'Reference photo at every checkpoint', !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)],
+      ].map(([label, sub, ok]) => ({ label, sub, state: ok ? 'Ready' : 'Simulated', color: ok ? '#2ecc71' : '#e6a100' })),
+    });
+    const trk = S.rsTrack && S.rsTrack.length ? S.rsTrack : [{ x:0, y:0, f:rf }], lp = trk[trk.length-1];
+    let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
+    trk.forEach(p => { x0 = Math.min(x0,p.x); x1 = Math.max(x1,p.x); y0 = Math.min(y0,p.y); y1 = Math.max(y1,p.y); });
+    const wM = Math.max(x1-x0, 24), hM = Math.max(y1-y0, 18), kk = Math.min(84/wM, 59/hM), cx = (x0+x1)/2, cy = (y0+y1)/2;
+    const M = p => [50 + (p.x-cx)*kk, 37.5 + (p.y-cy)*kk], pct = p => { const q = M(p); return [q[0].toFixed(1), (q[1]/75*100).toFixed(1)]; };
+    const line = list => list.map(p => M(p).map(n => n.toFixed(1)).join(',')).join(' ');
+    const live = !!(this.lastRealStep && Date.now() - this.lastRealStep < 3000), walkedM = Math.round(S.rsWalked || 0);
+    const last = draft[draft.length-1], prev = draft[draft.length-2];
+    const back = (cp, keep) => { const i = cp ? (cp.trackI != null ? cp.trackI : trk.length-1) : 0; this.setState({ rsDraft:keep, rsTrack: trk.slice(0, i+1), rsWalked: cp ? (cp.walked != null ? cp.walked : S.rsWalked) : 0, rsFloor: cp ? cp.floor : (S.rsStartFloor || 0), rsFloorSrc: cp ? `Restored from checkpoint ${keep.length}` : 'Set at start · barometer zeroed', rsUndo:false, rsSeg:0, rsToast: cp ? `Back at checkpoint ${keep.length} · ${cp.name}. Carry on from there.` : 'Back at the start point.', rsToastT: Date.now() }); };
+    const undoOpts = [];
+    if (last) {
+      const since = Math.max(0, Math.round((S.rsWalked || 0) - (last.walked != null ? last.walked : (S.rsWalked || 0))));
+      undoOpts.push({ title:`Return to checkpoint ${draft.length} · ${last.name}`, sub:`Keeps it and discards the ${since} m walked since. Walk back there, then carry on.`, color:'#e6e6e8', act: () => back(last, draft) });
+      undoOpts.push({ title:`Delete checkpoint ${draft.length}`, sub: prev ? `Removes ${last.name} and returns to checkpoint ${draft.length-1} · ${prev.name}.` : `Removes ${last.name} and returns to the start point.`, color:'#ff5c52', act: () => back(prev, draft.slice(0,-1)) });
+    } else undoOpts.push({ title:'Restart from the start point', sub:`Discards the ${walkedM} m walked so far.`, color:'#e6e6e8', act: () => back(null, []) });
+    const st0 = trk[0], sp = pct(st0), yp = pct(lp);
+    Object.assign(v, {
+      rsTitle: pName.toUpperCase(), rsSiteName: siteName, rsRouteName: pName, rsNextN: String(draft.length + 1),
+      rsPath: line(trk.filter(p => p.f === rf)), rsOther: line(trk.filter(p => p.f !== rf)),
+      rsShowStart: st0.f === rf, rsStartX: sp[0], rsStartY: sp[1], rsYouX: yp[0], rsYouY: yp[1], rsHeadDeg: Math.round(S.rsHead || 0),
+      rsPins: draft.map((p,i) => ({ ...p, i })).filter(p => p.floor === rf && p.tx != null).map(p => { const q = pct({ x:p.tx, y:p.ty }); return { x:q[0], y:q[1], num:String(p.i+1) }; }),
+      rsTrackLabel: live ? 'Live motion' : 'Simulated walk', rsTrackDot: live ? '#2ecc71' : '#e6a100',
+      rsFloorSrc: S.rsFloorSrc || 'Set at start · barometer zeroed', rsFloorFix: !!S.rsFloorFix, toggleFloorFix: () => this.setState(x => ({ rsFloorFix: !x.rsFloorFix })),
+      rsFloors: F.map(f => ({ label:f.short, pick: () => this.setFloor(f.k, 'Set manually'), bg: f.k === rf ? '#e6e6e8' : '#15161a', color: f.k === rf ? '#0b0b0c' : '#c9cacd' })),
+      rsToastOn: !!S.rsToast && Date.now() - (S.rsToastT || 0) < 6000, rsToast: S.rsToast || '',
+      rsUndoBtn: last ? 'Back to checkpoint' : 'Restart', openUndo: () => this.setState({ rsUndo:true }), closeUndo: () => this.setState({ rsUndo:false }),
+      rsUndoOpen: !!S.rsUndo, rsUndoOpts: undoOpts,
+      rsExit: () => { this.stopSR(); this.stopMotion(); this.go('patrolHome'); },
+      capPos: `${Math.round(Math.hypot(lp.x, lp.y))} m from start · anchor saved`,
+    });
+
+    // setup · capture
+    const cap = S.cap || {};
+    Object.assign(v, {
+      isRsCapture: S.screen === 'rsCapture', capN: String(cap.n || 1), capTime: cap.time || '', capFloor: F[cap.floor || 0].label,
+      capName: cap.name || '', setCapName: e => { const val = e.target.value; this.setState(x => ({ cap:{ ...x.cap, name:val, nameTouched:true } })); },
+      capText: cap.text || '', setCapText: e => { const val = e.target.value; this.setState(x => ({ cap:{ ...x.cap, text:val } })); },
+      capAiLabel: cap.busy ? 'AI is reading that…' : `AI turned that into ${(cap.tasks||[]).length} task${(cap.tasks||[]).length === 1 ? '' : 's'}`,
+      capSpinner: cap.busy ? React.createElement('span', { style:{ width:14, height:14, border:'2px solid rgba(255,92,82,.3)', borderTopColor:'#ff5c52', borderRadius:'50%', animation:'rspin .8s linear infinite', display:'inline-block' } }) : null,
+      capTasks: (cap.tasks||[]).map((t,i) => ({ q:t.q, type: t.t === 'photo' ? 'Photo' : 'Yes / No', remove: () => this.setState(x => ({ cap:{ ...x.cap, tasks: x.cap.tasks.filter((_,j) => j !== i) } })) })),
+      capLive: !cap.photo && !!S.camOk, capHasPhoto: !!cap.photo, capPhoto: cap.photo || '', capNoCam: !cap.photo && !S.camOk,
+      capShutterLabel: cap.photo ? 'Retake' : 'Capture', capSample: st.photoFor((cap.name || '') + ' ' + (cap.text || '')),
+      capShutter: () => { if (cap.photo) return this.setState(x => ({ cap:{ ...x.cap, photo:null } })); const p = this.snap(); if (p) this.setState(x => ({ cap:{ ...x.cap, photo:p } })); },
+      capBack: () => this.go('rsWalk'), capRedo: () => this.runAI(),
+      capSave: () => {
+        const photo = cap.photo || this.snap() || st.photoFor((cap.name || '') + ' ' + (cap.text || '')); const rooms = F[cap.floor||0].rooms; const room = rooms[draft.filter(p => p.floor === (cap.floor||0)).length % rooms.length];
+        const name = (cap.name || '').trim() || `Checkpoint ${cap.n}`;
+        const p = { name, floor: cap.floor||0, x: Math.round(room.x + room.w*(.3 + Math.random()*.4)), y: Math.round(room.y + room.h*(.35 + Math.random()*.4)), trackI: Math.max(0, (S.rsTrack || []).length - 1), walked: S.rsWalked || 0, tx: ((S.rsTrack || []).slice(-1)[0] || { x:0 }).x, ty: ((S.rsTrack || []).slice(-1)[0] || { y:0 }).y, low: /car park|stair|basement|b1|cellar/i.test(name), tasks: (cap.tasks && cap.tasks.length) ? cap.tasks : [{ q:'All secure?', t:'yesno' }], photo };
+        this.setState({ rsDraft:[...draft, p], cap:null }); this.go('rsWalk');
+      },
+    });
+    // setup · built
+    const used = [...new Set(draft.map(p => p.floor))].sort(), bf = S.bFloor != null ? S.bFloor : (used[0] || 0), bp = plan(bf, draft, null), low = draft.filter(p => p.low).map(p => p.name);
+    Object.assign(v, {
+      isRsBuilt: S.screen === 'rsBuilt',
+      bStats: `${draft.length} point${draft.length === 1 ? '' : 's'} · ${used.length} floor${used.length === 1 ? '' : 's'} · ${Math.round(S.rsWalked||0)} m · ${Math.max(1, Math.round(el/60))} min`,
+      bFloors: used.map(k => ({ label: F[k].label.toUpperCase(), pick: () => this.setState({ bFloor:k }), color: k === bf ? '#fff' : '#6b6c72', bar: k === bf ? '#e10600' : 'transparent' })),
+      bRooms: bp.rooms, bRoute: bp.route, bPts: bp.pts,
+      bList: draft.map((p,i) => ({ ...p, i })).filter(p => p.floor === bf).map(p => ({ num: String(p.i+1).padStart(2,'0'), name: p.name, tasks: `${p.tasks.length} task${p.tasks.length === 1 ? '' : 's'}` })),
+      bLow: low.length > 0, bLowTitle: `${low.length} low-light spot${low.length === 1 ? '' : 's'} found`, bLowText: `${low.join(' and ')}. Add a QR anchor at each to keep position locked.`,
+      keepWalking: () => this.go('rsWalk'),
+      publish: () => { if (!draft.length) return; const d = 32; this.save(x => st.push({ ...x, tagless:{ name:pName, published:true, idx:0, dist:d, points:draft }, sitesCfg:(x.sitesCfg || defSites()).map(z => z.id !== (siteSel && siteSel.id) ? z : { ...z, patrols:[...z.patrols.filter(p => p.name !== pName), { name:pName, points:draft.length, floors:used.length }] }) }, { title:`Patrol published · ${pName}`, sub:`${siteName} · ${draft.length} points · ${used.length} floor${used.length === 1 ? '' : 's'}`, kind:'info' })); this.stopMotion(); this.setState({ tgDist:d, tgTotal:d, rsDraft:[] }); this.go('tgMap'); },
+    });
+    // patrol · map / AR / verify
+    const tot = S.tgTotal || T.dist || 38, dist = S.tgDist != null ? S.tgDist : (T.dist || 38);
+    v.isTgMap = S.screen === 'tgMap'; v.isTgAR = S.screen === 'tgAR'; v.isTgMatch = S.screen === 'tgMatch';
+    v.tgRoute = T.name.toUpperCase(); v.tgDone = `${idx} of ${pts.length}`; v.tgPct = Math.round(idx/pts.length*100);
+    v.tgHasNext = !!next; v.tgComplete = !next; v.camOk = !!S.camOk; v.camNo = !S.camOk;
+    v.tgBack = () => this.go('patrol'); v.showMap = () => this.go('tgMap');
+    v.tgRestart = () => { this.save(x => ({ ...x, tagless:{ ...((x.tagless) || st.taglessDefault()), idx:0 } })); this.spoken = new Set(); this.setState({ tgDist:32, tgTotal:32, gWalk:0 }); };
+    if (next) {
+      const mf = next.floor, prev = pts[idx-1], fromStair = !(prev && prev.floor === mf), from = fromStair ? { x:88, y:64, name:'Stairwell B' } : prev;
+      const CY = st.corridorY, path = [[from.x,from.y],[from.x,CY],[next.x,CY],[next.x,next.y]];
+      const segM = (p,q) => Math.round(Math.hypot((q[0]-p[0])*.6, (q[1]-p[1])*.42));
+      const s1 = segM(path[0],path[1]), s2 = segM(path[1],path[2]), s3 = segM(path[2],path[3]), legM = Math.max(1, s1 + s2 + s3);
+      const west = next.x < from.x, side = (next.y < CY) === west ? 'right' : 'left';
+      const steps = [
+        { icon:'↑', text: fromStair ? (mf === 0 ? 'Leave Stairwell B into the corridor' : `Take Stairwell B up to ${F[mf].label}`) : `From ${from.name}, step into the corridor`, m: `${Math.max(1,s1)} m` },
+        { icon: west ? '←' : '→', text: `Turn ${west ? 'left' : 'right'} along the corridor`, m: `${s2} m` },
+        { icon:'●', text: `${next.name} on your ${side}`, m: `${Math.max(1,s3)} m` },
+      ];
+      const yx = from.x, yy = from.y, mp = plan(mf, pts, idx), ph = next.photo || st.photoFor(next.name);
+      const instr = steps[1].text + '.';
+      const noun = next.name.replace(/\(.*\)/,'').trim().split(' ').pop().toLowerCase();
+      const mt = S.tgMatchT ? (Date.now() - S.tgMatchT)/1000 : 0, matched = mt >= 3, tasks = next.tasks || [], ti = S.tgTaskI || 0, task = tasks[ti];
+      Object.assign(v, {
+        tgFloor: F[mf].label.toUpperCase(), mRooms: mp.rooms, mRoute: mp.route, mPts: mp.pts, mLeg: path.map(q => `${q[0]},${(q[1]*.7).toFixed(1)}`).join(' '),
+        youX: yx.toFixed(1), youY: yy.toFixed(1), pinX: next.x.toFixed(1), pinY: next.y.toFixed(1), youPulse: ring,
+        tgNext: next.name, tgDist: `${legM} m`, tgInstr: `Due in ${Math.max(2, Math.ceil(legM/1.4/60) + 2)} min · ${F[mf].label}`, tgSteps: steps, tgPhoto: ph, arPhoto: 'https://images.unsplash.com/photo-1694159591442-b53c323d9367?w=900&q=65&auto=format&fit=crop', arMeters: `${s2} m`,
+        showAR: () => this.go('tgAR'), tgVerify: () => this.enterMatch(),
+        arDeg: 0, arInstr: `Straight ahead along the corridor, then ${next.name} on your ${side}.`,
+        mName: next.name.toUpperCase(), mSub: `Checkpoint ${idx+1} of ${pts.length} · point the camera at the ${noun}`,
+        mSetupPhoto: ph, mHasSetup: true, mNoSetup: false, mMatched: matched, mFrame: matched ? '#2ecc71' : '#26272c',
+        mChecks: [['Position within 0.5 m',1],[`${F[mf].label} · barometer`,2],['Camera view matches setup photo',3]].map(([label,t]) => ({ label, mark: mt >= t ? '✓' : '…', color: mt >= t ? '#2ecc71' : '#5b5c63' })),
+        mHasTask: !!task, mTaskLabel: `Task ${ti+1} of ${tasks.length}`, mTaskQ: task ? task.q : '', mIsYesNo: !!task && task.t !== 'photo', mIsPhoto: !!task && task.t === 'photo',
+        mYesLabel: task && /lock/i.test(task.q) ? 'Yes, locked' : 'Yes',
+        mYes: () => this.setState(x => ({ tgTaskI:(x.tgTaskI||0) + 1 })),
+        mNo: () => { const q = task.q; this.save(x => st.push({ ...x, incidents:[{ id:`IR-${4472 + x.incidents.length}`, site:'Riverside DC', type:'Other', title:`${next.name}: ${q.replace('?','')} (No)`, officer:'D. Owusu', time: st.hhmm(new Date()), photos:1, status:'New' }, ...x.incidents] }, { title:`Checkpoint exception · ${next.name}`, sub:`${q} No · reported to control`, kind:'warn' })); this.setState(x => ({ tgTaskI:(x.tgTaskI||0) + 1 })); },
+        mPhoto: () => { this.snap(); this.setState(x => ({ tgTaskI:(x.tgTaskI||0) + 1 })); },
+        mTasksDone: !task, mDoneText: `${tasks.length} of ${tasks.length} task${tasks.length === 1 ? '' : 's'} answered`,
+        mConfirmBg: matched && !task ? '#e10600' : '#3a3b42',
+        mConfirm: () => { if (!(matched && !task)) return; const name = next.name; this.save(x => { const T0 = x.tagless || st.taglessDefault(); return st.push({ ...x, tagless:{ ...T0, idx:T0.idx + 1 } }, { title:`Checkpoint verified · ${name}`, sub:`D. Owusu · tagless · ±0.4 m · view matched · ${tasks.length} task${tasks.length === 1 ? '' : 's'}`, kind:'ok' }); }); const nd = Math.round(25 + Math.random()*35); this.setState({ tgDist:nd, tgTotal:nd, tgMatchT:null, tgTaskI:0, gWalk:0 }); this.go('tgMap'); },
+      });
+
+
+      const R = (x, y) => [(100 - y) * .7, x], S2 = q => R(q[0], q[1]).map(n => n.toFixed(2)).join(',');
+      const mlen = (p, q) => Math.round(Math.hypot((q[0]-p[0])*.6, (q[1]-p[1])*.42));
+      const prevP = pts[idx-1], climb = !!(prevP && prevP.floor !== mf), up = climb && mf > prevP.floor, STAIR = [88, 64];
+      const pathA = climb ? [[prevP.x, prevP.y],[prevP.x, CY],[STAIR[0], CY],[STAIR[0], STAIR[1]]] : null;
+      const segA = climb ? [mlen(pathA[0],pathA[1]), mlen(pathA[1],pathA[2]), mlen(pathA[2],pathA[3])] : [0,0,0];
+      const A = segA[0] + segA[1] + segA[2], C = climb ? 8 : 0, total = A + C + legM;
+      const gwT = Math.min(total, S.gWalk || 0), phase = climb && gwT < A ? 'A' : climb && gwT < A + C ? 'C' : 'B';
+      const fromF = climb ? prevP.floor : mf, fShown = phase === 'A' ? fromF : mf, fCur = phase === 'B' ? mf : fromF;
+      const dh = climb ? F[mf].alt - F[fromF].alt : 0, cFrac = phase === 'C' ? (gwT - A) / C : phase === 'B' ? 1 : 0;
+      const alt = (climb ? F[fromF].alt : F[mf].alt) + dh * cFrac;
+      const walkOn = (P0, L0, w) => { let acc = 0; for (let i = 0; i < 3; i++) { if (i === 2 || (L0[i] > 0 && w < acc + L0[i])) { const f = L0[i] > 0 ? Math.max(0, Math.min(1, (w - acc) / L0[i])) : 1; return { pos:[P0[i][0] + (P0[i+1][0]-P0[i][0])*f, P0[i][1] + (P0[i+1][1]-P0[i][1])*f], segI:i }; } acc += L0[i]; } };
+      const P = phase === 'A' ? pathA : path, L = phase === 'A' ? segA : [s1, s2, s3];
+      const wl = phase === 'A' ? gwT : phase === 'C' ? 0 : gwT - A - C;
+      const wo = phase === 'C' ? { pos: STAIR, segI: 2 } : walkOn(P, L, wl), pos = wo.pos, segI = wo.segI;
+      let dA = R(P[segI][0], P[segI][1]), dB = R(P[segI+1][0], P[segI+1][1]);
+      if (Math.hypot(dB[0]-dA[0], dB[1]-dA[1]) < .01) { dA = R(P[2][0], P[2][1]); dB = R(P[3][0], P[3][1]); }
+      const deg = Math.atan2(dB[0]-dA[0], -(dB[1]-dA[1])) * 180 / Math.PI;
+      const onF2 = pts.map((p,i) => ({ ...p, i })).filter(p => p.floor === fShown);
+      const routeQ = onF2.reduce((a2, p, i) => i === 0 ? [[p.x,p.y]] : a2.concat([[onF2[i-1].x, CY],[p.x, CY],[p.x,p.y]]), []);
+      const allR = P.map(q => R(q[0], q[1]));
+      let bx0 = Infinity, bx1 = -Infinity, by0 = Infinity, by1 = -Infinity; allR.forEach(q => { bx0 = Math.min(bx0,q[0]); bx1 = Math.max(bx1,q[0]); by0 = Math.min(by0,q[1]); by1 = Math.max(by1,q[1]); });
+      const VH = Math.max((by1-by0)/0.42, (bx1-bx0)/0.8/0.5, 44), VW = VH * .5, u = VW / 70;
+      const vx = (bx0+bx1)/2 - VW/2, vy = (by0+by1)/2 - VH*.45;
+      const yp2 = R(pos[0], pos[1]), f2 = n => (n*u).toFixed(2), sR = R(STAIR[0], STAIR[1]);
+      const rem = Math.max(0, Math.round((A - Math.min(gwT, A)) + (legM - Math.max(0, gwT - A - C))));
+      const arrived = phase === 'B' && legM - wl < .5, onNew = phase === 'B' && climb && wl < 4 && !arrived;
+      const aWest = climb && STAIR[0] < prevP.x, aSide = (STAIR[1] < CY) === aWest ? 'right' : 'left', toFl = `${up ? 'up' : 'down'} to ${F[mf].label}`;
+      let icon, big, sub;
+      if (arrived) { icon = '✓'; big = "You've arrived"; sub = next.name; }
+      else if (phase === 'A') {
+        if (segI === 0) { icon = aWest ? '←' : '→'; big = `Turn ${aWest ? 'left' : 'right'}`; sub = `in ${Math.max(1, Math.round(segA[0] - wl))} m · towards Stairwell B`; }
+        else if (segI === 1) { icon = aSide === 'left' ? '←' : '→'; big = `Stairwell B on your ${aSide}`; sub = `in ${Math.max(1, Math.round(segA[0] + segA[1] - wl))} m · then ${toFl}`; }
+        else { icon = '↑'; big = 'Stairwell B ahead'; sub = `${Math.max(1, Math.round(A - wl))} m · then ${toFl}`; }
+      }
+      else if (phase === 'C') { icon = up ? '↑' : '↓'; big = `Take the stairs ${toFl}`; sub = `${up ? '+' : '−'}${Math.abs(dh*cFrac).toFixed(1)} of ${Math.abs(dh).toFixed(1)} m · barometer`; }
+      else if (onNew) { icon = '✓'; big = `You're on ${F[mf].label}`; sub = 'Leave Stairwell B into the corridor'; }
+      else if (segI === 0) { icon = west ? '←' : '→'; big = `Turn ${west ? 'left' : 'right'}`; sub = `in ${Math.max(1, Math.round(s1 - wl))} m · ${fromStair ? (mf === 0 ? 'out of Stairwell B' : `at the ${F[mf].label} landing`) : 'into the corridor'}`; }
+      else if (segI === 1) { icon = side === 'left' ? '←' : '→'; big = `${next.name} on your ${side}`; sub = `in ${Math.max(1, Math.round(s1 + s2 - wl))} m`; }
+      else { icon = '↑'; big = `${next.name} ahead`; sub = `${rem} m`; }
+      const stairActive = phase !== 'B', sw = stairActive ? 13 : 8;
+      this._geo = { idx, name: next.name, climb, up, toLabel: F[mf].label, A, C, segA, aWest, s1, s2, s3, legM, total, walkM: A + legM, west, side };
+      Object.assign(v, {
+        gView: `${vx.toFixed(2)} ${vy.toFixed(2)} ${VW.toFixed(2)} ${VH.toFixed(2)}`,
+        gRooms: F[fShown].rooms.map(rm => { const x = (100 - (rm.y + rm.h)) * .7; return { x: x.toFixed(2), y: rm.x, w: (rm.h*.7).toFixed(2), h: rm.w, n: rm.n, lx: (x + 1.2*u).toFixed(2), ly: (rm.x + 3*u).toFixed(2) }; }),
+        gRoute: routeQ.map(S2).join(' '), gAhead: phase === 'C' ? '' : [pos].concat(P.slice(segI+1)).map(S2).join(' '), gTrail: phase === 'C' ? '' : P.slice(0, segI+1).concat([pos]).map(S2).join(' '),
+        gSw: f2(.25), gFsS: f2(1.9), gDot: f2(.9), gDash: `0 ${f2(2.2)}`, gDotB: f2(1.5), gDashB: `0 ${f2(2.8)}`, gTrailW: f2(.9),
+        gPins: onF2.map(p => { const q = R(p.x, p.y), done = p.i < idx, now = p.i === idx; return { cx: q[0].toFixed(2), cy: q[1].toFixed(2), ty: (q[1] + (now ? .8 : .66)*u).toFixed(2), r: f2(now ? 3 : 2.3), sw: f2(now ? .6 : .4), fs: f2(now ? 2.3 : 1.9), num: done ? '✓' : String(p.i+1), fill: done ? '#1c1d21' : now ? '#e10600' : '#0b0b0c', stroke: done ? '#3a3b42' : now ? '#fff' : '#c9cacd', tc: done ? '#6b6c72' : '#fff' }; }),
+        gStairT: `translate(${sR[0].toFixed(2)} ${(sR[1] + 4.5*u).toFixed(2)})`, gStairX: f2(-sw/2), gStairY: f2(-2), gStairW: f2(sw), gStairH: f2(4), gStairRx: f2(.8),
+        gStairFill: stairActive ? '#e6a100' : '#26272c', gStairTc: stairActive ? '#0b0b0c' : '#c9cacd', gStairFs: f2(2), gStairTy: f2(.7),
+        gStairLabel: stairActive ? `Stairs ${up ? '↑' : '↓'} ${F[mf].short}` : 'Stairs',
+        gYouT: `translate(${yp2[0].toFixed(2)} ${yp2[1].toFixed(2)}) rotate(${deg.toFixed(0)})`, gHalo: f2(4.5), gYouR: f2(1.7), gYouSw: f2(.6), gArrow: `M0 ${f2(-4.4)} L${f2(1.7)} ${f2(-2)} L${f2(-1.7)} ${f2(-2)} Z`,
+        gIcon: icon, gIconBg: arrived || onNew ? '#2ecc71' : '#e10600', gBig: big, gSub: sub,
+        tgFloor: F[fCur].label.toUpperCase(),
+        gRail: F.slice().reverse().map(f => { const cur = f.k === fCur, tgt = f.k === mf && !cur; return { label: f.short, bg: cur ? '#e6e6e8' : 'rgba(11,11,12,.85)', color: cur ? '#0b0b0c' : '#8a8b91', border: tgt ? '#e10600' : cur ? '#e6e6e8' : '#26272c', mark: tgt ? (up ? '↑' : '↓') : '' }; }),
+        gAlt: `${alt >= 0 ? '+' : '−'}${Math.abs(alt).toFixed(1)} m`, gBaroP: `${(1013.2 - alt*0.12 + Math.sin(Date.now()/2500)*0.04).toFixed(1)} hPa`, gBaroTrendC: phase === 'C' ? '#e6a100' : '#2ecc71',
+        gClimbing: phase === 'C', gClimbPct: Math.round(cFrac * 100), gClimbBig: `${up ? '↑' : '↓'} ${F[mf].label.toUpperCase()}`, gClimbSub: sub,
+        gRem: `${rem} m`, gCpOf: `${idx+1} of ${pts.length} · ${F[mf].label}`, gVerifyLabel: arrived ? 'Verify checkpoint' : "I'm at the checkpoint",
+        gLock: !!S.gLock, gLockOn: () => this.setState({ gLock:true, gUnPct:0 }),
+        gUnPct: S.gUnPct || 0,
+        gUnDown: e => { e.preventDefault(); const t0 = Date.now(); clearInterval(this.unT); this.unT = setInterval(() => { const p = Math.min(100, (Date.now()-t0)/8); this.setState({ gUnPct:p }); if (p >= 100) { clearInterval(this.unT); this.setState({ gLock:false, gUnPct:0 }); } }, 40); },
+        gUnUp: () => { clearInterval(this.unT); if (this.state.gLock) this.setState({ gUnPct:0 }); },
+        gVoiceLabel: this.isMuted() ? 'Muted' : 'Voice on', gVoiceColor: this.isMuted() ? '#ff5c52' : '#e6e6e8', gVoiceBorder: this.isMuted() ? '#e10600' : '#26272c', gMuted: this.isMuted(), gUnmuted: !this.isMuted(), gVoiceLabel2: this.isMuted() ? 'voice muted' : 'voice on',
+        gToggleVoice: () => { const m = !this.isMuted(); this.muted = m; try { localStorage.setItem('response.mute', m ? '1' : '0'); } catch (e) {} if (m) { try { window.speechSynthesis.cancel(); } catch (e) {} } this.setState({ gVoice: !m }, () => { if (!m) this.say('Voice prompts on.'); }); },
+        gLastSaidQ: S.gLastSaid ? `"${S.gLastSaid}"` : '',
+      });
+
+    } else this._geo = null;
+    return v;
+  }
   save(fn){ const ns = fn(this.state.s || this.store.initial()); this.store.save(ns); this.setState({ s: ns }); }
   go(screen){ this.setState({ screen }); }
   openCheckCall(){ this.setState({ cc: true, ccDeadline: Date.now() + 5*60*1000 }); }
   ccMiss(){ this.setState({ cc: false }); this.save(s => this.store.push(s, { title:'Missed check call · D. Owusu', sub:'Riverside DC · reminder sent', kind:'warn' })); }
+  msgVals(){
+    const S = this.state, seed = [
+      { from:'c', text:'Evening Daniel. Contractor access to Bay 4 is booked from 23:00 tonight. Details are in Site docs.', t:'21:58' },
+      { from:'c', text:'Please confirm when the Bay 4 roller door is shut after they leave.', t:'22:40' },
+    ], list = S.msgs || seed;
+    const send = () => {
+      const t = (this.state.msgDraft || '').trim(); if (!t) return;
+      const hm = () => new Date().toTimeString().slice(0,5);
+      this.setState({ msgs:[...(this.state.msgs || seed), { from:'me', text:t, t:hm() }], msgDraft:'' });
+      this.save(x => this.store.push(x, { title:'Message · D. Owusu', sub:t.slice(0, 80), kind:'info' }));
+      clearTimeout(this.msgT); this.msgT = setTimeout(() => this.setState(x => ({ msgs:[...(x.msgs || seed), { from:'c', text:'Received, thanks Daniel.', t:hm() }] })), 3000);
+    };
+    return {
+      isMessages: S.screen === 'messages', msgUnread: !S.msgRead,
+      msgList: list.slice().reverse().map(m => { const me = m.from === 'me'; return { text:m.text, align: me ? 'flex-end' : 'flex-start', bg: me ? '#e6e6e8' : '#15161a', color: me ? '#0b0b0c' : '#e6e6e8', border: me ? '#e6e6e8' : '#26272c', meta: `${me ? 'You' : 'Control room'} · ${m.t}` }; }),
+      msgDraft: S.msgDraft || '', setMsgDraft: e => this.setState({ msgDraft:e.target.value }), msgKey: e => { if (e.key === 'Enter') send(); }, sendMsg: send,
+      goMessages: () => { this.setState({ msgRead:true }); this.go('messages'); },
+    };
+  }
+
   renderVals(){
     const { screen, s, docs, tick } = this.state;
     const st = this.store; const now = new Date();
     const scanned = s ? s.scanned : 5; const route = st ? st.route : [];
     const nextCp = route[scanned] || 'Route complete';
     const sos = s && s.sos;
-    const tabs = [['Shift','home'],['Patrol','patrol'],['Report','incident'],['Me','profile']].map(([name,sc]) => ({ name, go: () => this.go(sc), color: screen===sc || (sc==='home'&&['scan','logged'].includes(screen)) ? '#e6e6e8' : '#5b5c63', bar: screen===sc ? '#e10600' : 'transparent' }));
+    const PAT = ['patrolHome','tgMap','tgAR','tgMatch','cfgSite','cfgAddSite','cfgPatrol','cfgBegin','rsWalk','rsCapture','rsBuilt'], grp = sc => sc === 'patrolHome' ? PAT.includes(screen) : sc === 'home' ? ['home','brief','messages'].includes(screen) : screen === sc;
+    const tabs = [['Home','home'],['Patrol','patrolHome'],['Report','incident'],['Me','profile']].map(([name,sc]) => ({ name, go: () => this.go(sc), color: grp(sc) ? '#e6e6e8' : '#5b5c63', bar: grp(sc) ? '#e10600' : 'transparent' }));
     const docNames = ['Assignment instructions v4','Fire procedure · Block B','New: Bay 4 contractor access'];
     const docsRead = docs.filter(Boolean).length;
     const shiftLeft = (() => { if(!s||!s.shiftStart) return '8h 00m'; const ms = 8*3600e3 - (Date.now()-s.shiftStart); const h=Math.max(0,Math.floor(ms/3600e3)), m=Math.max(0,Math.floor(ms%3600e3/60e3)); return `${h}h ${String(m).padStart(2,'0')}m`; })();
@@ -266,8 +1034,10 @@ class Component extends DCLogic {
     const ring = (color) => React.createElement('span', { style:{ position:'absolute', inset:0, borderRadius:'50%', border:`2px solid ${color}`, animation:'rpulse 1.6s ease-out infinite' } });
     return {
       topInset: (this.props.topInset ?? (new URLSearchParams(location.search).get('inset') || 0)),
-      isSignin: screen==='signin', isBrief: screen==='brief', isHome: screen==='home', isPatrol: screen==='patrol', isScan: screen==='scan', isLogged: screen==='logged', isIncident: screen==='incident', isProfile: screen==='profile',
-      tabs, isSos: !!sos, showTabs: ['home','patrol','incident','profile'].includes(screen), showCheckCall: this.state.cc && !sos,
+      ...this.taglessVals(),
+      ...this.msgVals(),
+      isSignin: screen==='signin', isBrief: screen==='brief', isHome: screen==='home', isPatrolHome: screen==='patrolHome', isPatrol: screen==='patrol', isScan: screen==='scan', isLogged: screen==='logged', isIncident: screen==='incident', isProfile: screen==='profile',
+      tabs, isSos: !!sos, showTabs: screen !== 'signin' && !sos, showCheckCall: this.state.cc && !sos,
       clockHM: st ? st.hhmm(now) : '', clockHMS: st ? st.hhmmss(now) : '',
       phone: this.state.phone, pass: this.state.pass, setPhone: e => this.setState({ phone: e.target.value }), setPass: e => this.setState({ pass: e.target.value }), signinErr: this.state.signinErr,
       userName: this.state.user ? this.state.user.name : 'Daniel',
@@ -304,8 +1074,8 @@ class Component extends DCLogic {
       sosBg: this.state.sosPct>0 ? '#b80500' : '#e10600', sosPct: this.state.sosPct, sosHint: this.state.sosPct>0 ? 'Keep holding…' : 'Hold 3 seconds',
       sosDown: e => { e.preventDefault(); const t0 = Date.now(); clearInterval(this.sosT); this.sosT = setInterval(() => { const p = Math.min(100, (Date.now()-t0)/30); this.setState({ sosPct:p }); if (p>=100) { clearInterval(this.sosT); this.setState({ sosPct:0 }); this.startSos(); } }, 50); },
       sosUp: () => { clearInterval(this.sosT); if (this.state.sosPct>0) this.setState({ sosPct:0 }); }, noop: e => e.preventDefault(),
-      sosElapsed: mmss(sosEl), sosCode: this.state.sosCodeV, setSosCode: e => this.setState({ sosCodeV: e.target.value }),
-      sosCancel: () => { if (this.state.sosCodeV.length < 4) return; this.setState({ sosCodeV:'' }); this.save(x => st.push({ ...x, sos:false, sosStart:null }, { title:'SOS cancelled by officer · D. Owusu', sub:'Passcode verified · Riverside DC', kind:'info' })); },
+      sosElapsed: mmss(sosEl), sosCode: this.state.sosCodeV, setSosCode: e => this.setState({ sosCodeV: e.target.value.replace(/\D/g,'').slice(0,4), sosErr:false }), sosErr: !!this.state.sosErr,
+      sosCancel: () => { if (this.state.sosCodeV !== '1234') return this.setState({ sosErr:true, sosCodeV:'' }); this.setState({ sosCodeV:'', sosErr:false }); this.save(x => st.push({ ...x, sos:false, sosStart:null }, { title:'SOS cancelled by officer · D. Owusu', sub:'Passcode verified · Riverside DC', kind:'info' })); },
       signOut: () => { localStorage.removeItem('response.officer'); this.setState({ user:null }); this.store.reset(); this.setState({ docs:[true,true,false] }); this.go('signin'); },
     };
   }

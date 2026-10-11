@@ -243,6 +243,7 @@ class Component extends DCLogic {
   state = { page:'control', sitesView:'list', mapOpen:true, authed:false, email:'', pw:'', loginErr:false, s:null, tick:0, sosAck:false };
   async componentDidMount(){
     this.store = await import('./store.js');
+    window.addEventListener('message', this.onMsgP);
     let user = null; try { user = JSON.parse(sessionStorage.getItem('response.controlUser')); } catch (e) {}
     this.setState({ s: this.store.load(), user, authed: !!user });
     this.unsub = this.store.subscribe(ns => this.setState({ s: ns }));
@@ -252,6 +253,13 @@ class Component extends DCLogic {
     }, 1000);
   }
   componentWillUnmount(){ clearInterval(this.timer); if (this.unsub) this.unsub(); }
+  onMsgP = e => {
+    if (e.origin !== location.origin || !e.data || e.data.type !== 'response:portal') return;
+    const pg = e.data.page;
+    if (pg === 'login') { sessionStorage.removeItem('response.control'); sessionStorage.removeItem('response.controlUser'); return this.setState({ authed:false, user:null }); }
+    if (!this.state.authed) { const u = { name:'Roberto', email:'roberto@recreateteam.com' }; sessionStorage.setItem('response.control','1'); sessionStorage.setItem('response.controlUser', JSON.stringify(u)); this.setState({ authed:true, user:u }); }
+    this.setState({ page:pg });
+  };
   async doLogin(){
     const u = await this.store.verify(this.state.email, this.state.pw, 'controller');
     if (!u) return this.setState({ loginErr:true });
@@ -267,7 +275,7 @@ class Component extends DCLogic {
     const navDef = [['Control room','control'],['Alarm jobs','job',alarms],['Rota','rota'],['Officers','officers'],['Sites','sites'],['Incidents','incidents', s ? s.incidents.filter(i=>i.status!=='Closed').length : 0],['Reports',null],['Compliance',null,2],['Settings',null]];
     const dot = k => ({ alarm:'#e10600', warn:'#e6a100', ok:'#2ecc71', info:'#8a8b91' })[k] || '#8a8b91';
     const siteMeta = { Review:['#fde8e7','#c40500'], Watch:['#fff4d6','#8a5a00'], Good:['#e6f7ec','#2a8f4f'] };
-    const scanned = s ? s.scanned : 5;
+    const scanned = s && s.tagless ? s.tagless.idx : 3; const scanTotal = s && s.tagless ? s.tagless.points.length : 12;
     const rotaDef = [
       ['DO','Daniel Owusu','Nights','#6b6c72',[['Riverside DC','22:00–06:00'],['Riverside DC','22:00–06:00'],null,['Riverside DC','22:00–06:00'],['Riverside DC','22:00–06:00'],null,null]],
       ['KP','Karan Patel','Mobile','#6b6c72',[['Mobile · RX-04','18:00–06:00'],['Mobile · RX-04','18:00–06:00'],['Mobile · RX-04','18:00–06:00'],null,['Mobile · RX-04','18:00–06:00'],['Mobile · RX-04','18:00–06:00'],null]],
@@ -303,7 +311,7 @@ class Component extends DCLogic {
       mapHeight: this.state.mapOpen ? 340 : 0, mapToggleLabel: this.state.mapOpen ? 'Collapse' : 'Expand', toggleMap: () => this.setState(x => ({ mapOpen: !x.mapOpen })),
       sitesMapView: this.state.sitesView==='map', sitesListView: this.state.sitesView!=='map', sitesList: () => this.setState({ sitesView:'list' }), sitesMap: () => this.setState({ sitesView:'map' }),
       listBg: this.state.sitesView!=='map' ? '#0b0b0c' : '#fff', listColor: this.state.sitesView!=='map' ? '#fff' : '#6b6c72', mapBg: this.state.sitesView==='map' ? '#0b0b0c' : '#fff', mapColor: this.state.sitesView==='map' ? '#fff' : '#6b6c72',
-      riversideDot: s && s.bookedOn ? `D. Owusu · ${scanned}/12 scans` : 'awaiting book on',
+      riversideDot: s && s.bookedOn ? `D. Owusu · ${scanned}/${scanTotal} checkpoints` : 'awaiting book on',
       mapPulse: React.createElement('span', { style:{ position:'absolute', inset:0, border:'2px solid #e10600', animation:'rpulse 1.6s ease-out infinite' } }),
       timeline: [
         ['02:12','Signal received from ARC','Zone 3 · rear loading door',true],['02:13','Offered to nearest keyholder','Auto-dispatch',true],['02:14','Accepted by K. Patel','SIA 1017-xxxx-xxxx',true],['02:15','Keys scanned out · Depot','Key K-114 (NFC)',true],['02:16','Client notified','SMS + email · ETA shared',true],['02:23','Arrival due · NFC gate scan','Pending',false],

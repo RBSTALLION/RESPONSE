@@ -53,11 +53,11 @@ export function hhmmss(d=new Date()){ return d.toTimeString().slice(0,8); }
 export function push(s,ev){ return {...s, events:[{t:hhmm(),...ev},...s.events].slice(0,40)}; }
 // background chatter for the control room
 const chatter=[
- ()=>({title:'Checkpoint scanned · Fuel Store',sub:'T. Brooks · Riverside DC · NFC',kind:'ok'}),
+ ()=>({title:'Checkpoint verified · Fuel Store',sub:'T. Brooks · Riverside DC · tagless · view matched',kind:'ok'}),
  ()=>({title:'Check call OK · S. Hussain',sub:'Hospital Car Park B',kind:'ok'}),
- ()=>({title:'Patrol completed · Route A',sub:'City Centre Office Campus · 10 of 10 scans',kind:'ok'}),
+ ()=>({title:'Patrol completed · Route A',sub:'City Centre Office Campus · 10 of 10 checkpoints',kind:'ok'}),
  ()=>({title:'Vehicle RX-04 moving',sub:'K. Patel · 1.4 mi from Unit 7',kind:'info'}),
- ()=>({title:'Checkpoint scanned · Car Park',sub:'S. Hussain · Hospital CP · QR',kind:'ok'}),
+ ()=>({title:'Checkpoint verified · Car Park',sub:'S. Hussain · Hospital CP · tagless',kind:'ok'}),
  ()=>({title:'Lock-up check complete',sub:'Station Road Retail · form + 4 photos',kind:'info'}),
 ];
 export function randomEvent(){ return chatter[Math.floor(Math.random()*chatter.length)](); }
@@ -73,6 +73,31 @@ export async function verify(email, password, role){
   const h = [...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,'0')).join('');
   return accounts.find(a => a.email===e && a.hash===h && (!role || a.role===role)) || null;
 }
+
+// Tagless patrol: floors, default route (Riverside DC · Night patrol B)
+export const floorsDef=[
+ {k:0,label:'Ground',short:'G',alt:0,rooms:[{n:'Reception',x:4,y:6,w:30,h:40},{n:'Loading bay',x:58,y:6,w:38,h:40},{n:'Car park B1',x:4,y:60,w:40,h:34},{n:'Stairwell B',x:80,y:62,w:16,h:32}]},
+ {k:1,label:'Floor 1',short:'1',alt:3.2,rooms:[{n:'Open office',x:4,y:6,w:54,h:40},{n:'Kitchen',x:64,y:6,w:32,h:32},{n:'Meeting',x:60,y:62,w:16,h:24},{n:'Stairwell B',x:80,y:62,w:16,h:32}]},
+ {k:2,label:'Floor 2',short:'2',alt:6.4,rooms:[{n:'Plant room',x:4,y:6,w:34,h:40},{n:'Server room',x:42,y:6,w:32,h:40},{n:'Roof access',x:78,y:6,w:18,h:30},{n:'Stairwell B',x:80,y:62,w:16,h:32}]},
+];
+export const P={"door":"https://images.unsplash.com/photo-1754390755713-8f7e9973ab3d?w=640&q=60&auto=format&fit=crop","server":"https://images.unsplash.com/photo-1695668548342-c0c1ad479aee?w=640&q=60&auto=format&fit=crop","stair":"https://images.unsplash.com/photo-1617512184788-62870b9f8eb2?w=640&q=60&auto=format&fit=crop","office":"https://images.unsplash.com/photo-1542081403278-ba5973c25c7a?w=640&q=60&auto=format&fit=crop","doors":"https://images.unsplash.com/photo-1691153431097-417d65a265f7?w=640&q=60&auto=format&fit=crop"};
+export const photoFor=(t='')=>{ t=String(t).toLowerCase(); if(/server/.test(t)) return P.server; if(/stair|roof|hatch|car park|basement|b1/.test(t)) return P.stair; if(/office|kitchen|meeting|desk/.test(t)) return P.office; if(/plant|panel|door/.test(t)) return P.door; return P.doors; };
+export const corridorY=53;
+export const taglessDefault=()=>({name:'Night patrol B',published:true,idx:3,dist:38,points:[
+ {name:'Gate house',floor:0,x:14,y:44,photo:P.doors,tasks:[{q:'Barrier down?',t:'yesno'}]},
+ {name:'Car park B1',floor:0,x:24,y:62,low:true,photo:P.stair,tasks:[{q:'Any vehicles left overnight?',t:'yesno'}]},
+ {name:'Stairwell B',floor:0,x:88,y:64,low:true,photo:P.stair,tasks:[{q:'Fire door closed?',t:'yesno'}]},
+ {name:'Plant room door',floor:2,x:30,y:45,photo:P.door,tasks:[{q:'Is the door locked?',t:'yesno'},{q:'Alarm panel green?',t:'photo'}]},
+ {name:'Server room corridor',floor:2,x:58,y:53,photo:P.server,tasks:[{q:'Server room door secured?',t:'yesno'}]},
+ {name:'Roof access hatch',floor:2,x:87,y:35,photo:P.stair,tasks:[{q:'Hatch padlocked?',t:'yesno'}]},
+ {name:'Open office',floor:1,x:30,y:45,photo:P.office,tasks:[{q:'Lights off, windows shut?',t:'yesno'}]},
+ {name:'Fire door east',floor:1,x:96,y:53,photo:P.doors,tasks:[{q:'Fire door locked and alarmed?',t:'yesno'}]},
+ {name:'Kitchen',floor:1,x:78,y:37,photo:P.office,tasks:[{q:'Appliances off?',t:'yesno'}]},
+ {name:'Loading bay',floor:0,x:76,y:45,photo:P.doors,tasks:[{q:'Shutters down?',t:'yesno'}]},
+ {name:'Yard gate',floor:0,x:50,y:53,photo:P.doors,tasks:[{q:'Gate chained?',t:'yesno'}]},
+ {name:'Gate house (close)',floor:0,x:20,y:45,photo:P.doors,tasks:[{q:'Log book signed?',t:'yesno'}]},
+]});
+export const narrationSamples=['Gate house. Check the barrier is down.','Car park B1. Check no vehicles are left overnight.','Stairwell B, ground floor. Check the fire door is closed.','Plant room, second floor. Check the door is locked and the alarm panel shows green.','Server room corridor. Check the server room door is secured.','Roof access hatch. Make sure the padlock is on.'];
 
 // Live sync between devices through Supabase (one shared demo row, pushed by Realtime).
 // Off unless /config.js sets supabaseUrl and supabaseAnonKey; then state stays browser-local.
