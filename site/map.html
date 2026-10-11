@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>RESPONSE · Live map</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/vendor/leaflet/leaflet.css">
+<script src="/vendor/leaflet/leaflet.js"></script>
+<style>
+html,body{margin:0;height:100%;background:#eef0f2;font-family:Barlow,system-ui,sans-serif;color:#111214}
+#map{position:absolute;inset:0}
+.leaflet-tile-pane{filter:grayscale(1) contrast(.9) brightness(1.05)}
+.leaflet-container{font-family:Barlow,system-ui,sans-serif}
+.pin{position:relative;width:14px;height:14px}
+.pin i{position:absolute;inset:0;background:#e10600;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.35)}
+.pin b{position:absolute;inset:-4px;border:2px solid #e10600;animation:pulse 1.6s ease-out infinite}
+@keyframes pulse{0%{transform:scale(1);opacity:.8}100%{transform:scale(3);opacity:0}}
+.site{width:12px;height:12px;background:#fff;border:1.5px solid #111214;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.site.live{border-color:#2ecc71;border-width:2.5px}
+.site.sos{background:#e10600;border-color:#e10600}
+.site.s-review{border-color:#c40500;border-width:2.5px}.site.s-watch{border-color:#e6a100;border-width:2.5px}.site.s-good{border-color:#2a8f4f;border-width:2.5px}
+.officer{width:12px;height:12px;border-radius:50%;background:#0b0b0c;border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.4)}
+.lbl{background:#0b0b0c;color:#fff;font-size:11px;font-weight:600;padding:3px 7px;white-space:nowrap;border:0;box-shadow:none;border-radius:2px}
+.lbl.light{background:rgba(255,255,255,.92);color:#111214;font-weight:500}
+.leaflet-tooltip-top:before{display:none}
+.hud{position:absolute;z-index:1000;left:12px;top:12px;display:flex;gap:8px;align-items:center}
+.card{background:rgba(255,255,255,.95);border:1px solid #d6d6da;padding:8px 12px;font-size:12px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.card .k{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#6b6c72;font-weight:600}
+.card .v{font-family:'Barlow Condensed';font-weight:700;font-size:20px;line-height:1.1;color:#c40500}
+.seg{display:flex;background:rgba(255,255,255,.95);border:1px solid #d6d6da;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.seg button{background:none;border:0;padding:8px 12px;font:600 12px Barlow,system-ui;color:#6b6c72;cursor:pointer}
+.seg button.on{background:#0b0b0c;color:#fff}
+.seg button:hover:not(.on){background:#f0f0f2}
+.seg button:focus-visible{outline:2px solid #e10600;outline-offset:-2px}
+.legend{position:absolute;z-index:1000;left:12px;bottom:12px;background:rgba(255,255,255,.92);padding:6px 10px;font-size:11px;color:#6b6c72;display:flex;gap:14px;border:1px solid #e2e2e5}
+.legend .a{color:#e10600}
+.leaflet-control-attribution{font-size:9px}
+</style></head><body>
+<div id="map"></div>
+<div class="hud">
+  <div class="card"><div class="k">Incident · AR-20931</div><div class="v">Unit 7, Fengate Ind. Est.</div><div style="color:#6b6c72">Intruder alarm · K. Patel ETA 9 min</div></div>
+  <div class="seg" role="group" aria-label="Response radius"><button data-r="30" class="on">30 mi radius</button><button data-r="50">50 mi radius</button><button data-r="0">Site view</button></div>
+</div>
+<div class="legend"><span class="a">■ Incident</span><span>▢ Static site</span><span>● Officer / vehicle</span><span>○ Response radius</span></div>
+<script type="module">
+const MI = 1609.344;
+const mode = new URLSearchParams(location.search).get('mode') || 'incident';
+const sitesOnly = mode === 'sites';
+if (sitesOnly) document.querySelector('.hud').style.display = 'none';
+const incident = [52.5685, -0.2085];
+const sites = [
+  { n:'Riverside DC', p:[52.5525,-0.2525], id:'riverside', st:'Review' },
+  { n:'Northgate Retail Park', p:[52.6015,-0.2410], st:'Watch' },
+  { n:'Canal Wharf Apartments', p:[52.5760,-0.2445], st:'Good' },
+  { n:'Hospital Car Park B', p:[52.5850,-0.2820], st:'Good' },
+  { n:'Fengate Industrial Estate', p:[52.5685,-0.2085], st:'Good', fengate:true },
+  { n:'City Centre Office Campus', p:[52.5730,-0.2430], st:'Good' },
+  { n:'Station Road Retail', p:[52.5905,-0.2005], st:'Good' },
+  { n:'Depot · RX-04 keys', p:[52.5610,-0.2300], depot:true },
+].filter(s => sitesOnly ? !s.depot : !s.fengate);
+const map = L.map('map', { zoomControl:true, attributionControl:true, scrollWheelZoom:false });
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution:'© OpenStreetMap contributors', maxZoom:19 }).addTo(map);
+map.zoomControl.setPosition('topright');
+
+const radius = L.circle(incident, { radius:30*MI, color:'#e10600', weight:1.5, dashArray:'6 5', fillColor:'#e10600', fillOpacity:.04 });
+const inner = L.circle(incident, { radius:2*MI, color:'#e10600', weight:1, fillColor:'#e10600', fillOpacity:.08 });
+if (!sitesOnly) { radius.addTo(map); inner.addTo(map); L.marker(incident, { icon:L.divIcon({ className:'', html:'<div class="pin"><b></b><i></i></div>', iconSize:[14,14], iconAnchor:[7,7] }), zIndexOffset:1000 }).addTo(map)
+  .bindTooltip('ALARM · Unit 7 · K. Patel ETA 9 min', { permanent:true, direction:'top', offset:[0,-10], className:'lbl' }); }
+
+const siteMarkers = {};
+for (const s of sites) {
+  const cls = sitesOnly && s.st ? ` s-${s.st.toLowerCase()}` : '';
+  const m = L.marker(s.p, { icon:L.divIcon({ className:'', html:`<div class="site${cls}"></div>`, iconSize:[12,12], iconAnchor:[6,6] }) }).addTo(map)
+    .bindTooltip(sitesOnly && s.st ? `${s.n} · ${s.st}` : s.n, { permanent:true, direction:'right', offset:[8,0], className:'lbl light' });
+  if (s.id) siteMarkers[s.id] = m;
+}
+// K. Patel: en route from depot to Unit 7
+const route = L.polyline([[52.5610,-0.2300],[52.5640,-0.2210],[52.5670,-0.2130],incident], { color:'#e10600', weight:1.5, dashArray:'5 4' });
+const patel = L.marker([52.5625,-0.2265], { icon:L.divIcon({ className:'', html:'<div class="officer"></div>', iconSize:[12,12], iconAnchor:[6,6] }), zIndexOffset:900 })
+  .bindTooltip('K. Patel · RX-04 · 3.2 mi', { permanent:true, direction:'bottom', offset:[0,8], className:'lbl' });
+if (!sitesOnly) { route.addTo(map); patel.addTo(map); }
+// vehicle creeps toward the incident
+let t = 0; const pts = route.getLatLngs();
+setInterval(() => { t = Math.min(t + 0.004, 0.97); const i = Math.min(pts.length-2, Math.floor(t*(pts.length-1))); const f = t*(pts.length-1) - i; const a = pts[i], b = pts[i+1]; patel.setLatLng([a.lat+(b.lat-a.lat)*f, a.lng+(b.lng-a.lng)*f]); }, 1000);
+
+function fit(r){ if (!r) { map.fitBounds(L.latLngBounds([incident, ...sites.map(s=>s.p)]).pad(0.25)); return; } radius.setRadius(r*MI); map.fitBounds(L.latLng(incident).toBounds(r*MI*2).pad(0.05)); }
+document.querySelectorAll('.seg button').forEach(b => b.addEventListener('click', () => { document.querySelectorAll('.seg button').forEach(x => x.classList.toggle('on', x===b)); fit(+b.dataset.r); }));
+fit(sitesOnly ? 0 : 30);
+const siteTips = () => { const show = map.getZoom() >= 11; document.querySelectorAll('.lbl.light').forEach(el => el.style.display = show ? '' : 'none'); };
+map.on('zoomend', siteTips); siteTips();
+if (sitesOnly) document.querySelector('.legend').innerHTML = '<span style="color:#c40500">▢ Review</span><span style="color:#8a5a00">▢ Watch</span><span style="color:#2a8f4f">▢ Good</span><span>Live: green ring = officer booked on</span>';
+
+// live state from the officer app
+try {
+  const st = await import('./store.js');
+  const apply = s => { const el = siteMarkers.riverside.getElement()?.firstChild; if (!el) return; el.classList.toggle('live', !!s.bookedOn && !s.sos); el.classList.toggle('sos', !!s.sos);
+    siteMarkers.riverside.setTooltipContent(s.sos ? 'Riverside DC · SOS · D. Owusu' : s.bookedOn ? `Riverside DC · D. Owusu · ${s.tagless ? s.tagless.idx : 3}/${s.tagless ? s.tagless.points.length : 12} checkpoints` : 'Riverside DC · awaiting book on'); };
+  apply(st.load()); st.subscribe(apply);
+} catch (e) { console.warn('store unavailable', e); }
+</script>
+</body></html>
