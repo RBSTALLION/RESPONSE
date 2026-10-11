@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;background:#f4f4f5;color:#111214;font-family:Barlow,system-ui,sans-serif;-webkit-font-smoothing:antialiased;height:100%}
+a{color:#111214}a:hover{color:#e10600}
+*{box-sizing:border-box}
+input,button,select{font-family:inherit}
+::selection{background:#e10600;color:#fff}
+@keyframes rblink{50%{opacity:.3}}
+@keyframes rpulse{0%{transform:scale(1);opacity:.7}100%{transform:scale(2.2);opacity:0}}
+</style>
+</helmet>
+
+<sc-if value="{{ isLogin }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Control login" style="min-height:100dvh;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);background:#f4f4f5">
+  <div style="background:#0b0b0c;color:#e6e6e8;display:flex;flex-direction:column;justify-content:space-between;padding:40px">
+    <img src="assets/logo-lockup.png" alt="RESPONSE · Guarding &amp; response software" style="width:300px;height:auto;display:block">
+    <div><div style="font-family:'Barlow Condensed';font-weight:700;font-size:56px;line-height:.95;letter-spacing:.01em">EVERY SITE.<br>EVERY OFFICER.<br><span style="color:#e10600">BY EXCEPTION.</span></div><div style="margin-top:18px;color:#8a8b91;max-width:380px;line-height:1.5">Control room for guarding, patrol and alarm response. Officers, alarms and welfare on one board.</div></div>
+    <div></div>
+  </div>
+  <div style="display:flex;align-items:center;justify-content:center;padding:40px">
+    <div style="width:100%;max-width:380px">
+      <div style="font-size:11px;letter-spacing:.2em;color:#6b6c72;text-transform:uppercase">Control room</div>
+      <div style="font-family:'Barlow Condensed';font-weight:700;font-size:36px;line-height:1;margin-top:6px">Sign in</div>
+      <label style="display:block;font-size:12px;font-weight:600;color:#6b6c72;margin:28px 0 6px">Work email</label>
+      <input value="{{ email }}" onChange="{{ setEmail }}" type="email" placeholder="you@company.co.uk" style="width:100%;background:#fff;border:1px solid #d6d6da;color:#111214;font-size:16px;padding:12px 14px;border-radius:6px;outline:none" style-focus="border-color:#e10600">
+      <label style="display:block;font-size:12px;font-weight:600;color:#6b6c72;margin:16px 0 6px">Password</label>
+      <input value="{{ pw }}" onChange="{{ setPw }}" onKeyDown="{{ pwKey }}" type="password" autoComplete="current-password" placeholder="••••••••" style="width:100%;background:#fff;border:1px solid #d6d6da;color:#111214;font-size:16px;padding:12px 14px;border-radius:6px;outline:none" style-focus="border-color:#e10600">
+      <sc-if value="{{ loginErr }}" hint-placeholder-val="{{ false }}"><div style="color:#c40500;font-size:13px;margin-top:8px">Email or password not recognised.</div></sc-if>
+      <button onClick="{{ login }}" style="margin-top:22px;width:100%;background:#e10600;color:#fff;border:0;border-radius:6px;padding:14px;font-family:'Barlow Condensed';font-weight:700;font-size:18px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer" style-hover="background:#ff1a10" style-active="background:#b80500">Sign in</button>
+      <div style="margin-top:14px;font-size:13px;color:#6b6c72;display:flex;justify-content:space-between"><span>Forgot password?</span><span>SSO</span></div>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isApp }}" hint-placeholder-val="{{ true }}">
+<div style="min-height:100dvh;display:grid;grid-template-columns:220px minmax(0,1fr);background:#f4f4f5">
+  <aside style="background:#0b0b0c;color:#c9cacd;display:flex;flex-direction:column;padding:18px 12px;position:sticky;top:0;height:100dvh">
+    <div style="padding:6px 8px 20px"><img src="assets/logo-wordmark.png" alt="RESPONSE" style="width:170px;height:auto;display:block"></div>
+    <nav style="display:flex;flex-direction:column;gap:2px">
+      <sc-for list="{{ nav }}" as="n" hint-placeholder-count="10">
+        <button onClick="{{ n.go }}" style="display:flex;justify-content:space-between;align-items:center;background:{{ n.bg }};color:{{ n.color }};border:0;border-left:2px solid {{ n.bar }};border-radius:0 4px 4px 0;padding:9px 10px;font-size:14px;font-weight:500;cursor:pointer;text-align:left" style-hover="background:#1c1d22"><span>{{ n.name }}</span><sc-if value="{{ n.badge }}" hint-placeholder-val="{{ false }}"><span style="background:#e10600;color:#fff;font-size:11px;font-weight:700;padding:1px 7px;border-radius:10px">{{ n.badge }}</span></sc-if></button>
+      </sc-for>
+    </nav>
+    <div style="flex:1"></div>
+    <div style="border-top:1px solid #26272c;padding-top:12px;display:flex;justify-content:space-between;align-items:center;padding-left:8px;padding-right:4px"><div><div style="font-size:13px;color:#e6e6e8;font-weight:600">{{ userName }}</div><div style="font-size:11px;color:#8a8b91">Control · Night shift</div></div><button onClick="{{ logout }}" style="background:none;border:0;color:#8a8b91;font-size:12px;cursor:pointer" style-hover="color:#fff">Sign out</button></div>
+  </aside>
+
+  <main style="min-width:0;display:flex;flex-direction:column">
+    <header style="display:flex;align-items:center;gap:16px;padding:14px 24px;border-bottom:1px solid #e2e2e5;background:#fff;position:sticky;top:0;z-index:5">
+      <div style="font-family:'Barlow Condensed';font-weight:700;font-size:22px;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap">{{ pageTitle }}</div>
+      <span style="font-size:13px;color:#6b6c72;border:1px solid #d6d6da;padding:4px 10px;border-radius:4px;white-space:nowrap">All regions ▾</span>
+      <span style="font-size:13px;color:#6b6c72;white-space:nowrap">Night shift</span>
+      <div style="flex:1"></div>
+      <span style="font-family:'Barlow Condensed';font-weight:600;font-size:18px;font-variant-numeric:tabular-nums;letter-spacing:.04em;white-space:nowrap">{{ clockFull }}</span>
+      <button onClick="{{ newAlarm }}" style="background:#e10600;color:#fff;border:0;border-radius:4px;padding:8px 14px;font-weight:600;font-size:13px;cursor:pointer;white-space:nowrap" style-hover="background:#ff1a10">+ New alarm job</button>
+      <span style="width:32px;height:32px;border-radius:50%;background:#0b0b0c;color:#fff;display:grid;place-items:center;font-family:'Barlow Condensed';font-weight:700;font-size:13px">DM</span>
+    </header>
+
+    <sc-if value="{{ sosBanner }}" hint-placeholder-val="{{ false }}">
+    <div style="background:#e10600;color:#fff;padding:12px 24px;display:flex;align-items:center;gap:16px"><span style="font-family:'Barlow Condensed';font-weight:800;font-size:20px;letter-spacing:.14em;animation:rblink 1s step-end infinite">SOS</span><span style="font-weight:600">D. Owusu · Riverside DC · live audio connected · location sharing</span><span style="opacity:.85;font-size:13px">K. Patel dispatched · 4 min</span><div style="flex:1"></div><button onClick="{{ ackSos }}" style="background:#fff;color:#e10600;border:0;border-radius:4px;padding:6px 12px;font-weight:700;font-size:13px;cursor:pointer">Acknowledge</button></div>
+    </sc-if>
+
+    <div style="background:#fff;border-bottom:1px solid #e2e2e5">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 24px;border-bottom:1px solid #f0f0f2"><span style="font-size:11px;letter-spacing:.2em;color:#6b6c72;text-transform:uppercase;font-weight:600">Live map · all sites, officers and alarms</span><div style="display:flex;gap:14px;align-items:center"><span style="font-size:12px;color:#6b6c72;display:flex;gap:6px;align-items:center"><span style="width:6px;height:6px;border-radius:50%;background:#e10600;animation:rblink 1.2s step-end infinite"></span>AR-20931 · Unit 7 · 30 mi response radius</span><button onClick="{{ toggleMap }}" style="background:none;border:1px solid #d6d6da;border-radius:3px;padding:3px 9px;font-size:12px;font-weight:600;color:#6b6c72;cursor:pointer" style-hover="border-color:#111214">{{ mapToggleLabel }}</button></div></div>
+      <iframe src="map.html" title="Live incident map" style="border:0;width:100%;height:{{ mapHeight }}px;display:block;background:#eef0f2;transition:height .25s ease"></iframe>
+    </div>
+
+    <sc-if value="{{ isControl }}" hint-placeholder-val="{{ true }}">
+    <section data-screen-label="Control room" style="padding:20px 24px;display:flex;flex-direction:column;gap:18px">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px">
+        <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="5">
+          <div style="background:#fff;border:1px solid #e2e2e5;border-radius:6px;padding:14px 16px"><div style="font-size:12px;color:#6b6c72;font-weight:500">{{ k.label }}</div><div style="font-family:'Barlow Condensed';font-weight:700;font-size:38px;line-height:1.05;margin-top:4px;color:{{ k.color }}">{{ k.value }}</div><div style="font-size:12px;color:#6b6c72;margin-top:2px">{{ k.sub }}</div></div>
+        </sc-for>
+      </div>
+      <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:12px;align-items:start">
+        <div style="background:#fff;border:1px solid #e2e2e5;border-radius:6px;display:flex;flex-direction:column">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid #e2e2e5"><span style="font-size:11px;letter-spacing:.2em;color:#6b6c72;text-transform:uppercase;font-weight:600">Live events</span><span style="font-size:12px;color:#6b6c72;display:flex;gap:6px;align-items:center"><span style="width:6px;height:6px;border-radius:50%;background:#2ecc71;animation:rblink 1.5s step-end infinite"></span>Live · from officer app</span></div>
+          <div style="max-height:520px;overflow:auto">
+            <sc-for list="{{ events }}" as="e" hint-placeholder-count="7">
+              <div style="display:grid;grid-template-columns:44px 6px minmax(0,1fr);gap:12px;align-items:start;padding:11px 16px;border-bottom:1px solid #f0f0f2"><span style="font-variant-numeric:tabular-nums;font-size:13px;color:#6b6c72;padding-top:2px">{{ e.t }}</span><span style="width:6px;height:6px;border-radius:50%;background:{{ e.dot }};margin-top:7px"></span><div><div style="font-weight:600;font-size:14px">{{ e.title }}</div><div style="font-size:12px;color:#6b6c72">{{ e.sub }}</div></div></div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="background:#fff;border:1px solid #e2e2e5;border-radius:6px;padding:12px 16px">
+            <div style="display:flex;justify-content:space-between"><span style="font-size:11px;letter-spacing:.2em;color:#6b6c72;text-transform:uppercase;font-weight:600">Welfare</span><span style="font-size:12px;color:#6b6c72">Lone workers</span></div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px">
+              <div><div style="font-size:12px;color:#6b6c72">Due in 10 min</div><div style="font-family:'Barlow Condensed';font-weight:700;font-size:28px">7</div></div>
+              <div><div style="font-size:12px;color:#6b6c72">Overdue</div><div style="font-family:'Barlow Condensed';font-weight:700;font-size:28px;color:#c40500">{{ overdue }}</div></div>
+              <div><div style="font-size:12px;color:#6b6c72">SOS active</div><div style="font-family:'Barlow Condensed';font-weight:700;font-size:28px;color:{{ sosColor }}">{{ sosCount }}</div></div>
+            </div>
+          </div>
+          <div style="background:#fff;border:1px solid #e2e2e5;border-radius:6px;padding:12px 16px">
+            <div style="font-size:11px;letter-spacing:.2em;color:#6b6c72;text-transform:uppercase;font-weight:600">Open alarms</div>
+            <div style="margin-top:8px;display:flex;flex-direction:column">
+              <button onClick="{{ goJob }}" style="display:flex;justify-content:space-between;align-items:center;gap:10px;background:none;border:0;border-bottom:1px solid #f0f0f2;padding:10px 0;cursor:pointer;text-align:left;font-family:inherit" style-hover="background:#fafafa"><span><span style="display:block;font-weight:600;font-size:14px">AR-20931 · Unit 7, Fengate</span><span style="font-size:12px;color:#6b6c72">Intruder · K. Patel · ETA 02:23</span></span><span style="background:#fde8e7;color:#c40500;font-size:11px;font-weight:700;padding:3px 8px;border-radius:3px;letter-spacing:.06em">IN PROGRESS</span></button>
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;border-bottom:1px solid #f0f0f2;padding:10px 0"><span><span style="display:block;font-weight:600;font-size:14px">AR-20932 · Canal Wharf</span><span style="font-size:12px;color:#6b6c72">Panel alarm · no keyholder accepted</span></span><button style="background:#e10600;color:#fff;border:0;border-radius:3px;padding:5px 10px;font-size:12px;font-weight:600;cursor:pointer" style-hover="background:#ff1a10">Assign</button></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0"><span><span style="display:block;font-weight:600;font-size:14px">AR-20930 · Station Road Retail</span><span style="font-size:12px;color:#6b6c72">Reset complete · awaiting report</span></span><span style="background:#f0f0f2;color:#6b6c72;font-size:11px;font-weight:700;padding:3px 8px;border-radius:3px;letter-spacing:.06em">CLOSING</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    </sc-if>
+
+    <sc-if value="{{ isJob }}" hint-placeholder-val="{{ false }}">
+    <section data-screen-label="Alarm job detail" style="padding:20px 24px;display:flex;flex-direction:column;gap:16px">
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap"><span style="font-size:13px;color:#6b6c72;font-variant-numeric:tabular-nums">AR-20931</span><div style="font-family:'Barlow Condensed';font-weight:700;font-size:30px;line-height:1">INTRUDER ALARM · UNIT 7, FENGATE IND. EST.</div><span style="background:#fde8e7;color:#c40500;font-size:12px;font-weight:700;padding:3px 9px;border-radius:3px;letter-spacing:.06em">IN PROGRESS</span><div style="flex:1"></div><button style="background:#fff;border:1px solid #d6d6da;border-radius:4px;padding:8px 12px;font-size:13px;font-weight:600;cursor:pointer" style-hover="border-color:#111214">Call officer</button><button style="background:#fff;border:1px solid #d6d6da;border-radius:4px;padding:8px 12px;font-size:13px;font-weight:600;cursor:pointer" style-hover="border-color:#111214">Reassign</button><button style="background:#0b0b0c;color:#fff;border:0;border-radius:4px;padding:8px 12px;font-size:13px;font-weight:600;cursor:pointer">Close job</button></div>
+      <div style="display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:12px;align-items:start">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="background:#fff;border:1px solid #e2e2e5;border-radius:6px;padding:14px 16px">
+            <div style="font-size:11px;letter-spacing:.2em;color:#6b6c72;text-transform:uppercase;font-weight:600">Timeline</div>
+            <div style="margin-top:8px;display:flex;flex-direction:column">
+              <sc-for list="{{ timeline }}" as="t" hint-placeholder-count="6">
+                <div style="display:grid;grid-template-columns:48px 16px minmax(0,1fr);gap:10px;align-items:start;padding:10px 0;border-bottom:1px solid #f0f0f2"><span style="font-variant-numeric:tabular-nums;font-size:13px;color:#6b6c72;padding-top:1px">{{ t.t }}</span><span style="width:10px;height:10px;border-radius:50%;background:{{ t.dot }};border:2px solid {{ t.ring }};margin-top:4px"></span><span><span style="display:block;font-weight:600;font-size:14px;color:{{ t.color }}">{{ t.title }}</span><span style="font-size:12px;color:#6b6c72">{{ t.sub }}</span></span></div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="background:#fff;border:1px solid #e2e2e5;border-radius:6px;padding:14px 16px">
+            <div style="display:flex;justify-content:space-between"><span style="font-size:11px;letter-spacing:.2em;color:#6b6c72;text-transform:uppercase;font-weight:600">Evidence required</span><span style="font-size:12px;color:#6b6c72">BS 7984-3</span></div>
+            <div style="margin-top:8px;display:grid;grid-template-columns:1fr 1fr;gap:6px 16px;font-size:14px"><span style="color:#2a8f4f">✓ Signal and dispatch times</span><span style="color:#2a8f4f">✓ Key signed out</span><span style="color:#6b6c72">○ Arrival scan</span><span style="color:#6b6c72">○ Perimeter check + photos</span><span style="color:#6b6c72">○ Reset and key return</span></div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="background:#fff;border:1px solid #e2e2e5;border-radius:6px;padding:14px 16px">
+            <div style="font-size:11px;letter-spacing:.2em;color:#6b6c72;text-transform:uppercase;font-weight:600">Attending officer</div>
+            <div style="display:flex;gap:12px;align-items:center;margin-top:10px"><span style="width:40px;height:40px;border-radius:50%;background:#0b0b0c;color:#fff;display:grid;place-items:center;font-family:'Barlow Condensed';font-weight:700">KP</span><div><div style="font-weight:600">Karan Patel</div><div style="font-size:12px;color:#6b6c72">Mobile response · Vehicle RX-04</div></div></div>
+            <div style="display:flex;justify-content:space-between;margin-top:12px;font-size:12px;color:#6b6c72"><span>SIA Door Supervisor · valid</span><span style="color:#2a8f4f">Welfare OK 02:14</span></div>
+          </div>
+          <div style="background:#fff;border:1px solid #e2e2e5;border-radius:6px;padding:14px 16px">
+            <div style="font-size:11px;letter-spacing:.2em;color:#6b6c72;text-transform:uppercase;font-weight:600">Site notes</div>
+            <p style="margin:8px 0 0;font-size:14px;line-height:1.5;color:#3a3b42">Enter via Gate 2 (code on key tag). Alarm panel inside rear fire door. Guard dog on adjacent site after 22:00. Client contact: [Client E], 07xxx xxxxxx.</p>
+          </div>
+          <div style="background:#eef0f2;border:1px solid #e2e2e5;border-radius:6px;height:200px;position:relative;background-image:linear-gradient(#e2e5e9 1px,transparent 1px),linear-gradient(90deg,#e2e5e9 1px,transparent 1px);background-size:28px 28px;overflow:hidden">
+            <svg viewBox="0 0 400 200" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%"><path d="M320 40 C260 60 200 120 90 150" stroke="#e10600" stroke-width="1.5" stroke-dasharray="5 4" fill="none"/></svg>
+            <div style="position:absolute;left:22%;top:75%;width:12px;height:12px;background:#e10600;transform:translate(-50%,-50%)"></div><div style="position:absolute;left:22%;top:75%;transform:translate(12px,-6px);font-size:11px">Unit 7</div>
+            <div style="position:absolute;left:80%;top:20%;width:10px;height:10px;border-radius:50%;background:#0b0b0c;border:2px solid #fff;transform:translate(-50%,-50%)"></div><div style="position:absolute;left:80%;top:20%;transform:translate(-100%,10px);font-size:11px;white-space:nowrap">K. Patel · 3.2 mi · ETA 02:23</div>
+            <div style="position:absolute;left:60%;top:55%;width:10px;height:10px;border:1.5px solid #111214;background:#fff;transform:translate(-50%,-50%)"></div><div style="position:absolute;left:60%;top:55%;transform:translate(10px,-6px);font-size:11px">Depot · keys 02:15</div>
+          </div>
+        </div>
+      </div>
+    </section>
+    </sc-if>
+
+    <sc-if value="{{ isRota }}" hint-placeholder-val="{{ false }}">
+    <section data-screen-label="Rota" style="padding:20px 24px;display:flex;flex-direction:column;gap:14px">
+      <div style="display:flex;align-items:center;gap:14px"><span style="font-size:14px;font-weight:600">‹ 28 Sep – 4 Oct 2026 ›</span><span style="font-size:13px;color:#6b6c72;border:1px solid #d6d6da;padding:4px 10px;border-radius:4px">All sites ▾</span><span style="background:#fde8e7;color:#c40500;font-size:12px;font-weight:700;padding:3px 9px;border-radius:3px">{{ openShifts }} open shifts</span><div style="flex:1"></div><button style="background:#fff;border:1px solid #d6d6da;border-radius:4px;padding:8px 12px;font-size:13px;font-weight:600;cursor:pointer" style-hover="border-color:#111214">Auto-fill</button><button style="background:#e10600;color:#fff;border:0;border-radius:4px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer" style-hover="background:#ff1a10">Publish rota</button></div>
+      <div style="background:#fff;border:1px solid #e2e2e5;border-radius:6px;overflow:auto">
+        <div style="display:grid;grid-template-columns:180px repeat(7,minmax(110px,1fr));border-bottom:1px solid #e2e2e5;font-size:11px;letter-spacing:.16em;color:#6b6c72;text-transform:uppercase;font-weight:600"><span style="padding:10px 14px">Officer</span><span style="padding:10px 8px">Mon 28</span><span style="padding:10px 8px">Tue 29</span><span style="padding:10px 8px">Wed 30</span><span style="padding:10px 8px">Thu 1</span><span style="padding:10px 8px">Fri 2</span><span style="padding:10px 8px">Sat 3</span><span style="padding:10px 8px">Sun 4</span></div>
+        <sc-for list="{{ rota }}" as="r" hint-placeholder-count="8">
+          <div style="display:grid;grid-template-columns:180px repeat(7,minmax(110px,1fr));border-bottom:1px solid #f0f0f2">
+            <div style="padding:10px 14px;display:flex;gap:10px;align-items:center"><span style="width:28px;height:28px;border-radius:50%;background:{{ r.avBg }};color:{{ r.avColor }};display:grid;place-items:center;font-family:'Barlow Condensed';font-weight:700;font-size:12px">{{ r.id }}</span><div><div style="font-size:13px;font-weight:600">{{ r.name }}</div><div style="font-size:11px;color:{{ r.tagColor }}">{{ r.tag }}</div></div></div>
+            <sc-for list="{{ r.days }}" as="d" hint-placeholder-count="7">
+              <div style="padding:6px"><sc-if value="{{ d.has }}" hint-placeholder-val="{{ false }}"><button onClick="{{ d.click }}" style="width:100%;text-align:left;background:{{ d.bg }};border:1px solid {{ d.border }};border-radius:4px;padding:6px 8px;cursor:pointer;color:{{ d.color }}" style-hover="border-color:#111214"><div style="font-size:12px;font-weight:600;line-height:1.2">{{ d.site }}</div><div style="font-size:11px;opacity:.8">{{ d.time }}</div></button></sc-if></div>
+            </sc-for>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px">
+        <div style="background:#fff;border:1px solid #e2e2e5;border-left:3px solid #e10600;border-radius:6px;padding:12px 14px"><div style="font-weight:600;font-size:14px">Rest break warning</div><div style="font-size:13px;color:#6b6c72;margin-top:4px;line-height:1.4">A. Novak: 9h between Fri night and Sat day shift. Working Time Regulations need 11h.</div></div>
+        <div style="background:#fff;border:1px solid #e2e2e5;border-left:3px solid #e6a100;border-radius:6px;padding:12px 14px"><div style="font-weight:600;font-size:14px">Licence expiring</div><div style="font-size:13px;color:#6b6c72;margin-top:4px;line-height:1.4">T. Brooks: SIA licence expires 12 Oct. Renewal reminder sent.</div></div>
+        <div style="background:#fff;border:1px solid #e2e2e5;border-radius:6px;padding:12px 14px"><div style="font-weight:600;font-size:14px">This week</div><div style="font-size:13px;color:#6b6c72;margin-top:4px;line-height:1.4">1,184 hours rostered · 96% of contract hours covered</div></div>
+      </div>
+    </section>
+    </sc-if>
+
+    <sc-if value="{{ isOfficers }}" hint-placeholder-val="{{ false }}">
+    <section data-screen-label="Officers" style="padding:20px 24px;display:flex;flex-direction:column;gap:14px">
+      <div style="display:flex;gap:12px;align-items:center"><input placeholder="Search officers…" style="background:#fff;border:1px solid #d6d6da;border-radius:4px;padding:8px 12px;font-size:14px;width:280px;outline:none" style-focus="border-color:#e10600"><span style="font-size:13px;color:#6b6c72;border:1px solid #d6d6da;padding:4px 10px;border-radius:4px">On shift ▾</span><div style="flex:1"></div><button style="background:#0b0b0c;color:#fff;border:0;border-radius:4px;padding:8px 12px;font-size:13px;font-weight:600;cursor:pointer">+ Add officer</button></div>
+      <div style="background:#fff;border:1px solid #e2e2e5;border-radius:6px;overflow:auto">
+        <div style="display:grid;grid-template-columns:2fr 1fr 1.6fr 1.4fr 1.6fr 1fr;border-bottom:1px solid #e2e2e5;font-size:11px;letter-spacing:.16em;color:#6b6c72;text-transform:uppercase;font-weight:600"><span style="padding:10px 14px">Officer</span><span style="padding:10px 8px">Pattern</span><span style="padding:10px 8px">Assignment</span><span style="padding:10px 8px">Status</span><span style="padding:10px 8px">SIA licence</span><span style="padding:10px 8px">Welfare</span></div>
+        <sc-for list="{{ officerRows }}" as="o" hint-placeholder-count="7">
+          <div style="display:grid;grid-template-columns:2fr 1fr 1.6fr 1.4fr 1.6fr 1fr;border-bottom:1px solid #f0f0f2;align-items:center;font-size:14px" style-hover="background:#fafafa">
+            <div style="padding:10px 14px;display:flex;gap:10px;align-items:center"><span style="width:28px;height:28px;border-radius:50%;background:#0b0b0c;color:#fff;display:grid;place-items:center;font-family:'Barlow Condensed';font-weight:700;font-size:12px">{{ o.id }}</span><span style="font-weight:600">{{ o.name }}</span></div>
+            <span style="padding:10px 8px;color:#6b6c72">{{ o.role }}</span>
+            <span style="padding:10px 8px">{{ o.site }}</span>
+            <span style="padding:10px 8px"><span style="display:inline-flex;gap:6px;align-items:center;font-size:13px;color:{{ o.stColor }}"><span style="width:7px;height:7px;border-radius:50%;background:{{ o.stColor }}"></span>{{ o.status }}</span></span>
+            <span style="padding:10px 8px;font-size:13px;color:{{ o.siaColor }}">{{ o.sia }}<br><span style="font-size:11px;color:#6b6c72">exp. {{ o.exp }}</span></span>
+            <span style="padding:10px 8px;color:{{ o.wColor }};font-size:13px">{{ o.welfare }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+    </sc-if>
+
+    <sc-if value="{{ isSites }}" hint-placeholder-val="{{ false }}">
+    <section data-screen-label="Sites" style="padding:20px 24px;display:flex;flex-direction:column;gap:14px">
+      <div style="display:flex;gap:12px;align-items:center"><input placeholder="Search sites…" style="background:#fff;border:1px solid #d6d6da;border-radius:4px;padding:8px 12px;font-size:14px;width:280px;outline:none" style-focus="border-color:#e10600"><span style="font-size:13px;color:#6b6c72">Sorted by patrol compliance</span><div style="flex:1"></div><div style="display:flex;border:1px solid #d6d6da;border-radius:4px;overflow:hidden"><button onClick="{{ sitesList }}" style="background:{{ listBg }};color:{{ listColor }};border:0;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer">List</button><button onClick="{{ sitesMap }}" style="background:{{ mapBg }};color:{{ mapColor }};border:0;border-left:1px solid #d6d6da;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer">Map</button></div><button style="background:#0b0b0c;color:#fff;border:0;border-radius:4px;padding:8px 12px;font-size:13px;font-weight:600;cursor:pointer">+ Add site</button></div>
+      <sc-if value="{{ sitesMapView }}" hint-placeholder-val="{{ false }}"><div style="background:#fff;border:1px solid #e2e2e5;border-radius:6px;overflow:hidden"><iframe src="map.html?mode=sites" title="All sites map" style="border:0;width:100%;height:560px;display:block;background:#eef0f2"></iframe></div></sc-if>
+      <sc-if value="{{ sitesListView }}" hint-placeholder-val="{{ true }}">
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px">
+        <sc-for list="{{ siteCards }}" as="si" hint-placeholder-count="7">
+          <div style="background:#fff;border:1px solid #e2e2e5;border-radius:6px;padding:14px 16px;display:flex;flex-direction:column;gap:10px" style-hover="border-color:#111214">
+            <div style="display:flex;justify-content:space-between;align-items:start;gap:8px"><div><div style="font-family:'Barlow Condensed';font-weight:700;font-size:20px;line-height:1.05">{{ si.name }}</div><div style="font-size:12px;color:#6b6c72;margin-top:3px">{{ si.client }} · {{ si.type }}</div></div><span style="background:{{ si.badgeBg }};color:{{ si.badgeColor }};font-size:11px;font-weight:700;padding:3px 8px;border-radius:3px;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap">{{ si.status }}</span></div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;border-top:1px solid #f0f0f2;padding-top:10px">
+              <div><div style="font-size:11px;color:#6b6c72">On site now</div><div style="font-family:'Barlow Condensed';font-weight:700;font-size:22px">{{ si.officers }}</div></div>
+              <div><div style="font-size:11px;color:#6b6c72">Patrols / 7d</div><div style="font-family:'Barlow Condensed';font-weight:700;font-size:22px">{{ si.patrols }}</div></div>
+              <div><div style="font-size:11px;color:#6b6c72">On time</div><div style="font-family:'Barlow Condensed';font-weight:700;font-size:22px;color:{{ si.badgeColor }}">{{ si.onTime }}</div></div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+      </sc-if>
+    </section>
+    </sc-if>
+
+    <sc-if value="{{ isIncidents }}" hint-placeholder-val="{{ false }}">
+    <section data-screen-label="Incidents" style="padding:20px 24px;display:flex;flex-direction:column;gap:14px">
+      <div style="display:flex;gap:12px;align-items:center"><span style="font-size:13px;color:#6b6c72;border:1px solid #d6d6da;padding:4px 10px;border-radius:4px">Last 7 days ▾</span><span style="font-size:13px;color:#6b6c72;border:1px solid #d6d6da;padding:4px 10px;border-radius:4px">All sites ▾</span><span style="font-size:13px;color:#6b6c72">{{ incidentCount }} reports · from officer app in real time</span><div style="flex:1"></div><button style="background:#fff;border:1px solid #d6d6da;border-radius:4px;padding:8px 12px;font-size:13px;font-weight:600;cursor:pointer" style-hover="border-color:#111214">Export PDF</button></div>
+      <div style="background:#fff;border:1px solid #e2e2e5;border-radius:6px;overflow:auto">
+        <div style="display:grid;grid-template-columns:100px 1fr 2.2fr 1.2fr 1fr 1fr;border-bottom:1px solid #e2e2e5;font-size:11px;letter-spacing:.16em;color:#6b6c72;text-transform:uppercase;font-weight:600"><span style="padding:10px 14px">Ref</span><span style="padding:10px 8px">Site</span><span style="padding:10px 8px">Summary</span><span style="padding:10px 8px">Officer</span><span style="padding:10px 8px">Evidence</span><span style="padding:10px 8px">Status</span></div>
+        <sc-for list="{{ incidentRows }}" as="i" hint-placeholder-count="2">
+          <div style="display:grid;grid-template-columns:100px 1fr 2.2fr 1.2fr 1fr 1fr;border-bottom:1px solid #f0f0f2;align-items:center;font-size:14px" style-hover="background:#fafafa">
+            <span style="padding:12px 14px;font-variant-numeric:tabular-nums;font-weight:600">{{ i.id }}</span>
+            <span style="padding:12px 8px">{{ i.site }}</span>
+            <span style="padding:12px 8px"><span style="display:block;font-weight:600">{{ i.type }} · {{ i.title }}</span><span style="font-size:12px;color:#6b6c72">{{ i.time }}</span></span>
+            <span style="padding:12px 8px">{{ i.officer }}</span>
+            <span style="padding:12px 8px;color:#6b6c72;font-size:13px">{{ i.photos }} photos · report</span>
+            <span style="padding:12px 8px"><span style="background:{{ i.bg }};color:{{ i.color }};font-size:11px;font-weight:700;padding:3px 8px;border-radius:3px;letter-spacing:.06em;text-transform:uppercase">{{ i.status }}</span></span>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+    </sc-if>
+  </main>
+</div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { page:'control', sitesView:'list', mapOpen:true, authed:false, email:'', pw:'', loginErr:false, s:null, tick:0, sosAck:false };
+  async componentDidMount(){
+    this.store = await import('./store.js');
+    let user = null; try { user = JSON.parse(sessionStorage.getItem('response.controlUser')); } catch (e) {}
+    this.setState({ s: this.store.load(), user, authed: !!user });
+    this.unsub = this.store.subscribe(ns => this.setState({ s: ns }));
+    this.timer = setInterval(() => {
+      this.setState(st => ({ tick: st.tick + 1 }));
+      if (this.state.tick % 22 === 10 && this.state.s) { const ns = this.store.push(this.state.s, this.store.randomEvent()); this.store.save(ns); this.setState({ s: ns }); }
+    }, 1000);
+  }
+  componentWillUnmount(){ clearInterval(this.timer); if (this.unsub) this.unsub(); }
+  async doLogin(){
+    const u = await this.store.verify(this.state.email, this.state.pw, 'controller');
+    if (!u) return this.setState({ loginErr:true });
+    sessionStorage.setItem('response.control','1'); sessionStorage.setItem('response.controlUser', JSON.stringify({ email:u.email, name:u.name }));
+    this.setState({ authed:true, loginErr:false, pw:'', user:u });
+  }
+  renderVals(){
+    const { page, s, authed } = this.state; const st = this.store;
+    const now = new Date();
+    const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']; const mons = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const alarms = 3; const overdue = 1;
+    const sos = !!(s && s.sos);
+    const navDef = [['Control room','control'],['Alarm jobs','job',alarms],['Rota','rota'],['Officers','officers'],['Sites','sites'],['Incidents','incidents', s ? s.incidents.filter(i=>i.status!=='Closed').length : 0],['Reports',null],['Compliance',null,2],['Settings',null]];
+    const dot = k => ({ alarm:'#e10600', warn:'#e6a100', ok:'#2ecc71', info:'#8a8b91' })[k] || '#8a8b91';
+    const siteMeta = { Review:['#fde8e7','#c40500'], Watch:['#fff4d6','#8a5a00'], Good:['#e6f7ec','#2a8f4f'] };
+    const scanned = s ? s.scanned : 5;
+    const rotaDef = [
+      ['DO','Daniel Owusu','Nights','#6b6c72',[['Riverside DC','22:00–06:00'],['Riverside DC','22:00–06:00'],null,['Riverside DC','22:00–06:00'],['Riverside DC','22:00–06:00'],null,null]],
+      ['KP','Karan Patel','Mobile','#6b6c72',[['Mobile · RX-04','18:00–06:00'],['Mobile · RX-04','18:00–06:00'],['Mobile · RX-04','18:00–06:00'],null,['Mobile · RX-04','18:00–06:00'],['Mobile · RX-04','18:00–06:00'],null]],
+      ['AN','Aleksander Novak','Nights','#6b6c72',[['Riverside DC','22:00–06:00'],null,['Northgate','18:00–06:00'],null,['Northgate','18:00–06:00'],['Rest warning','Sat 07:00','warn'],null]],
+      ['JE','Jade Evans','Days','#6b6c72',[['Canal Wharf','07:00–19:00'],['Canal Wharf','07:00–19:00'],null,['Canal Wharf','07:00–19:00'],['Canal Wharf','07:00–19:00'],null,null]],
+      ['SH','Samira Hussain','Days','#6b6c72',[['Hospital CP','07:00–19:00'],['Hospital CP','07:00–19:00'],['Hospital CP','07:00–19:00'],['Hospital CP','07:00–19:00'],['Hospital CP','07:00–19:00'],null,null]],
+      ['TB','Tom Brooks','SIA exp. 12 Oct','#c40500',[null,['Riverside DC','22:00–06:00'],['Riverside DC','22:00–06:00'],['Riverside DC','22:00–06:00'],null,['Riverside DC','22:00–06:00'],null]],
+      ['LG','Leah Grant','Days','#6b6c72',[null,null,['Canal Wharf','07:00–19:00'],['Canal Wharf','07:00–19:00'],['Canal Wharf','07:00–19:00'],['Canal Wharf','07:00–19:00'],null]],
+      ['OS','Open shifts','Unfilled','#c40500',[null,null,null,['OPEN · Northgate','18:00–06:00','open'],null,['OPEN · Northgate','18:00–06:00','open'],['OPEN · Northgate','18:00–06:00','open']]],
+    ];
+    return {
+      isLogin: !authed, isApp: authed,
+      email: this.state.email, pw: this.state.pw, setEmail: e => this.setState({ email: e.target.value }), setPw: e => this.setState({ pw: e.target.value }), loginErr: this.state.loginErr,
+      login: () => this.doLogin(), pwKey: e => { if (e.key === 'Enter') this.doLogin(); },
+      userName: this.state.user ? this.state.user.name : 'Controller',
+      logout: () => { sessionStorage.removeItem('response.control'); sessionStorage.removeItem('response.controlUser'); this.setState({ authed:false, user:null }); },
+      nav: navDef.map(([name, p, badge]) => ({ name, badge: badge || false, go: () => p && this.setState({ page:p }), bg: page===p ? '#1c1d22' : 'transparent', color: page===p ? '#fff' : p ? '#c9cacd' : '#5b5c63', bar: page===p ? '#e10600' : 'transparent' })),
+      pageTitle: ({ control:'Control room', job:'Alarm job', rota:'Rota · Week 40', officers:'Officers', sites:'Sites', incidents:'Incidents' })[page],
+      clockFull: `${days[now.getDay()]} ${now.getDate()} ${mons[now.getMonth()]} · ${st ? st.hhmmss(now) : ''}`,
+      newAlarm: () => { if (!s) return; const ns = st.push(s, { title:'Panel alarm · Station Road Retail', sub:'Created by D. Marsh · offered to nearest keyholder', kind:'alarm' }); st.save(ns); this.setState({ s: ns, page:'control' }); },
+      isControl: page==='control', isJob: page==='job', isRota: page==='rota', isOfficers: page==='officers', isSites: page==='sites', isIncidents: page==='incidents',
+      sosBanner: sos && !this.state.sosAck, ackSos: () => this.setState({ sosAck:true }),
+      kpis: [
+        { label:'Officers on shift', value: s && s.bookedOn ? '48' : '47', sub:'of 50 rostered', color:'#111214' },
+        { label:'Patrols on time', value:'96%', sub:'tonight so far', color:'#111214' },
+        { label:'Open alarms', value:String(alarms), sub:'1 unassigned', color:'#c40500' },
+        { label:'Missed check calls', value:String(overdue), sub:'escalated 02:11', color:'#c40500' },
+        { label:'Sites covered', value:'31', sub:'static and mobile', color:'#111214' },
+      ],
+      events: (s ? s.events : []).map(e => ({ ...e, dot: dot(e.kind) })),
+      overdue, sosCount: sos ? 1 : 0, sosColor: sos ? '#c40500' : '#111214',
+      goJob: () => this.setState({ page:'job' }),
+      mapHeight: this.state.mapOpen ? 340 : 0, mapToggleLabel: this.state.mapOpen ? 'Collapse' : 'Expand', toggleMap: () => this.setState(x => ({ mapOpen: !x.mapOpen })),
+      sitesMapView: this.state.sitesView==='map', sitesListView: this.state.sitesView!=='map', sitesList: () => this.setState({ sitesView:'list' }), sitesMap: () => this.setState({ sitesView:'map' }),
+      listBg: this.state.sitesView!=='map' ? '#0b0b0c' : '#fff', listColor: this.state.sitesView!=='map' ? '#fff' : '#6b6c72', mapBg: this.state.sitesView==='map' ? '#0b0b0c' : '#fff', mapColor: this.state.sitesView==='map' ? '#fff' : '#6b6c72',
+      riversideDot: s && s.bookedOn ? `D. Owusu · ${scanned}/12 scans` : 'awaiting book on',
+      mapPulse: React.createElement('span', { style:{ position:'absolute', inset:0, border:'2px solid #e10600', animation:'rpulse 1.6s ease-out infinite' } }),
+      timeline: [
+        ['02:12','Signal received from ARC','Zone 3 · rear loading door',true],['02:13','Offered to nearest keyholder','Auto-dispatch',true],['02:14','Accepted by K. Patel','SIA 1017-xxxx-xxxx',true],['02:15','Keys scanned out · Depot','Key K-114 (NFC)',true],['02:16','Client notified','SMS + email · ETA shared',true],['02:23','Arrival due · NFC gate scan','Pending',false],
+      ].map(([t,title,sub,done]) => ({ t, title, sub, dot: done ? '#111214' : '#fff', ring: done ? '#111214' : '#c9cacd', color: done ? '#111214' : '#6b6c72' })),
+      openShifts: 3,
+      rota: rotaDef.map(([id,name,tag,tagColor,days]) => ({ id, name, tag, tagColor, avBg: id==='OS' ? '#fde8e7' : '#0b0b0c', avColor: id==='OS' ? '#c40500' : '#fff', days: days.map(d => d ? { has:true, site:d[0], time:d[1], click: () => {}, bg: d[2]==='open' ? '#fde8e7' : d[2]==='warn' ? '#fff4d6' : '#f4f4f5', border: d[2]==='open' ? '#f5b5b2' : d[2]==='warn' ? '#f0d48a' : '#e2e2e5', color: d[2]==='open' ? '#c40500' : d[2]==='warn' ? '#8a5a00' : '#111214' } : { has:false }) })),
+      officerRows: (st ? st.officers : []).map(o => { const status = o.id==='DO' ? (sos ? 'SOS active' : s && s.bookedOn ? 'On shift' : 'Due on 22:00') : o.status; const bad = /overdue|SOS/i.test(status); const off = /Off|Due/.test(status); return { ...o, status, stColor: bad ? '#c40500' : off ? '#9a9ba1' : '#2a8f4f', siaColor: o.id==='TB' ? '#c40500' : '#111214', welfare: o.id==='DO' ? (sos ? 'SOS' : 'OK') : o.welfare, wColor: /Overdue|SOS/.test(o.id==='DO' ? (sos?'SOS':'OK') : o.welfare) ? '#c40500' : '#6b6c72' }; }),
+      siteCards: (st ? st.sites : []).map(si => ({ ...si, badgeBg: siteMeta[si.status][0], badgeColor: siteMeta[si.status][1] })),
+      incidentCount: s ? s.incidents.length : 0,
+      incidentRows: (s ? s.incidents : []).map(i => ({ ...i, bg: i.status==='New' ? '#fde8e7' : i.status==='Closed' ? '#f0f0f2' : '#fff4d6', color: i.status==='New' ? '#c40500' : i.status==='Closed' ? '#6b6c72' : '#8a5a00' })),
+    };
+  }
+}
+</script>
+</body>
+</html>

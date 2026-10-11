@@ -24,6 +24,28 @@ RESPONSE/
 └── README.md
 ```
 
+## Deploying (live prototype)
+
+`site/` is the deployable prototype, a static site with no build step:
+
+| Route | What it is |
+|---|---|
+| `/app` | Officer app for phones (installable: Safari, Share, Add to Home Screen) |
+| `/portal` | Control room web portal |
+| `/` | Both side by side, sharing one live demo state |
+
+To deploy, paste this into Terminal (Mac or Linux):
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/RBSTALLION/RESPONSE/main/deploy.sh | bash
+```
+
+It needs Node.js 18+ and a Vercel login (the script opens the browser login the first time).
+Set `VERCEL_SCOPE=<team-slug>` to deploy under a specific Vercel team, or `TARGET=preview` for a preview URL.
+Drag-and-drop still works too: drag the `site/` folder into vercel.com/new.
+
+Demo state is stored in the browser only, so two devices do not share data yet; the Supabase schema in `supabase/` is the next step for that.
+
 ## Viewing the mock-ups
 
 Open any `.html` file in `mockups/` directly in a browser. No build step is needed.

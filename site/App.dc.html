@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;background:#0b0b0c;color:#e6e6e8;font-family:Barlow,system-ui,sans-serif;-webkit-font-smoothing:antialiased;height:100%}
+a{color:#e6e6e8}a:hover{color:#ff3b30}
+*{box-sizing:border-box}
+input,textarea,button{font-family:inherit}
+input::placeholder,textarea::placeholder{color:#5b5c63}
+@keyframes rpulse{0%{transform:scale(1);opacity:.6}100%{transform:scale(1.9);opacity:0}}
+@keyframes rspin{to{transform:rotate(360deg)}}
+::selection{background:#e10600;color:#fff}
+</style>
+</helmet>
+<div style="min-height:100dvh;height:100%;display:flex;flex-direction:column;background:#0b0b0c;color:#e6e6e8;position:relative;overflow:hidden;max-width:520px;margin:0 auto;padding-top:{{ topInset }}px">
+
+<sc-if value="{{ isSignin }}" hint-placeholder-val="{{ true }}">
+<div data-screen-label="Sign in" style="flex:1;display:flex;flex-direction:column;padding:56px 28px 32px">
+  <div style="margin-top:40px"><img src="assets/logo-lockup.png" alt="RESPONSE · Guarding &amp; response software" style="width:100%;max-width:320px;height:auto;display:block"><div style="margin-top:14px;font-size:11px;letter-spacing:.22em;color:#8a8b91;text-transform:uppercase">Officer app</div></div>
+  <div style="flex:1"></div>
+  <label style="display:block;font-size:11px;letter-spacing:.2em;color:#8a8b91;text-transform:uppercase;margin-bottom:8px">Email</label>
+  <input value="{{ phone }}" onChange="{{ setPhone }}" type="email" autoComplete="username" autoCapitalize="none" placeholder="you@company.co.uk" style="width:100%;background:#15161a;border:1px solid #26272c;color:#e6e6e8;font-size:18px;padding:14px 16px;border-radius:6px;outline:none" style-focus="border-color:#e10600">
+  <label style="display:block;font-size:11px;letter-spacing:.2em;color:#8a8b91;text-transform:uppercase;margin:20px 0 8px">Password</label>
+  <input value="{{ pass }}" onChange="{{ setPass }}" onKeyDown="{{ passKey }}" type="password" autoComplete="current-password" placeholder="••••••••" style="width:100%;background:#15161a;border:1px solid #26272c;color:#e6e6e8;font-size:18px;padding:14px 16px;border-radius:6px;outline:none" style-focus="border-color:#e10600">
+  <sc-if value="{{ signinErr }}" hint-placeholder-val="{{ false }}"><div style="color:#ff5c52;font-size:13px;margin-top:10px">Email or password not recognised.</div></sc-if>
+  <button onClick="{{ signIn }}" style="margin-top:24px;width:100%;background:#e10600;color:#fff;border:0;border-radius:6px;padding:16px;font-family:'Barlow Condensed';font-weight:700;font-size:20px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer" style-hover="background:#ff1a10" style-active="background:#b80500">Sign in</button>
+  <button onClick="{{ signIn }}" style="margin-top:12px;width:100%;background:transparent;color:#c9cacd;border:1px solid #26272c;border-radius:6px;padding:14px;font-size:15px;cursor:pointer;display:flex;justify-content:center;gap:8px;align-items:center" style-hover="border-color:#8a8b91">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2M9 9h.01M15 9h.01M9 15c.8.7 1.8 1 3 1s2.2-.3 3-1"/></svg>Use Face ID
+  </button>
+  <div style="display:flex;justify-content:center;align-items:center;gap:8px;color:#5b5c63;font-size:12px;margin-top:28px"><span>[Company name] · Secured by</span><img src="assets/logo-wordmark.png" alt="RESPONSE" style="height:14px;width:auto;display:block;opacity:.8"></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isBrief }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Shift brief" style="flex:1;display:flex;flex-direction:column;padding:20px 20px 28px;overflow:auto">
+  <div style="display:flex;justify-content:space-between;align-items:center"><img src="assets/logo-wordmark.png" alt="RESPONSE" style="height:22px;width:auto;display:block"><span style="font-size:13px;color:#8a8b91">Tonight</span></div>
+  <div style="margin-top:28px;font-family:'Barlow Condensed';font-weight:700;font-size:36px;line-height:1;letter-spacing:.02em">RIVERSIDE DC</div>
+  <div style="color:#c9cacd;margin-top:6px;font-size:15px">22:00 – 06:00 · Static + patrol · Gate House</div>
+  <div style="margin-top:28px;font-size:11px;letter-spacing:.2em;color:#8a8b91;text-transform:uppercase">You are here</div>
+  <div style="margin-top:10px;background:#15161a;border:1px solid #26272c;border-radius:6px;padding:14px 16px;display:flex;gap:12px;align-items:center">
+    <span style="width:10px;height:10px;border-radius:50%;background:#2ecc71;box-shadow:0 0 0 4px rgba(46,204,113,.18)"></span>
+    <div><div style="font-weight:600">Inside site geofence</div><div style="font-size:13px;color:#8a8b91">GPS ±6 m · verified {{ clockHM }}</div></div>
+  </div>
+  <div style="margin-top:28px;display:flex;justify-content:space-between;font-size:11px;letter-spacing:.2em;color:#8a8b91;text-transform:uppercase"><span>Read before shift</span><span>{{ docsRead }} of 3</span></div>
+  <div style="margin-top:10px;display:flex;flex-direction:column;gap:8px">
+    <sc-for list="{{ docs }}" as="d" hint-placeholder-count="3">
+      <button onClick="{{ d.toggle }}" style="display:flex;justify-content:space-between;align-items:center;text-align:left;background:#15161a;border:1px solid #26272c;border-radius:6px;padding:14px 16px;color:#e6e6e8;cursor:pointer;font-size:15px" style-hover="border-color:#8a8b91">
+        <span>{{ d.name }}</span><span style="font-family:'Barlow Condensed';font-weight:700;letter-spacing:.06em;font-size:13px;color:{{ d.color }}">{{ d.mark }}</span>
+      </button>
+    </sc-for>
+  </div>
+  <div style="flex:1"></div>
+  <button onClick="{{ bookOn }}" disabled="{{ bookDisabled }}" style="margin-top:24px;width:100%;background:{{ bookBg }};color:#fff;border:0;border-radius:6px;padding:16px;font-family:'Barlow Condensed';font-weight:700;font-size:20px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer">{{ bookLabel }}</button>
+</div>
+</sc-if>
+
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Home" style="flex:1;display:flex;flex-direction:column;padding:20px 20px 0;overflow:auto">
+  <div style="display:flex;justify-content:space-between;align-items:center"><img src="assets/logo-wordmark.png" alt="RESPONSE" style="height:22px;width:auto;display:block"><span style="width:34px;height:34px;border-radius:50%;background:#26272c;display:grid;place-items:center;font-family:'Barlow Condensed';font-weight:700;font-size:14px">DO</span></div>
+  <div style="margin-top:22px;color:#8a8b91;font-size:15px">Good evening, {{ userName }}</div>
+  <div style="font-family:'Barlow Condensed';font-weight:700;font-size:34px;line-height:1.05;letter-spacing:.02em">RIVERSIDE DC</div>
+  <div style="display:flex;align-items:center;gap:8px;margin-top:6px;color:#c9cacd;font-size:14px"><span style="width:8px;height:8px;border-radius:50%;background:#2ecc71"></span>On shift · {{ shiftLeft }} left · {{ clockHMS }}</div>
+  <div style="margin-top:22px;background:#15161a;border:1px solid #26272c;border-radius:8px;padding:16px">
+    <div style="font-size:11px;letter-spacing:.2em;color:#8a8b91;text-transform:uppercase">Next checkpoint</div>
+    <div style="font-family:'Barlow Condensed';font-weight:700;font-size:28px;margin-top:4px">{{ nextCp }}</div>
+    <div style="font-size:13px;color:#8a8b91">Route B · {{ nextDue }}</div>
+    <button onClick="{{ goScan }}" style="margin-top:14px;width:100%;background:#e6e6e8;color:#0b0b0c;border:0;border-radius:6px;padding:14px;font-family:'Barlow Condensed';font-weight:700;font-size:18px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer" style-hover="background:#fff">Scan checkpoint</button>
+  </div>
+  <div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <button onClick="{{ openCheckCall }}" style="background:#15161a;border:1px solid #26272c;border-radius:8px;padding:16px 14px;color:#e6e6e8;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:8px" style-hover="border-color:#8a8b91"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8.1 9.7a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.8.3 1.7.5 2.6.7a2 2 0 0 1 1.7 2z"/></svg><span style="font-weight:600">Check call</span></button>
+    <button onClick="{{ goIncident }}" style="background:#15161a;border:1px solid #26272c;border-radius:8px;padding:16px 14px;color:#e6e6e8;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:8px" style-hover="border-color:#8a8b91"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M12 18v-6M9 15h6"/></svg><span style="font-weight:600">Report</span></button>
+    <button onClick="{{ goBriefDocs }}" style="background:#15161a;border:1px solid #26272c;border-radius:8px;padding:16px 14px;color:#e6e6e8;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:8px" style-hover="border-color:#8a8b91"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5z"/></svg><span style="font-weight:600">Site docs</span></button>
+    <button style="background:#15161a;border:1px solid #26272c;border-radius:8px;padding:16px 14px;color:#e6e6e8;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:8px" style-hover="border-color:#8a8b91"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span style="font-weight:600;display:flex;gap:6px;align-items:center">Messages<span style="width:6px;height:6px;border-radius:50%;background:#e10600"></span></span></button>
+  </div>
+  <div style="flex:1;min-height:16px"></div>
+  <button onPointerDown="{{ sosDown }}" onPointerUp="{{ sosUp }}" onPointerLeave="{{ sosUp }}" onPointerCancel="{{ sosUp }}" onContextMenu="{{ noop }}" style="width:100%;background:{{ sosBg }};color:#fff;border:0;border-radius:8px;padding:18px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;user-select:none;-webkit-user-select:none;touch-action:none;position:relative;overflow:hidden">
+    <span style="position:absolute;left:0;top:0;bottom:0;width:{{ sosPct }}%;background:rgba(255,255,255,.22);transition:width .1s linear"></span>
+    <span style="font-family:'Barlow Condensed';font-weight:800;font-size:28px;letter-spacing:.12em;position:relative">SOS</span><span style="font-size:13px;opacity:.85;position:relative">{{ sosHint }}</span>
+  </button>
+</div>
+</sc-if>
+
+<sc-if value="{{ isPatrol }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Patrol route" style="flex:1;display:flex;flex-direction:column;padding:20px 20px 0;overflow:auto">
+  <div style="display:flex;justify-content:space-between;align-items:center"><button onClick="{{ goHome }}" style="background:none;border:0;color:#c9cacd;font-size:15px;cursor:pointer;padding:0">‹ Shift</button><span style="font-size:13px;color:#8a8b91">Night patrol</span></div>
+  <div style="margin-top:22px;display:flex;justify-content:space-between;align-items:flex-end"><div><div style="font-family:'Barlow Condensed';font-weight:700;font-size:34px;line-height:1">ROUTE B</div><div style="color:#8a8b91;font-size:14px;margin-top:4px">{{ scanned }} of 12 checkpoints</div></div><span style="font-family:'Barlow Condensed';font-weight:700;font-size:13px;letter-spacing:.1em;color:#2ecc71;border:1px solid rgba(46,204,113,.4);padding:4px 8px;border-radius:4px">ON TIME</span></div>
+  <div style="margin-top:8px;height:3px;background:#26272c;border-radius:2px"><div style="height:100%;width:{{ routePct }}%;background:#e10600;border-radius:2px"></div></div>
+  <div style="margin-top:18px;display:flex;flex-direction:column">
+    <sc-for list="{{ cps }}" as="c" hint-placeholder-count="8">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #1c1d21;color:{{ c.color }}">
+        <span style="display:flex;gap:12px;align-items:center"><span style="width:18px;text-align:center;font-family:'Barlow Condensed';font-weight:700">{{ c.mark }}</span><span style="font-weight:{{ c.weight }}">{{ c.name }}</span></span><span style="font-size:13px;font-variant-numeric:tabular-nums">{{ c.time }}</span>
+      </div>
+    </sc-for>
+  </div>
+  <div style="position:sticky;bottom:0;padding:16px 0 16px;background:linear-gradient(transparent,#0b0b0c 30%)">
+    <button onClick="{{ goScan }}" style="width:100%;background:#e10600;color:#fff;border:0;border-radius:6px;padding:16px;font-family:'Barlow Condensed';font-weight:700;font-size:20px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer" style-hover="background:#ff1a10">Scan {{ nextCp }}</button>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isScan }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="NFC scan" style="flex:1;display:flex;flex-direction:column;padding:20px 24px 28px;align-items:center;text-align:center">
+  <div style="width:100%;display:flex;justify-content:space-between"><button onClick="{{ goPatrol }}" style="background:none;border:0;color:#c9cacd;font-size:15px;cursor:pointer;padding:0">‹ Route</button><span style="font-size:13px;color:#8a8b91">{{ clockHMS }}</span></div>
+  <div style="flex:1"></div>
+  <div style="font-size:11px;letter-spacing:.22em;color:#8a8b91;text-transform:uppercase">Ready to scan</div>
+  <button onClick="{{ doScan }}" style="margin-top:28px;width:180px;height:180px;border-radius:50%;background:#15161a;border:1px solid #26272c;color:#e6e6e8;cursor:pointer;position:relative;display:grid;place-items:center" style-hover="border-color:#e10600">
+    {{ pulse }}
+    <span style="font-family:'Barlow Condensed';font-weight:800;font-size:44px;letter-spacing:.1em;position:relative">NFC</span>
+  </button>
+  <div style="margin-top:28px;font-family:'Barlow Condensed';font-weight:600;font-size:24px;line-height:1.15">Hold the top of your phone<br>to the tag</div>
+  <div style="margin-top:8px;color:#8a8b91;font-size:14px">{{ nextCp }} · Tag {{ tagId }}</div>
+  <div style="color:#5b5c63;font-size:12px;margin-top:6px">Tap the ring to simulate a tag read</div>
+  <div style="flex:1"></div>
+  <button onClick="{{ doScan }}" style="width:100%;background:transparent;color:#c9cacd;border:1px solid #26272c;border-radius:6px;padding:14px;font-size:15px;cursor:pointer" style-hover="border-color:#8a8b91">Scan QR code instead</button>
+  <button style="margin-top:12px;background:none;border:0;color:#8a8b91;font-size:14px;cursor:pointer">Tag damaged? Report it</button>
+</div>
+</sc-if>
+
+<sc-if value="{{ isLogged }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Checkpoint logged" style="flex:1;display:flex;flex-direction:column;padding:28px 20px 24px;overflow:auto">
+  <div style="display:flex;gap:14px;align-items:center"><span style="width:44px;height:44px;border-radius:50%;background:#2ecc71;display:grid;place-items:center;color:#0b0b0c;font-weight:800;font-size:22px">✓</span><div><div style="font-family:'Barlow Condensed';font-weight:700;font-size:26px;line-height:1">CHECKPOINT LOGGED</div><div style="color:#8a8b91;font-size:13px;margin-top:4px">{{ loggedAt }} · GPS ±4 m · {{ loggedName }}</div></div></div>
+  <div style="margin-top:28px;font-size:11px;letter-spacing:.2em;color:#8a8b91;text-transform:uppercase">{{ loggedName }} · Tasks</div>
+  <div style="margin-top:10px;display:flex;flex-direction:column;gap:8px">
+    <sc-for list="{{ tasks }}" as="t" hint-placeholder-count="3">
+      <button onClick="{{ t.toggle }}" style="display:flex;justify-content:space-between;align-items:center;text-align:left;background:#15161a;border:1px solid #26272c;border-radius:6px;padding:14px 16px;color:#e6e6e8;cursor:pointer;font-size:15px" style-hover="border-color:#8a8b91"><span>{{ t.name }}</span><span style="font-family:'Barlow Condensed';font-weight:700;color:{{ t.color }}">{{ t.mark }}</span></button>
+    </sc-for>
+  </div>
+  <div style="margin-top:24px;font-size:11px;letter-spacing:.2em;color:#8a8b91;text-transform:uppercase">Add photo or note (optional)</div>
+  <div style="margin-top:10px;display:flex;gap:10px"><button style="width:64px;height:64px;border:1px dashed #3a3b42;border-radius:6px;background:none;color:#8a8b91;font-size:26px;cursor:pointer" style-hover="border-color:#8a8b91">+</button><textarea placeholder="Note…" style="flex:1;background:#15161a;border:1px solid #26272c;border-radius:6px;color:#e6e6e8;padding:10px 12px;font-size:14px;resize:none;outline:none" style-focus="border-color:#e10600"></textarea></div>
+  <div style="flex:1;min-height:20px"></div>
+  <button onClick="{{ nextCheckpoint }}" style="width:100%;background:#e6e6e8;color:#0b0b0c;border:0;border-radius:6px;padding:16px;font-family:'Barlow Condensed';font-weight:700;font-size:20px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer" style-hover="background:#fff">Next: {{ nextCp }} ›</button>
+</div>
+</sc-if>
+
+<sc-if value="{{ isIncident }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Incident" style="flex:1;display:flex;flex-direction:column;padding:20px 20px 24px;overflow:auto">
+  <div style="display:flex;justify-content:space-between;align-items:center"><button onClick="{{ goHome }}" style="background:none;border:0;color:#c9cacd;font-size:15px;cursor:pointer;padding:0">‹ Cancel</button><span style="font-size:13px;color:#8a8b91">Draft saved</span></div>
+  <div style="margin-top:20px;font-family:'Barlow Condensed';font-weight:700;font-size:34px;line-height:1">NEW INCIDENT</div>
+  <div style="margin-top:22px;font-size:11px;letter-spacing:.2em;color:#8a8b91;text-transform:uppercase">Type</div>
+  <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
+    <sc-for list="{{ types }}" as="ty" hint-placeholder-count="6">
+      <button onClick="{{ ty.pick }}" style="border:1px solid {{ ty.border }};background:{{ ty.bg }};color:{{ ty.color }};border-radius:20px;padding:8px 14px;font-size:14px;cursor:pointer">{{ ty.name }}</button>
+    </sc-for>
+  </div>
+  <div style="margin-top:20px;font-size:11px;letter-spacing:.2em;color:#8a8b91;text-transform:uppercase">Location</div>
+  <div style="margin-top:8px;display:flex;justify-content:space-between;background:#15161a;border:1px solid #26272c;border-radius:6px;padding:12px 14px;font-size:14px"><span>Gate 2, north perimeter</span><span style="color:#2ecc71">GPS ✓</span></div>
+  <div style="margin-top:20px;font-size:11px;letter-spacing:.2em;color:#8a8b91;text-transform:uppercase">Photos · 3</div>
+  <div style="margin-top:8px;display:flex;gap:8px"><span style="width:60px;height:60px;border-radius:6px;background:#26272c"></span><span style="width:60px;height:60px;border-radius:6px;background:#1f2024"></span><span style="width:60px;height:60px;border-radius:6px;background:#26272c"></span><button style="width:60px;height:60px;border:1px dashed #3a3b42;border-radius:6px;background:none;color:#8a8b91;font-size:24px;cursor:pointer">+</button></div>
+  <div style="margin-top:20px;font-size:11px;letter-spacing:.2em;color:#8a8b91;text-transform:uppercase">What happened</div>
+  <textarea value="{{ notes }}" onChange="{{ setNotes }}" rows="5" style="margin-top:8px;width:100%;background:#15161a;border:1px solid #26272c;border-radius:6px;color:#e6e6e8;padding:12px 14px;font-size:15px;line-height:1.4;resize:vertical;outline:none" style-focus="border-color:#e10600"></textarea>
+  <button onClick="{{ tidy }}" disabled="{{ tidying }}" style="margin-top:10px;width:100%;background:transparent;border:1px solid #e10600;color:#ff5c52;border-radius:6px;padding:12px;font-size:14px;font-weight:600;cursor:pointer;display:flex;justify-content:center;gap:8px;align-items:center" style-hover="background:rgba(225,6,0,.1)">{{ spinner }}{{ tidyLabel }}</button>
+  <sc-if value="{{ tidyErr }}" hint-placeholder-val="{{ false }}"><div style="color:#ff5c52;font-size:13px;margin-top:8px">{{ tidyErr }}</div></sc-if>
+  <div style="flex:1;min-height:20px"></div>
+  <button onClick="{{ submitIncident }}" style="width:100%;background:#e10600;color:#fff;border:0;border-radius:6px;padding:16px;font-family:'Barlow Condensed';font-weight:700;font-size:20px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer" style-hover="background:#ff1a10">Submit to control</button>
+</div>
+</sc-if>
+
+<sc-if value="{{ isProfile }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Profile" style="flex:1;display:flex;flex-direction:column;padding:20px 20px 0;overflow:auto">
+  <div style="display:flex;gap:14px;align-items:center"><span style="width:52px;height:52px;border-radius:50%;background:#26272c;display:grid;place-items:center;font-family:'Barlow Condensed';font-weight:700;font-size:20px">DO</span><div><div style="font-family:'Barlow Condensed';font-weight:700;font-size:26px;line-height:1">Daniel Owusu</div><div style="color:#8a8b91;font-size:13px;margin-top:4px">Security Officer · since 2023</div></div></div>
+  <div style="margin-top:24px;background:linear-gradient(135deg,#1c1d22,#0f1013);border:1px solid #26272c;border-radius:10px;padding:18px;position:relative;overflow:hidden">
+    <img src="assets/logo-mark.png" alt="" style="position:absolute;right:-18px;top:-14px;width:150px;height:auto;opacity:.06;pointer-events:none">
+    <div style="display:flex;justify-content:space-between;font-size:11px;letter-spacing:.2em;color:#8a8b91;text-transform:uppercase"><span>SIA licence · verified</span><span style="color:#2ecc71">● Valid</span></div>
+    <div style="margin-top:14px;font-family:'Barlow Condensed';font-weight:700;font-size:22px">SECURITY GUARDING</div>
+    <div style="font-size:16px;letter-spacing:.14em;color:#c9cacd;margin-top:4px">1017 •••• •••• 2291</div>
+    <div style="margin-top:14px;font-size:13px;color:#8a8b91">Expires 14 Mar 2028</div>
+  </div>
+  <div style="margin-top:24px;font-size:11px;letter-spacing:.2em;color:#8a8b91;text-transform:uppercase">This pay period</div>
+  <div style="margin-top:8px;display:flex;flex-direction:column">
+    <div style="display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid #1c1d21"><span>Hours worked</span><span style="font-variant-numeric:tabular-nums">112.5</span></div>
+    <div style="display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid #1c1d21"><span>Timesheet</span><span style="color:#2ecc71">Approved</span></div>
+    <div style="display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid #1c1d21"><span>Training and certificates</span><span style="color:#8a8b91">3 ›</span></div>
+    <div style="display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid #1c1d21"><span>Request holiday</span><span style="color:#8a8b91">›</span></div>
+    <div style="display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid #1c1d21"><span>Payslips</span><span style="color:#8a8b91">›</span></div>
+    <button onClick="{{ signOut }}" style="display:flex;justify-content:space-between;padding:14px 0;background:none;border:0;color:#ff5c52;font-size:16px;cursor:pointer;text-align:left">Sign out</button>
+  </div>
+  <div style="height:16px"></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ showTabs }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;border-top:1px solid #1c1d21;background:#0b0b0c;padding:8px 8px calc(10px + env(safe-area-inset-bottom))">
+  <sc-for list="{{ tabs }}" as="tb" hint-placeholder-count="4">
+    <button onClick="{{ tb.go }}" style="flex:1;background:none;border:0;color:{{ tb.color }};cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px 0;font-size:11px;letter-spacing:.06em;font-weight:600;text-transform:uppercase"><span style="width:22px;height:2px;background:{{ tb.bar }};border-radius:1px"></span>{{ tb.name }}</button>
+  </sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ showCheckCall }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Check call" style="position:absolute;inset:0;background:rgba(11,11,12,.7);backdrop-filter:blur(6px);display:flex;align-items:flex-end;padding:14px">
+  <div style="width:100%;background:#15161a;border:1px solid #26272c;border-radius:14px;padding:22px 20px">
+    <div style="font-size:11px;letter-spacing:.2em;color:#8a8b91;text-transform:uppercase">Welfare check call</div>
+    <div style="margin-top:8px;font-family:'Barlow Condensed';font-weight:700;font-size:30px;line-height:1">ARE YOU OK, DANIEL?</div>
+    <div style="margin-top:6px;color:#c9cacd;font-size:14px">Due now · reply within <span style="font-variant-numeric:tabular-nums;color:#ff5c52">{{ ccCountdown }}</span></div>
+    <button onClick="{{ ccOk }}" style="margin-top:20px;width:100%;background:#2ecc71;color:#0b0b0c;border:0;border-radius:6px;padding:18px;font-family:'Barlow Condensed';font-weight:700;font-size:22px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer" style-hover="background:#4ae08a">I'm OK</button>
+    <button onClick="{{ ccHelp }}" style="margin-top:10px;width:100%;background:transparent;color:#ff5c52;border:1px solid #e10600;border-radius:6px;padding:14px;font-family:'Barlow Condensed';font-weight:700;font-size:18px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer" style-hover="background:rgba(225,6,0,.1)">I need help</button>
+    <div style="margin-top:14px;font-size:12px;color:#5b5c63;text-align:center">No reply: reminder at 5 min, supervisor at 10 min, control room at 15 min</div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isSos }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="SOS active" style="position:absolute;inset:0;background:#a30400;color:#fff;display:flex;flex-direction:column;padding:28px 24px 24px">
+  <div style="font-size:11px;letter-spacing:.24em;text-transform:uppercase;opacity:.85">SOS active · {{ sosElapsed }}</div>
+  <div style="margin-top:24px;align-self:center;width:120px;height:120px;border-radius:50%;background:#e10600;display:grid;place-items:center;position:relative">{{ sosPulse }}<span style="font-family:'Barlow Condensed';font-weight:800;font-size:40px;letter-spacing:.12em;position:relative">SOS</span></div>
+  <div style="margin-top:24px;text-align:center;font-family:'Barlow Condensed';font-weight:700;font-size:32px;line-height:1">HELP IS ON THE WAY</div>
+  <div style="margin-top:24px;display:flex;flex-direction:column">
+    <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.2)"><span>Control room</span><span style="opacity:.9">Connected · listening</span></div>
+    <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.2)"><span>Live location</span><span style="opacity:.9">Sharing</span></div>
+    <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.2)"><span>Nearest officer</span><span style="opacity:.9">K. Patel · 4 min</span></div>
+    <div style="display:flex;justify-content:space-between;padding:12px 0"><span>Audio recording</span><span style="opacity:.9">● {{ sosElapsed }}</span></div>
+  </div>
+  <div style="flex:1"></div>
+  <button style="width:100%;background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.4);border-radius:6px;padding:14px;font-size:15px;cursor:pointer" style-hover="background:rgba(255,255,255,.25)">Silent mode</button>
+  <div style="margin-top:16px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;opacity:.85">Enter passcode to cancel</div>
+  <div style="display:flex;gap:8px;margin-top:8px"><input value="{{ sosCode }}" onChange="{{ setSosCode }}" inputMode="numeric" type="password" placeholder="••••" style="flex:1;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.4);color:#fff;font-size:20px;letter-spacing:.3em;padding:12px 14px;border-radius:6px;outline:none"><button onClick="{{ sosCancel }}" style="background:#fff;color:#a30400;border:0;border-radius:6px;padding:12px 18px;font-family:'Barlow Condensed';font-weight:700;font-size:16px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer">Cancel SOS</button></div>
+</div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:393,&quot;height&quot;:852}}">
+class Component extends DCLogic {
+  state = { screen:'signin', phone:'', pass:'', signinErr:false, docs:[true,true,false], s:null, sosPct:0, sosCodeV:'', tick:0,
+    cc:false, ccDeadline:null, logged:null, tasks:[true,true,null], notes:'side gate lock forced, checked perimeter no entry, chained gate, called police', type:'Damage', tidying:false, tidyErr:'' };
+  async componentDidMount(){
+    this.store = await import('./store.js');
+    const s = this.store.load();
+    this.unsub = this.store.subscribe(ns => this.setState({ s: ns }));
+    let user = null; try { user = JSON.parse(localStorage.getItem('response.officer')); } catch (e) {}
+    this.setState({ s, user, screen: user ? (s.bookedOn ? 'home' : 'brief') : 'signin' });
+    this.timer = setInterval(() => {
+      this.setState(st => ({ tick: st.tick + 1 }));
+      const st = this.state;
+      if (st.cc && st.ccDeadline && Date.now() > st.ccDeadline) this.ccMiss();
+      if (st.s && st.s.bookedOn && !st.cc && st.screen === 'home' && !st.s.sos && st.tick % 60 === 45) this.openCheckCall();
+    }, 1000);
+  }
+  componentWillUnmount(){ clearInterval(this.timer); if (this.unsub) this.unsub(); clearInterval(this.sosT); }
+  save(fn){ const ns = fn(this.state.s || this.store.initial()); this.store.save(ns); this.setState({ s: ns }); }
+  go(screen){ this.setState({ screen }); }
+  openCheckCall(){ this.setState({ cc: true, ccDeadline: Date.now() + 5*60*1000 }); }
+  ccMiss(){ this.setState({ cc: false }); this.save(s => this.store.push(s, { title:'Missed check call · D. Owusu', sub:'Riverside DC · reminder sent', kind:'warn' })); }
+  renderVals(){
+    const { screen, s, docs, tick } = this.state;
+    const st = this.store; const now = new Date();
+    const scanned = s ? s.scanned : 5; const route = st ? st.route : [];
+    const nextCp = route[scanned] || 'Route complete';
+    const sos = s && s.sos;
+    const tabs = [['Shift','home'],['Patrol','patrol'],['Report','incident'],['Me','profile']].map(([name,sc]) => ({ name, go: () => this.go(sc), color: screen===sc || (sc==='home'&&['scan','logged'].includes(screen)) ? '#e6e6e8' : '#5b5c63', bar: screen===sc ? '#e10600' : 'transparent' }));
+    const docNames = ['Assignment instructions v4','Fire procedure · Block B','New: Bay 4 contractor access'];
+    const docsRead = docs.filter(Boolean).length;
+    const shiftLeft = (() => { if(!s||!s.shiftStart) return '8h 00m'; const ms = 8*3600e3 - (Date.now()-s.shiftStart); const h=Math.max(0,Math.floor(ms/3600e3)), m=Math.max(0,Math.floor(ms%3600e3/60e3)); return `${h}h ${String(m).padStart(2,'0')}m`; })();
+    const ccLeft = Math.max(0, Math.floor(((this.state.ccDeadline||0) - Date.now())/1000));
+    const sosEl = s && s.sosStart ? Math.floor((Date.now()-s.sosStart)/1000) : 0;
+    const mmss = n => `${String(Math.floor(n/60)).padStart(2,'0')}:${String(n%60).padStart(2,'0')}`;
+    const ring = (color) => React.createElement('span', { style:{ position:'absolute', inset:0, borderRadius:'50%', border:`2px solid ${color}`, animation:'rpulse 1.6s ease-out infinite' } });
+    return {
+      topInset: (this.props.topInset ?? (new URLSearchParams(location.search).get('inset') || 0)),
+      isSignin: screen==='signin', isBrief: screen==='brief', isHome: screen==='home', isPatrol: screen==='patrol', isScan: screen==='scan', isLogged: screen==='logged', isIncident: screen==='incident', isProfile: screen==='profile',
+      tabs, isSos: !!sos, showTabs: ['home','patrol','incident','profile'].includes(screen), showCheckCall: this.state.cc && !sos,
+      clockHM: st ? st.hhmm(now) : '', clockHMS: st ? st.hhmmss(now) : '',
+      phone: this.state.phone, pass: this.state.pass, setPhone: e => this.setState({ phone: e.target.value }), setPass: e => this.setState({ pass: e.target.value }), signinErr: this.state.signinErr,
+      userName: this.state.user ? this.state.user.name : 'Daniel',
+      passKey: e => { if (e.key === 'Enter') this.doSignIn(); },
+      signIn: () => this.doSignIn(),
+      docs: docNames.map((name,i) => ({ name, mark: docs[i] ? 'READ ✓' : 'OPEN', color: docs[i] ? '#2ecc71' : '#ff5c52', toggle: () => this.setState(x => { const d=[...x.docs]; d[i]=!d[i]; return { docs:d }; }) })),
+      docsRead, bookDisabled: docsRead<3, bookBg: docsRead<3 ? '#3a3b42' : '#e10600', bookLabel: docsRead<3 ? 'Book on · read all to continue' : 'Book on',
+      bookOn: () => { this.save(x => st.push({ ...x, bookedOn:true, shiftStart: Date.now() }, { title:'Booked on · D. Owusu', sub:'Riverside DC · inside geofence · on time', kind:'ok' })); this.go('home'); },
+      shiftLeft, nextCp, nextDue: scanned>=12 ? 'all checkpoints scanned' : `due in ${6 + (scanned-5)*8} min`, scanned, routePct: Math.round(scanned/12*100),
+      cps: route.map((name,i) => ({ name, mark: i<scanned ? '✓' : i===scanned ? '▸' : '', time: i<scanned ? `0${1 + Math.floor((32 + i*8)/60)}:${String((32+i*8)%60).padStart(2,'0')}` : i===scanned ? 'NOW' : `0${1 + Math.floor((32 + i*8)/60)}:${String((32+i*8)%60).padStart(2,'0')}`, color: i<scanned ? '#8a8b91' : i===scanned ? '#e6e6e8' : '#5b5c63', weight: i===scanned ? 700 : 400 })),
+      tagId: `${nextCp.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,3)}-A`,
+      pulse: ring('#e10600'), sosPulse: ring('rgba(255,255,255,.7)'),
+      goHome: () => this.go('home'), goPatrol: () => this.go('patrol'), goScan: () => this.go('scan'), goIncident: () => this.go('incident'), goBriefDocs: () => this.go('brief'),
+      doScan: () => { const name = nextCp; this.setState({ logged: { name, at: st.hhmmss(now) }, tasks:[true,true,null] }); this.save(x => st.push({ ...x, scanned: Math.min(12, x.scanned+1) }, { title:`Checkpoint scanned · ${name}`, sub:'D. Owusu · Riverside DC · NFC · on time', kind:'ok' })); this.go('logged'); },
+      loggedName: this.state.logged ? this.state.logged.name : '', loggedAt: this.state.logged ? this.state.logged.at : '',
+      tasks: ['Roller shutter closed','Trailers secured','Fire exit clear?'].map((name,i) => { const v=this.state.tasks[i]; return { name, mark: v===true ? '✓' : v===false ? '✗' : 'YES / NO', color: v===true ? '#2ecc71' : v===false ? '#ff5c52' : '#8a8b91', toggle: () => this.setState(x => { const t=[...x.tasks]; t[i] = t[i]===true ? false : true; return { tasks:t }; }) }; }),
+      nextCheckpoint: () => this.go(scanned>=12 ? 'home' : 'patrol'),
+      types: ['Intruder','Damage','Medical','Fire','Suspicious','Other'].map(name => { const on = this.state.type===name; return { name, pick: () => this.setState({ type:name }), border: on ? '#e10600' : '#26272c', bg: on ? 'rgba(225,6,0,.15)' : '#15161a', color: on ? '#fff' : '#c9cacd' }; }),
+      notes: this.state.notes, setNotes: e => this.setState({ notes: e.target.value }),
+      tidying: this.state.tidying, tidyLabel: this.state.tidying ? 'Tidying…' : 'AI · Tidy into a formal report', tidyErr: this.state.tidyErr,
+      spinner: this.state.tidying ? React.createElement('span', { style:{ width:14, height:14, border:'2px solid rgba(255,92,82,.3)', borderTopColor:'#ff5c52', borderRadius:'50%', animation:'rspin .8s linear infinite', display:'inline-block' } }) : null,
+      tidy: async () => {
+        this.setState({ tidying:true, tidyErr:'' });
+        try {
+          if (!window.claude || !window.claude.complete) throw new Error('AI not available in this preview');
+          const text = await window.claude.complete({ system:'You write concise, factual UK security incident reports for a client. Third person, past tense, plain English, no headings, 3-5 sentences. Officer: D. Owusu. Site: Riverside Distribution Centre. Do not invent facts not in the notes.', messages:[{ role:'user', content:`Incident type: ${this.state.type}. Location: Gate 2, north perimeter. Time: ${st.hhmm(now)}. Officer notes: ${this.state.notes}` }] });
+          this.setState({ notes: text.trim(), tidying:false });
+        } catch (e) { this.setState({ tidying:false, tidyErr: String(e.message||e) }); }
+      },
+      submitIncident: () => { const id = `IR-${4472 + ((s&&s.incidents.length)||1) - 1}`; this.save(x => st.push({ ...x, incidents:[{ id, site:'Riverside DC', type:this.state.type, title:this.state.notes.split(/[.,\n]/)[0].slice(0,60), officer:'D. Owusu', time:`${st.hhmm(now)}`, photos:3, status:'New' }, ...x.incidents] }, { title:`Incident report filed · ${id}`, sub:`Riverside DC · ${this.state.type} · D. Owusu · 3 photos`, kind:'info' })); this.setState({ notes:'' }); this.go('home'); },
+      openCheckCall: () => this.openCheckCall(), ccCountdown: mmss(ccLeft),
+      ccOk: () => { this.setState({ cc:false }); this.save(x => st.push(x, { title:'Check call OK · D. Owusu', sub:'Riverside DC', kind:'ok' })); },
+      ccHelp: () => { this.setState({ cc:false }); this.startSos(); },
+      sosBg: this.state.sosPct>0 ? '#b80500' : '#e10600', sosPct: this.state.sosPct, sosHint: this.state.sosPct>0 ? 'Keep holding…' : 'Hold 3 seconds',
+      sosDown: e => { e.preventDefault(); const t0 = Date.now(); clearInterval(this.sosT); this.sosT = setInterval(() => { const p = Math.min(100, (Date.now()-t0)/30); this.setState({ sosPct:p }); if (p>=100) { clearInterval(this.sosT); this.setState({ sosPct:0 }); this.startSos(); } }, 50); },
+      sosUp: () => { clearInterval(this.sosT); if (this.state.sosPct>0) this.setState({ sosPct:0 }); }, noop: e => e.preventDefault(),
+      sosElapsed: mmss(sosEl), sosCode: this.state.sosCodeV, setSosCode: e => this.setState({ sosCodeV: e.target.value }),
+      sosCancel: () => { if (this.state.sosCodeV.length < 4) return; this.setState({ sosCodeV:'' }); this.save(x => st.push({ ...x, sos:false, sosStart:null }, { title:'SOS cancelled by officer · D. Owusu', sub:'Passcode verified · Riverside DC', kind:'info' })); },
+      signOut: () => { localStorage.removeItem('response.officer'); this.setState({ user:null }); this.store.reset(); this.setState({ docs:[true,true,false] }); this.go('signin'); },
+    };
+  }
+  async doSignIn(){
+    const u = await this.store.verify(this.state.phone, this.state.pass, 'officer');
+    if (!u) return this.setState({ signinErr:true });
+    localStorage.setItem('response.officer', JSON.stringify({ email:u.email, name:u.name }));
+    this.setState({ signinErr:false, pass:'', user:u }); this.go('brief');
+  }
+  startSos(){ this.save(x => this.store.push({ ...x, sos:true, sosStart: Date.now() }, { title:'SOS · D. Owusu', sub:'Riverside DC · live audio + location · K. Patel dispatched', kind:'alarm' })); }
+}
+</script>
+</body>
+</html>
