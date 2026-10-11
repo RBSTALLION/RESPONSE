@@ -44,7 +44,7 @@ It needs Node.js 18+ and a Vercel login (the script opens the browser login the 
 Set `VERCEL_SCOPE=<team-slug>` to deploy under a specific Vercel team, or `TARGET=preview` for a preview URL.
 Drag-and-drop still works too: drag the `site/` folder into vercel.com/new.
 
-Demo state is stored in the browser only, so two devices do not share data yet; the Supabase schema in `supabase/` is the next step for that.
+Live sync: with a Supabase URL and anon key in `site/config.js` (or `SUPABASE_URL` and `SUPABASE_ANON_KEY` set when running the script), the phone app and the portal share one live demo state across devices. Run `supabase/migrations/20261011180000_demo_state.sql` in the Supabase SQL editor first. Without it, demo state stays in each browser.
 
 ## Viewing the mock-ups
 

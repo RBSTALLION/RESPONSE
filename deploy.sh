@@ -9,6 +9,8 @@
 #   VERCEL_TOKEN   use a token instead of the browser login
 #   PROJECT        Vercel project name (default: response)
 #   TARGET         "prod" (default) or "preview"
+#   SUPABASE_URL, SUPABASE_ANON_KEY
+#                  turn on live sync between /app and /portal (overrides site/config.js)
 set -euo pipefail
 
 REPO="RBSTALLION/RESPONSE"
@@ -32,6 +34,10 @@ fi
 mv "$SRC" "$WORK/$PROJECT"
 
 cd "$WORK/$PROJECT"
+if [ -n "${SUPABASE_URL:-}" ] && [ -n "${SUPABASE_ANON_KEY:-}" ]; then
+  printf "window.RESPONSE_CONFIG = { supabaseUrl: '%s', supabaseAnonKey: '%s' };\n" "$SUPABASE_URL" "$SUPABASE_ANON_KEY" > config.js
+  echo "==> Live sync on ($SUPABASE_URL)"
+fi
 VC=(npx --yes vercel@latest)
 ARGS=(--yes)
 [ -n "${VERCEL_SCOPE:-}" ] && ARGS+=(--scope "$VERCEL_SCOPE")

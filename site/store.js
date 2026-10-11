@@ -40,7 +40,8 @@ export function initial(){
  };
 }
 export function load(){ try{ const s=JSON.parse(localStorage.getItem(KEY)); if(s&&s.events) return s; }catch(e){} return initial(); }
-export function save(s){ localStorage.setItem(KEY, JSON.stringify(s)); window.dispatchEvent(new CustomEvent('response:state',{detail:s})); if(bc) bc.postMessage(s); }
+function apply(s){ localStorage.setItem(KEY, JSON.stringify(s)); window.dispatchEvent(new CustomEvent('response:state',{detail:s})); if(bc) bc.postMessage(s); }
+export function save(s){ apply(s); pushRemote(s); }
 export function reset(){ const s=initial(); save(s); return s; }
 export function subscribe(fn){
  const a=e=>fn(e.detail); const b=e=>{ if(e.key===KEY) fn(load()); }; const c=e=>fn(e.data);
@@ -72,3 +73,30 @@ export async function verify(email, password, role){
   const h = [...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,'0')).join('');
   return accounts.find(a => a.email===e && a.hash===h && (!role || a.role===role)) || null;
 }
+
+// Live sync between devices through Supabase (one shared demo row, pushed by Realtime).
+// Off unless /config.js sets supabaseUrl and supabaseAnonKey; then state stays browser-local.
+const ROW='demo', ME=Math.random().toString(36).slice(2);
+let sb=null, pushT=null;
+function loadScript(src){ return new Promise((ok,no)=>{ const el=document.createElement('script'); el.src=src; el.onload=ok; el.onerror=no; document.head.appendChild(el); }); }
+function pushRemote(s){
+ if(!sb) return;
+ clearTimeout(pushT);
+ pushT=setTimeout(()=>{ sb.from('demo_state').upsert({id:ROW, state:{...s,_by:ME}, updated_at:new Date().toISOString()}).then(r=>{ if(r&&r.error) console.warn('[response] sync failed', r.error.message); }); },150);
+}
+export const live = (async()=>{
+ try{
+  await loadScript('/config.js');
+  const c=window.RESPONSE_CONFIG||{};
+  if(!c.supabaseUrl||!c.supabaseAnonKey) return false;
+  if(!window.supabase) await loadScript('/vendor/supabase.js');
+  sb=window.supabase.createClient(c.supabaseUrl, c.supabaseAnonKey, {auth:{persistSession:false}});
+  const {data,error}=await sb.from('demo_state').select('state').eq('id',ROW).maybeSingle();
+  if(error) throw error;
+  if(data&&data.state&&data.state.events) apply(data.state); else pushRemote(load());
+  sb.channel('response-demo')
+   .on('postgres_changes',{event:'*',schema:'public',table:'demo_state',filter:'id=eq.'+ROW},p=>{ const s=p.new&&p.new.state; if(s&&s.events&&s._by!==ME) apply(s); })
+   .subscribe();
+  return true;
+ }catch(e){ console.warn('[response] live sync off:', e&&e.message||e); sb=null; return false; }
+})();
