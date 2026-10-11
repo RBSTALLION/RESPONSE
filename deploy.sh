@@ -44,7 +44,11 @@ fi
 
 echo "==> Deploying to Vercel ($TARGET)"
 [ "$TARGET" = "prod" ] && ARGS+=(--prod)
-URL="$("${VC[@]}" deploy "${ARGS[@]}" | tail -n1)"
+LOG="$WORK/deploy.log"
+"${VC[@]}" deploy "${ARGS[@]}" 2>&1 | tee "$LOG"
+# Prefer the production domain (public) over the per-deployment URL.
+URL="$(grep -Eo 'Aliased:? +https://[^ ]+' "$LOG" | grep -Eo 'https://[^ ]+' | tail -n1 || true)"
+[ -n "$URL" ] || URL="$(grep -Eo 'https://[a-zA-Z0-9.-]+\.vercel\.app' "$LOG" | tail -n1)"
 
 echo
 echo "Deployed: $URL"
